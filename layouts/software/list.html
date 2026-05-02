@@ -1,0 +1,72 @@
+{{ define "main" }}
+  {{ if .Params.wip }}
+    <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
+    {{ partial "wip.html" . }}
+  {{ else }}
+    <header>
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
+    </header>
+
+    {{/* Collapsible project grid */}}
+    {{ $projects := where .Pages "Params.project" true }}
+    {{ if $projects }}
+      <details class="group mt-8" open>
+        <summary class="mb-4 cursor-pointer list-none">
+          <span class="flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400">
+            <span class="transition-transform group-open:rotate-90">▶</span>
+            {{ i18n "software.projects" | default "Projects" }}
+            <span class="rounded-full bg-neutral-100 px-2 py-0.5 text-xs dark:bg-neutral-700">{{ len $projects }}</span>
+          </span>
+        </summary>
+        <div class="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {{ range $projects }}
+            <a href="{{ .RelPermalink }}"
+               class="group/card rounded-lg border border-neutral-200 p-4 transition-colors hover:border-primary-400 hover:bg-primary-50 dark:border-neutral-700 dark:hover:border-primary-600 dark:hover:bg-primary-950/20">
+              <h3 class="mb-1 font-semibold text-neutral-900 group-hover/card:text-primary-600 dark:text-neutral dark:group-hover/card:text-primary-400">
+                {{ .Title | emojify }}
+              </h3>
+              {{ with .Description }}
+                <p class="text-sm text-neutral-500 dark:text-neutral-400">{{ . }}</p>
+              {{ end }}
+              {{ with .Params.tags }}
+                <div class="mt-2 flex flex-wrap gap-1">
+                  {{ range . }}
+                    <span class="rounded bg-neutral-100 px-1.5 py-0.5 text-xs text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400">{{ . }}</span>
+                  {{ end }}
+                </div>
+              {{ end }}
+            </a>
+          {{ end }}
+        </div>
+      </details>
+      <hr class="mt-8 border-neutral-200 dark:border-neutral-700" />
+    {{ end }}
+
+    {{/* Regular articles */}}
+    {{ $articles := where .Pages "Params.project" "!=" true }}
+    {{ if $articles }}
+      <section class="mt-6">
+        {{ range $articles }}
+          <div class="group flex items-baseline gap-4 border-b border-neutral-100 py-3 dark:border-neutral-800 last:border-0">
+            <time class="w-24 shrink-0 text-sm tabular-nums text-neutral-400 dark:text-neutral-500">
+              {{ .Date.Format "2006-01-02" }}
+            </time>
+            <div class="min-w-0">
+              <a href="{{ .RelPermalink }}"
+                 class="font-medium text-neutral-800 decoration-primary-500 hover:underline hover:underline-offset-2 dark:text-neutral">
+                {{ .Title | emojify }}
+              </a>
+              {{ with .Description }}
+                <p class="truncate text-sm text-neutral-500 dark:text-neutral-400">{{ . }}</p>
+              {{ end }}
+            </div>
+          </div>
+        {{ end }}
+      </section>
+    {{ else if not $projects }}
+      <section class="prose mt-10 dark:prose-invert">
+        <p class="border-t py-8"><em>{{ i18n "list.no_articles" | emojify }}</em></p>
+      </section>
+    {{ end }}
+  {{ end }}
+{{ end }}

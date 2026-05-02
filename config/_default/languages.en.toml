@@ -1,0 +1,12 @@
+locale = "en"
+label = "English"
+weight = 2
+title = "Parker Chang's Web"
+contentDir = "content/en"
+
+[params]
+  dateFormat = "2 January 2006"
+  description = "I like writing and record my thoughts and ideas here. I'd be happy if I can inspire others during the journey. The topics cover software, life, reading notes, and reflections on various works."
+
+[params.author]
+  name = "Parker"

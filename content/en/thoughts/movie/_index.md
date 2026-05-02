@@ -1,0 +1,4 @@
+---
+title: "Movie"
+thoughtsCategory: "movie"
+---

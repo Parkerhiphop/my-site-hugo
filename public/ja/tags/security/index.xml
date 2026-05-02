@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Security on Parker Chang&#39;s Web</title>
+    <link>http://localhost:1313/ja/tags/security/</link>
+    <description>Recent content in Security on Parker Chang&#39;s Web</description>
+    <generator>Hugo</generator>
+    <language>ja</language>
+    <lastBuildDate>Sat, 30 Sep 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/ja/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JavaScriptにおけるeval、リスク、そして代替案について</title>
+      <link>http://localhost:1313/ja/software/talk-about-js-eval/</link>
+      <pubDate>Sat, 30 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/ja/software/talk-about-js-eval/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;注:&lt;/strong&gt; この記事は AI によって翻訳されています。もし不自然な表現や誤りがありましたら、メールやその他の手段でお知らせいただけると幸いです。フィードバックをいただけると助かります！&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;h2 id=&#34;はじめに&#34; class=&#34;relative group&#34;&gt;はじめに &lt;span class=&#34;absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100&#34;&gt;&lt;a class=&#34;group-hover:text-primary-300 dark:group-hover:text-neutral-700&#34; style=&#34;text-decoration-line: none !important;&#34; href=&#34;#%e3%81%af%e3%81%98%e3%82%81%e3%81%ab&#34; aria-label=&#34;アンカー&#34;&gt;#&lt;/a&gt;&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;最近、Google Sheets が提供する App Script を使って友人のために小さなクローラーを書き、ウェブ上の情報を自動的に移動・整理しようとしました。その際、HTML ソース内の&lt;code&gt;&amp;lt;script /&amp;gt;&lt;/code&gt;の情報が直接読み取れないことに気づきました。ChatGPT に聞いたところ、突然&lt;code&gt;eval&lt;/code&gt;を使用した実装を提示されました。以前は使ってはいけないということしか知らなかったので、今回は&lt;strong&gt;どのような時に使われる可能性があるのか&lt;/strong&gt;、&lt;strong&gt;なぜ使ってはいけないのか&lt;/strong&gt;、そして&lt;strong&gt;どのような代替案があるのか&lt;/strong&gt;について真剣に理解することにしました。&lt;/p&gt;&#xA;&lt;p&gt;この記事では、&lt;code&gt;eval&lt;/code&gt;を簡単に紹介した後、一つの使用事例と一つの面接問題を取り上げます。&lt;/p&gt;&#xA;&lt;h2 id=&#34;eval-基本紹介&#34; class=&#34;relative group&#34;&gt;&lt;code&gt;eval&lt;/code&gt; 基本紹介 &lt;span class=&#34;absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100&#34;&gt;&lt;a class=&#34;group-hover:text-primary-300 dark:group-hover:text-neutral-700&#34; style=&#34;text-decoration-line: none !important;&#34; href=&#34;#eval-%e5%9f%ba%e6%9c%ac%e7%b4%b9%e4%bb%8b&#34; aria-label=&#34;アンカー&#34;&gt;#&lt;/a&gt;&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;&lt;code&gt;eval(script);&lt;/code&gt; は JavaScript の組み込み関数です。&lt;/p&gt;&#xA;&lt;p&gt;渡された script 文字列（String）を JavaScript の式（Expression）または文（Statement）として実行することができます。&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;使用シーン：「実行したい script を信頼しており、かつ String を JS コードとして実行したい場合」&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;h3 id=&#34;戻り値-return-value&#34; class=&#34;relative group&#34;&gt;戻り値 (Return value) &lt;span class=&#34;absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100&#34;&gt;&lt;a class=&#34;group-hover:text-primary-300 dark:group-hover:text-neutral-700&#34; style=&#34;text-decoration-line: none !important;&#34; href=&#34;#%e6%88%bb%e3%82%8a%e5%80%a4-return-value&#34; aria-label=&#34;アンカー&#34;&gt;#&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;&lt;p&gt;パラメータが String の場合、JS の実際の実行結果を返します。その String が実行可能な JS コードでない場合は、&lt;code&gt;Error: {script} is not defined&lt;/code&gt;を返します。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,4 @@
+---
+title: "ドラマ"
+thoughtsCategory: "series"
+---

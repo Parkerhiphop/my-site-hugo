@@ -1,0 +1,42 @@
+[[main]]
+  name = "Life"
+  pageRef = "life"
+  weight = 10
+
+[[main]]
+  name = "Software"
+  pageRef = "software"
+  weight = 20
+
+[[main]]
+  name = "Novel"
+  pageRef = "novel"
+  weight = 30
+
+[[main]]
+  name = "Thoughts"
+  pageRef = "thoughts"
+  weight = 40
+
+[[main]]
+  name = "About"
+  pageRef = "about"
+  weight = 50
+
+[[main]]
+  name = "Now"
+  pageRef = "now"
+  weight = 60
+
+[[main]]
+  identifier = "appearance"
+  weight = 70
+  [main.params]
+    action = "appearance"
+    showName = false
+
+[[main]]
+  identifier = "locale"
+  weight = 80
+  [main.params]
+    action = "locale"

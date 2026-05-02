@@ -1,0 +1,4 @@
+---
+title: "Novel"
+worksCategory: "novel"
+---

@@ -1,0 +1,88 @@
+{{ define "main" }}
+  {{ if .Params.wip }}
+    <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
+    {{ partial "wip.html" . }}
+  {{ else }}
+    {{- $lang := lower site.Language.Lang -}}
+    {{- $categories := slice
+      (dict "key" "manga" "zh-tw" "漫畫" "en" "Manga" "ja" "漫画")
+      (dict "key" "anime" "zh-tw" "動畫" "en" "Anime" "ja" "アニメ")
+      (dict "key" "movie" "zh-tw" "電影" "en" "Movie" "ja" "映画")
+      (dict "key" "series" "zh-tw" "影集" "en" "Series" "ja" "ドラマ")
+      (dict "key" "novel" "zh-tw" "小說" "en" "Novel" "ja" "小説")
+      (dict "key" "tools" "zh-tw" "工具書" "en" "Tools" "ja" "実用書")
+    -}}
+    {{- $allLabel := dict "zh-tw" "全部" "en" "All" "ja" "すべて" -}}
+    {{- $description := dict "zh-tw" "記錄我看過作品的感想，另外有看過但沒有寫感想的作品們會記錄在這裡：" "en" "This is where I write down my thoughts on the works I've read/watched, while the ones I haven't written about will be listed here:" "ja" "ここでは、私が読んだ/見た作品についての感想を書き留めています。感想を書いていない作品はここにリストされます：" -}}
+    {{- $worksLabel := dict "zh-tw" "作品資料庫" "en" "Works" "ja" "作品データベース" -}}
+    {{- $empty := dict "zh-tw" "目前沒有文章" "en" "No articles yet" "ja" "まだ記事がありません" -}}
+    {{- $root := site.GetPage "thoughts" -}}
+    {{- $allPages := where $root.RegularPagesRecursive.ByDate.Reverse "Params.wip" "!=" true -}}
+    {{- $pages := where .RegularPagesRecursive.ByDate.Reverse "Params.wip" "!=" true -}}
+    {{- $currentCategory := .Params.thoughtsCategory | default "all" -}}
+
+    <header>
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
+      {{ with .Description }}
+        <p class="mt-3 max-w-3xl text-base leading-7 text-neutral-500 dark:text-neutral-400">{{ . }}</p>
+      {{ end }}
+      {{ with site.GetPage "works" }}
+        <p>
+          {{ index $description $lang | default (index $description "zh-TW") }}
+          <a class="thoughts-works-link" href="{{ .RelPermalink }}">{{ index $worksLabel $lang | default "Works" }}</a>
+        </p>
+      {{ end }}
+    </header>
+
+    <nav class="thoughts-category-menu" aria-label="{{ .Title }}">
+      <a class="thoughts-category-pill {{ if eq $currentCategory "all" }}is-active{{ end }}" href="{{ $root.RelPermalink }}">
+        <span>{{ index $allLabel $lang | default "All" }}</span>
+        <span class="thoughts-category-count">{{ len $allPages }}</span>
+      </a>
+      {{ range $categories }}
+        {{- $key := .key -}}
+        {{- $categoryPage := site.GetPage (printf "thoughts/%s" $key) -}}
+        {{- $items := where $allPages "Params.thoughtsCategory" $key -}}
+        {{- $label := index . $lang | default (index . "en") -}}
+        {{ with $categoryPage }}
+          <a class="thoughts-category-pill {{ if eq $currentCategory $key }}is-active{{ end }}" href="{{ .RelPermalink }}">
+            <span>{{ $label }}</span>
+            <span class="thoughts-category-count">{{ len $items }}</span>
+          </a>
+        {{ end }}
+      {{ end }}
+    </nav>
+
+    {{ if $pages }}
+      <div class="thoughts-article-list">
+        {{ range $pages }}
+          {{- $category := .Params.thoughtsCategory | default "uncategorized" -}}
+          {{- $categoryLabel := $category -}}
+          {{- range $categories -}}
+            {{- if eq .key $category -}}
+              {{- $categoryLabel = index . $lang | default (index . "en") -}}
+            {{- end -}}
+          {{- end -}}
+          <article class="thoughts-article-row">
+            <time class="thoughts-article-date" datetime="{{ .Date.Format "2006-01-02" }}">
+              {{ .Date | time.Format (site.Language.Params.dateFormat | default "2006-01-02") }}
+            </time>
+            <div class="min-w-0">
+              <div class="thoughts-article-heading">
+                <span class="thoughts-article-category">{{ $categoryLabel }}</span>
+                <h2 class="thoughts-article-title">
+                  <a href="{{ .RelPermalink }}">{{ .Title | emojify }}</a>
+                </h2>
+              </div>
+              {{ with .Description }}
+                <p class="thoughts-article-summary">{{ . }}</p>
+              {{ end }}
+            </div>
+          </article>
+        {{ end }}
+      </div>
+    {{ else }}
+      <p class="thoughts-empty">{{ index $empty $lang | default "No articles yet" }}</p>
+    {{ end }}
+  {{ end }}
+{{ end }}

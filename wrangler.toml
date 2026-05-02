@@ -1,0 +1,10 @@
+name = "my-site"
+compatibility_date = "2026-05-03"
+
+[env.production]
+  command = "hugo --minify"
+  directory = "public"
+
+[env.preview]
+  command = "hugo --minify --buildDrafts"
+  directory = "public"

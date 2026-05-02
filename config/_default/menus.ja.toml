@@ -1,0 +1,42 @@
+[[main]]
+  name = "生活"
+  pageRef = "life"
+  weight = 10
+
+[[main]]
+  name = "ソフトウェア"
+  pageRef = "software"
+  weight = 20
+
+[[main]]
+  name = "小説"
+  pageRef = "novel"
+  weight = 30
+
+[[main]]
+  name = "感想"
+  pageRef = "thoughts"
+  weight = 40
+
+[[main]]
+  name = "このサイトについて"
+  pageRef = "about"
+  weight = 50
+
+[[main]]
+  name = "今"
+  pageRef = "now"
+  weight = 60
+
+[[main]]
+  identifier = "appearance"
+  weight = 70
+  [main.params]
+    action = "appearance"
+    showName = false
+
+[[main]]
+  identifier = "locale"
+  weight = 80
+  [main.params]
+    action = "locale"

@@ -1,0 +1,1213 @@
+
+
+
+
+
+
+<!doctype html>
+<html
+  lang="en"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="light"
+  data-auto-appearance="true"
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FFFFFF" />
+  
+  <title>Implementing Google OAuth Login (Vue / Express) &middot; Parker Chang&#39;s Web</title>
+    <meta name="title" content="Implementing Google OAuth Login (Vue / Express) &middot; Parker Chang&#39;s Web" />
+  
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/appearance.min.8a082f81b27f3cb2ee528df0b0bdc39787034cf2cc34d4669fbc9977c929023c.js"
+    integrity="sha256-iggvgbJ/PLLuUo3wsL3Dl4cDTPLMNNRmn7yZd8kpAjw="
+  ></script>
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.3d626d356703626569364790e95b69715968a53a1054f31d92786caaf3605200.css"
+    integrity="sha256-PWJtNWcDYmVpNkeQ6VtpcVlopToQVPMdknhsqvNgUgA="
+  />
+  
+  
+  
+  
+  
+  
+  
+  <meta
+    name="description"
+    content="
+      A small example of integrating Google Login using Vue and Express.
+    "
+  />
+  
+  
+  
+  
+    <link rel="canonical" href="http://localhost:1313/en/software/google-oauth-login/" />
+  
+  
+  
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:url" content="http://localhost:1313/en/software/google-oauth-login/">
+  <meta property="og:site_name" content="Parker Chang&#39;s Web">
+  <meta property="og:title" content="Implementing Google OAuth Login (Vue / Express)">
+  <meta property="og:description" content="A small example of integrating Google Login using Vue and Express.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="software">
+    <meta property="article:published_time" content="2022-10-23T00:00:00+00:00">
+    <meta property="article:modified_time" content="2022-10-23T00:00:00+00:00">
+    <meta property="article:tag" content="Software Development">
+    <meta property="article:tag" content="Web Development">
+    <meta property="article:tag" content="Vue">
+    <meta property="article:tag" content="Express">
+    <meta property="article:tag" content="Google OAuth">
+    <meta property="og:image" content="http://localhost:1313/en/software/google-oauth-login/cover-en.png">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/en/software/google-oauth-login/cover-en.png">
+  <meta name="twitter:title" content="Implementing Google OAuth Login (Vue / Express)">
+  <meta name="twitter:description" content="A small example of integrating Google Login using Vue and Express.">
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Software",
+    "name": "Implementing Google OAuth Login (Vue \/ Express)",
+    "headline": "Implementing Google OAuth Login (Vue \/ Express)",
+    "description": "A small example of integrating Google Login using Vue and Express.",
+    "abstract": "\u003cblockquote\u003e\n\u003cp\u003e\u003cstrong\u003eNote:\u003c\/strong\u003e This post is translated by AI. If you find any unnatural phrasing or errors, please feel free to contact me via email or other channels. Your feedback is appreciated!\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003ch2 id=\u0022preface\u0022 class=\u0022relative group\u0022\u003ePreface \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#preface\u0022 aria-label=\u0022Anchor\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003eRecently, the company needed to integrate third-party login. As it was my first time doing it, I stepped into quite a few pitfalls. I also found that Google has updated again, and many articles I found were no longer usable, so I decided to share and record the integration process.\u003c\/p\u003e",
+    "inLanguage": "en",
+    "url" : "http:\/\/localhost:1313\/en\/software\/google-oauth-login\/",
+    "author" : {
+      "@type": "Person",
+      "name": "Parker"
+    },
+    "copyrightYear": "2022",
+    "dateCreated": "2022-10-23T00:00:00\u002b00:00",
+    "datePublished": "2022-10-23T00:00:00\u002b00:00",
+    
+    "dateModified": "2022-10-23T00:00:00\u002b00:00",
+    
+    "keywords": ["Software Development","Web Development","Vue","Express","Google OAuth"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "1362"
+  }
+  </script>
+    
+    <script type="application/ld+json">
+    {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/en/",
+       "name": "Home",
+       "position": 1
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/en/software/",
+       "name": "Software",
+       "position": 2
+     },
+     {
+       "@type": "ListItem",
+       "name": "Implementing Google Oauth Login ( Vue Express)",
+       "position": 3
+     }
+   ]
+ }
+  </script>
+
+  
+  
+    <meta name="author" content="Parker" />
+  
+  
+  
+  
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script>
+(function () {
+  
+  if (sessionStorage.getItem('lang-redirected')) return;
+  sessionStorage.setItem('lang-redirected', '1');
+
+  var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+  var path = window.location.pathname;
+
+  
+  var onEn = path === '/en' || path.startsWith('/en/');
+  var onJa = path === '/ja' || path.startsWith('/ja/');
+  
+  var onZh = !onEn && !onJa;
+
+  
+  var preferred;
+  if (/^ja/.test(lang)) {
+    preferred = 'ja';
+  } else if (/^zh/.test(lang)) {
+    preferred = 'zh';
+  } else {
+    preferred = 'en';
+  }
+
+  var alreadyCorrect =
+    (preferred === 'zh' && onZh) ||
+    (preferred === 'en' && onEn) ||
+    (preferred === 'ja' && onJa);
+
+  if (alreadyCorrect) return;
+
+  
+  var stripped = path.replace(/^\/(en|ja)/, '') || '/';
+
+  var target;
+  if (preferred === 'zh') {
+    target = stripped;
+  } else {
+    target = '/' + preferred + stripped;
+  }
+
+  window.location.replace(target);
+})();
+</script>
+
+  
+</head>
+<body
+    class="m-auto flex h-screen max-w-7xl flex-col bg-neutral px-6 text-lg leading-7 text-neutral-900 dark:bg-neutral-800 dark:text-neutral sm:px-14 md:px-24 lg:px-32"
+  >
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="-translate-y-8 rounded-b-lg bg-primary-200 px-3 py-1 text-sm focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content"
+        ><span class="pe-2 font-bold text-primary-600 dark:text-primary-400">&darr;</span
+        >Skip to main content</a
+      >
+    </div>
+    
+    
+      <header class="py-6 font-semibold text-neutral-900 dark:text-neutral sm:py-10 print:hidden">
+  <nav class="flex items-center justify-between">
+    <div class="z-40 flex flex-row items-center">
+      
+    </div>
+    
+      <div class="site-header-mobile-actions">
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+              
+              <button
+                id="appearance-switcher-1"
+                type="button"
+                aria-label="appearance switcher"
+                class="site-header-icon-button group"
+              >
+                <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                  </svg>
+                </span>
+                <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                  </svg>
+                </span>
+              </button>
+            
+          
+            
+              
+              
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/software/google-oauth-login/"
+          aria-current="true"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-primary-600 dark:text-primary-400"
+        >EN</a><a
+          href="/ja/software/google-oauth-login/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >日</a></div>
+  
+
+
+            
+          
+        
+      </div>
+      
+      <label id="menu-button" for="menu-controller" class="site-header-menu-button block">
+        <input type="checkbox" id="menu-controller" class="hidden" />
+        <div class="site-header-menu-trigger cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+          <span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+</span>
+        </div>
+        <div
+          id="menu-wrapper"
+          class="invisible fixed inset-0 z-30 m-auto h-full w-full cursor-default overflow-auto bg-neutral-100/50 opacity-0 backdrop-blur-sm transition-opacity dark:bg-neutral-900/50"
+        >
+          <ul
+            class="site-header-mobile-menu mx-auto flex w-full max-w-7xl list-none flex-col items-end overflow-visible px-6 py-6 text-end sm:px-14 sm:py-10 md:px-24 lg:px-32"
+          >
+            <li class="site-header-menu-close flex w-full items-end justify-end">
+              <span class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400"
+                ><span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span></span
+              >
+            </li>
+            
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/life/"
+                    title="Life"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >Life</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/software/"
+                    title="Software"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >Software</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/novel/"
+                    title="Novel"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >Novel</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/thoughts/"
+                    title="Thoughts"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >Thoughts</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/about/"
+                    title="About"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >About</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/now/"
+                    title="Now"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >Now</span
+                    ></a
+                  >
+                </li>
+              
+                
+                  
+                
+                  
+            
+          </ul>
+        </div>
+      </label>
+      
+      <ul class="site-header-desktop-nav hidden list-none flex-row items-center gap-6">
+        
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/life/"
+                  title="Life"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >Life</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/software/"
+                  title="Software"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >Software</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/novel/"
+                  title="Novel"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >Novel</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/thoughts/"
+                  title="Thoughts"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >Thoughts</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/about/"
+                  title="About"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >About</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/now/"
+                  title="Now"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >Now</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                <button
+                  id="appearance-switcher-2"
+                  type="button"
+                  aria-label="appearance switcher"
+                  class="flex items-center"
+                >
+                  <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                    </svg>
+                  </span>
+                  <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="4" />
+                      <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                    </svg>
+                  </span>
+                </button>
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/software/google-oauth-login/"
+          aria-current="true"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-primary-600 dark:text-primary-400"
+        >EN</a><a
+          href="/ja/software/google-oauth-login/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >日</a></div>
+  
+
+
+              
+            </li>
+          
+        
+      </ul>
+    
+  </nav>
+</header>
+
+    
+    <div class="relative flex grow flex-col">
+      <main id="main-content" class="grow">
+        
+  <article>
+    <header class="max-w-prose">
+      
+      <h1 class="mb-8 mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        Implementing Google OAuth Login (Vue / Express)
+      </h1>
+      
+        <div class="mb-10 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+          
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+    
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2022-10-23 00:00:00 &#43;0000 UTC">23 October 2022</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">7 mins</span>
+    
+
+    
+    
+  </div>
+
+  
+  
+
+
+        </div>
+      
+      
+        
+          <div class="prose">
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+  
+    <picture
+      class="mb-6 rounded-md"
+      
+    >
+      
+      
+      
+      
+        <source
+          
+            srcset="http://localhost:1313/en/software/google-oauth-login/cover-en_hu_c7e1dc8ea73f08d8.webp 330w,http://localhost:1313/en/software/google-oauth-login/cover-en_hu_44528e608dbb6034.webp 660w
+            
+              ,http://localhost:1313/en/software/google-oauth-login/cover-en_hu_101e8170c8f58c37.webp 1024w
+            
+            
+              
+                ,http://localhost:1313/en/software/google-oauth-login/cover-en_hu_a5807d9430ded911.webp 1200w
+              
+            "
+          
+          sizes="100vw"
+          type="image/webp"
+        />
+      
+      <img
+        width="1200"
+        height="630"
+        class="mb-6 rounded-md"
+        
+        
+        
+          src="http://localhost:1313/en/software/google-oauth-login/cover-en_hu_7902d7402b937077.png" srcset="http://localhost:1313/en/software/google-oauth-login/cover-en_hu_340bd2a983355c6b.png 330w,http://localhost:1313/en/software/google-oauth-login/cover-en_hu_7902d7402b937077.png 660w
+          
+            ,http://localhost:1313/en/software/google-oauth-login/cover-en_hu_545e520e3862eccd.png 1024w
+          
+          
+            ,http://localhost:1313/en/software/google-oauth-login/cover-en.png 1200w
+          "
+          sizes="100vw"
+        
+      />
+    </picture>
+  
+
+
+            
+          </div>
+        
+      
+    </header>
+    
+      <section class="prose mt-0 flex max-w-full flex-col dark:prose-invert lg:flex-row">
+        
+          <div class="order-first px-0 lg:order-last lg:max-w-xs lg:ps-8">
+            <div class="toc pe-5 lg:sticky lg:top-10 print:hidden">
+              <details open class="-ms-5 mt-0 overflow-hidden rounded-lg ps-5">
+  <summary
+    class="block cursor-pointer bg-neutral-100 py-1 ps-5 text-lg font-semibold text-neutral-800 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden"
+  >
+    Table of Contents
+  </summary>
+  <div class="border-s border-dotted border-neutral-300 py-2 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#preface">Preface</a></li>
+    <li><a href="#overview">Overview</a>
+      <ul>
+        <li><a href="#1-google-cloud-settings">1. Google Cloud Settings</a></li>
+        <li><a href="#2-frontend-initialize--display-google-button--on-tap-login">2. Frontend: Initialize &amp; Display Google Button / On Tap Login</a></li>
+        <li><a href="#3-frontend-get-token-and-login-after-user-agrees">3. Frontend: Get Token and Login after User Agrees</a></li>
+        <li><a href="#4-backend-receive-verify-return-user-data--and-authorization-token-">4. Backend: Receive, Verify, Return User Data ( and Authorization Token )</a></li>
+      </ul>
+    </li>
+    <li><a href="#demo">Demo</a>
+      <ul>
+        <li><a href="#frontend-vue-sign-in-with-google">Frontend: Vue Sign In With Google</a></li>
+        <li><a href="#backend-express-sign-in-with-google">Backend: Express Sign In With Google</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+            </div>
+          </div>
+        
+        <div class="min-h-0 min-w-0 max-w-prose grow">
+          <blockquote>
+<p><strong>Note:</strong> This post is translated by AI. If you find any unnatural phrasing or errors, please feel free to contact me via email or other channels. Your feedback is appreciated!</p>
+</blockquote>
+<h2 id="preface" class="relative group">Preface <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#preface" aria-label="Anchor">#</a></span></h2><p>Recently, the company needed to integrate third-party login. As it was my first time doing it, I stepped into quite a few pitfalls. I also found that Google has updated again, and many articles I found were no longer usable, so I decided to share and record the integration process.</p>
+<p>Basically, if you are integrating using the <a href="https://github.com/google/google-api-javascript-client" target="_blank" rel="noreferrer">Google Sign-in JavaScript library</a>, Google has deprecated it (<a href="https://developers.google.com/identity/sign-in/web/reference" target="_blank" rel="noreferrer">deprecated</a>) and will completely discontinue it on 2023/03/31, meaning it will no longer be available for download or use. So those who implemented it following <a href="https://developers.google.com/identity/sign-in/web/reference" target="_blank" rel="noreferrer">this process</a> before should hurry up and refactor!</p>
+<blockquote>
+<p>This article will use Vue3 and Express to take everyone step by step to implement a simple Google third-party login!</p>
+</blockquote>
+<p>(In addition to using the new Sign In With Google button, there will also be the new Google One Tap feature)</p>
+<p>Because I only use Google&rsquo;s native Library and not one wrapped by others, if you are using React, you can also use it with slightly modified syntax!</p>
+<p>Now Google Login is getting easier to integrate. It is recommended not to use libraries wrapped by others to reduce coupling, because my company recently had to re-implement it because the library used before was no longer maintained.</p>
+<h2 id="overview" class="relative group">Overview <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#overview" aria-label="Anchor">#</a></span></h2><p>The integration process will be divided into four steps:</p>
+<ol>
+<li>Set up OAuth Consent Screen and Credentials in Google Cloud.</li>
+<li>Frontend: Initialize &amp; Display Google Button.</li>
+<li>Frontend: After the user clicks agree, POST Google Credential to the backend, and get the returned Authorization Token to successfully login and retrieve User Data!</li>
+<li>Backend: After receiving Google Credential in the POST Route, confirm with Google Auth Library, get Google User Data, save these User Data to DB or return corresponding Authorization Token and User Data to the frontend.</li>
+</ol>
+<p>I believe there will still be some doubts after reading these steps. Let&rsquo;s implement it step by step below!</p>
+<h3 id="1-google-cloud-settings" class="relative group">1. Google Cloud Settings <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#1-google-cloud-settings" aria-label="Anchor">#</a></span></h3><ol>
+<li>Select or create a project you want to use Google Login for in <a href="https://console.cloud.google.com/apis" target="_blank" rel="noreferrer">Google Cloud</a> (img)</li>
+</ol>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*U7RXhmA7apJa7uAgr5kRwg.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol start="2">
+<li>Then go to the OAuth Consent Screen place.</li>
+</ol>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*ylYSIsJBIm_c4oE-3YmhYA.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol start="3">
+<li>Register an App and just fill in the fields according to the steps!</li>
+</ol>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*VRMef2aHjtekX6yw9ekMkA.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>Scopes are which data of the authorized user you allow the App to access. Basic ones are like <code>auth/userInfo.email</code> and <code>auth/userInfo.profile</code> in the image (img)</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*hkZLtL311mJOvGjF2hdQcQ.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>Test Users are the accounts you allow to log in during testing.</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*ehTtRiKqgW25y44nfJoc0w.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol start="4">
+<li>After creating the APP for OAuth Consent Screen, set up Credentials.</li>
+</ol>
+<p>Click Credentials on the left, then click CREATE CREDENTIALS above.</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*ew9PwDoWfFg1LoH277GXBA.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol start="5">
+<li>Set Authorized JavaScript origins and Authorized redirect URIs.</li>
+</ol>
+<p>Authorized JavaScript origins: Refer to the frontend domain.
+Authorized redirect URIs: Refer to which URI the backend will receive the POST Request with Google Credential after the user clicks agree.</p>
+<p>For the Demo later, the frontend will be at <code>http://localhost:5173</code>, and the backend will use <code>http://localhost:3000/verify-token</code> to receive the POST Request. Note that for the domain here, you need to add <code>http://localhost</code> specifically during local testing, and Google does not allow IP as source, so something like <code>127.0.0.1</code> won&rsquo;t work.</p>
+<p>(And after officially going live, remember to change to the official domain and URI)</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*vO99i3FUkkfSp97qysHojw.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol start="6">
+<li>After creation, you can see your Client ID on the list, which will be used later!</li>
+</ol>
+<p>(Client means we are the Client to Google, and Google is the Server from whom we get credentials and user data)</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*sCw3rHXoSxJ7oq0uvarN8Q.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<blockquote>
+<p>Congratulations, we have successfully completed the Google Cloud settings.</p>
+</blockquote>
+<p>After obtaining the Client ID and authorizing our frontend Origin and backend URI, let&rsquo;s implement the frontend and backend respectively!</p>
+<h3 id="2-frontend-initialize--display-google-button--on-tap-login" class="relative group">2. Frontend: Initialize &amp; Display Google Button / On Tap Login <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-frontend-initialize--display-google-button--on-tap-login" aria-label="Anchor">#</a></span></h3><p>Basically follow this process: <a href="https://developers.google.com/identity/gsi/web/guides/display-button" target="_blank" rel="noreferrer">Display the Sign in with Google Button</a>, but I&rsquo;ll walk through it below for everyone!</p>
+<p>Load google library script in entry index.html</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>// index.html
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">”https://accounts.google.com/gsi/client&#34;</span> <span style="color:#a6e22e">async</span> <span style="color:#a6e22e">defer</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">body</span>&gt;
+</span></span></code></pre></div><p>At this time, window will be registered with a google object, and subsequent operations will use this object!</p>
+<p>Let&rsquo;s directly log window.google in the browser to see what&rsquo;s inside.</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*e-PjDrm2kjrRNGsgAmY6kw.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol>
+<li>
+<p>Initialize settings by calling <code>window.google.accounts.id.initialize</code> directly.</p>
+<ul>
+<li>Client ID: Just copy from Credentials.</li>
+<li>callback: The Callback Function triggered when the user clicks agree on the Google login Popup.</li>
+<li>Cancel On Tap Outside: Whether clicking outside the Tap area can close the Tap Login Model.</li>
+<li>Context: <code>signin | signout | login</code></li>
+</ul>
+</li>
+<li>
+<p>Render Button uses <code>window.google.accounts.id.renderButton</code>.</p>
+</li>
+<li>
+<p>Display On Tap Login relies on calling <code>window.google.accounts.id.prompt()</code>.</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">onMounted</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>  window.<span style="color:#a6e22e">onload</span> <span style="color:#f92672">=</span> () =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">CLIENT_ID</span>) {
+</span></span><span style="display:flex;"><span>      window.<span style="color:#a6e22e">google</span>.<span style="color:#a6e22e">accounts</span>.<span style="color:#a6e22e">id</span>.<span style="color:#a6e22e">initialize</span>({
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">client_id</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CLIENT_ID</span>, <span style="color:#75715e">// required
+</span></span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">callback</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">onLogin</span>, <span style="color:#75715e">// invoke while user login in the popup
+</span></span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">cancel_on_tap_outside</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>, <span style="color:#75715e">// optional
+</span></span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">context</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;signin&#39;</span>, <span style="color:#75715e">// optional
+</span></span></span><span style="display:flex;"><span>      });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      window.<span style="color:#a6e22e">google</span>.<span style="color:#a6e22e">accounts</span>.<span style="color:#a6e22e">id</span>.<span style="color:#a6e22e">renderButton</span>(
+</span></span><span style="display:flex;"><span>        document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;googleButton&#39;</span>),
+</span></span><span style="display:flex;"><span>        { <span style="color:#a6e22e">theme</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;outline&#39;</span>, <span style="color:#a6e22e">size</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;large&#39;</span> } <span style="color:#75715e">// customization attributes
+</span></span></span><span style="display:flex;"><span>      );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      window.<span style="color:#a6e22e">google</span>.<span style="color:#a6e22e">accounts</span>.<span style="color:#a6e22e">id</span>.<span style="color:#a6e22e">prompt</span>(); <span style="color:#75715e">// show one-tap popup
+</span></span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#34;client_id doesn&#39;t exist!&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><h3 id="3-frontend-get-token-and-login-after-user-agrees" class="relative group">3. Frontend: Get Token and Login after User Agrees <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#3-frontend-get-token-and-login-after-user-agrees" aria-label="Anchor">#</a></span></h3><p>This step is implementing the callback passed in during <code>initialize</code> above.</p>
+<p>And this is also the function executed after the user logs in on the Google login screen.</p>
+<p>So we will implement our own login logic here, like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">onLogin</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">res</span>) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">axiosOptions</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">headers</span><span style="color:#f92672">:</span> { <span style="color:#e6db74">&#39;Access-Control-Allow-Origin&#39;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CLIENT_URL</span> },
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">axios</span>
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">API_URL</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/verify-token`</span>, <span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">axiosOptions</span>)
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">res</span>) =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;res&#39;</span>, <span style="color:#a6e22e">res</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">userData</span>.<span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">data</span>;
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>    .<span style="color:#66d9ef">catch</span>((<span style="color:#a6e22e">error</span>) =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;error&#39;</span>, <span style="color:#a6e22e">error</span>);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>The callback will receive a response from Google (<code>res</code> of onLogin), and the response will contain this data. We will take the <code>credential</code> from it to send to the backend for verification.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;clientId&#34;</span>: <span style="color:#e6db74">&#34;123456789.apps.googleusercontent.com&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;credential&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;select_by&#34;</span>: <span style="color:#e6db74">&#34;btn&#34;</span> <span style="color:#75715e">// or &#39;user&#39;
+</span></span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>Frontend processing ends here!</p>
+</blockquote>
+<p>Brief review: We introduced <code>gsi client</code>, established <code>google</code> object under window, then used <code>initialize</code> and <code>renderButton</code> provided by google object to initialize and render Google Button. Our own login logic <code>onLogin</code> function is passed into <code>callback</code> during <code>initialize</code> for execution after user login.</p>
+<h3 id="4-backend-receive-verify-return-user-data--and-authorization-token-" class="relative group">4. Backend: Receive, Verify, Return User Data ( and Authorization Token ) <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#4-backend-receive-verify-return-user-data--and-authorization-token-" aria-label="Anchor">#</a></span></h3><p>We saw above that onLogin POSTs to <code>/verify-token</code>. Next, we will verify and get Google User Data in this Route.</p>
+<p>Basically just follow <a href="https://developers.google.com/identity/gsi/web/guides/verify-google-id-token" target="_blank" rel="noreferrer">Google&rsquo;s Example</a>, and remember to handle CORS!</p>
+<p>From here, the third-party integration is complete!</p>
+<blockquote>
+<p>Next, the backend just needs to let the frontend know that login is successful.</p>
+</blockquote>
+<p>And here we simply return User Data to the frontend.</p>
+<p>In company projects, we adopt the same approach as general registration or login to save data to DB or obtain Authorization Token and User Data for the frontend.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">cors</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;cors&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#a6e22e">cors</span>());
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">CLIENT_ID</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;YOUR CLIENT ID&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/** Handle the POST request from onLogin callback in frontend */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/verify-token&#39;</span>, (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// use google-auth-library to verify token
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">OAuth2Client</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;google-auth-library&#39;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">client</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">OAuth2Client</span>(<span style="color:#a6e22e">CLIENT_ID</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">verify</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// get credential from google
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">token</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">credential</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;token from credential&#39;</span>, <span style="color:#a6e22e">token</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">ticket</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">verifyIdToken</span>({
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">idToken</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">token</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">audience</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CLIENT_ID</span>,
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">payload</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">ticket</span>.<span style="color:#a6e22e">getPayload</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// You can store user data in DB and return Authorization Token here.
+</span></span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">json</span>({
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">email</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">email</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">email_verified</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">email_verified</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">picture</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">picture</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">name</span>,
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">verify</span>().<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>);
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><h2 id="demo" class="relative group">Demo <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#demo" aria-label="Anchor">#</a></span></h2><p>After running the Repo provided below, it will look like this:</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*ZWMMJvk3tpZrNFnvYojxuQ.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>Initial login screen</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*jOQkAVvJ1VldfqVoYKBlSQ.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>After user login</p>
+<h3 id="frontend-vue-sign-in-with-google" class="relative group">Frontend: <a href="https://github.com/Parkerhiphop/Vue-Sign-In-With-Google" target="_blank" rel="noreferrer">Vue Sign In With Google</a> <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#frontend-vue-sign-in-with-google" aria-label="Anchor">#</a></span></h3><ul>
+<li>After cloning, <code>npm install</code> + <code>npm run dev</code> will run at port:5173, which is exactly the Authorized JavaScript origins we set in Google Cloud — Credentials.</li>
+<li>When developing yourself, remember to change to your own Port, and change to the official domain after going live!</li>
+</ul>
+<h3 id="backend-express-sign-in-with-google" class="relative group">Backend: <a href="https://github.com/Parkerhiphop/Express-Sign-In-With-Google" target="_blank" rel="noreferrer">Express Sign In With Google</a> <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#backend-express-sign-in-with-google" aria-label="Anchor">#</a></span></h3><ul>
+<li>After cloning, <code>npm install</code> + <code>npm run start</code> will run at port:3000, which is exactly the Authorized redirect URIs we set in Google Cloud — Credentials.</li>
+</ul>
+<h3 id="conclusion" class="relative group">Conclusion <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#conclusion" aria-label="Anchor">#</a></span></h3><p>I read a bunch of documents for third-party integration and did it confusedly. Just a few days after finishing writing, I still forgot some details when writing the article, but organizing it into an article makes it much clearer!</p>
+<p>Hope this article is helpful to everyone who needs to integrate Google Login!</p>
+<p>I&rsquo;m going to continue integrating Facebook Login. I have to say, compared to Facebook and Twitter integration, implementing Google is much, much friendlier.</p>
+
+        </div>
+      </section>
+      <footer class="max-w-prose pt-8 print:hidden">
+        
+  <div class="flex">
+    
+    
+    
+    <div class="place-self-center">
+      
+        <div class="text-[0.6rem] uppercase leading-3 text-neutral-500 dark:text-neutral-400">
+          Author
+        </div>
+        <div class="font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
+          Parker
+        </div>
+      
+      
+      <div class="text-2xl sm:text-lg">
+</div>
+    </div>
+  </div>
+
+
+        
+
+        
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="group flex" href="http://localhost:1313/en/software/talk-about-web-font/">
+              <span
+                class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+                ><span class="ltr:inline rtl:hidden">&larr;</span
+                ><span class="ltr:hidden rtl:inline">&rarr;</span></span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Talk about Web Fonts — Design, File Formats and Frontend Loading</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2021-10-28 00:00:00 &#43;0000 UTC">28 October 2021</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+            <a class="group flex text-right" href="http://localhost:1313/en/software/from-callback-to-async/">
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >From Callback to Async/Await: Sequential Fade-In Animation</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2023-08-21 00:00:00 &#43;0000 UTC">21 August 2023</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ms-2 text-neutral-700 transition-transform group-hover:-translate-x-[-2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+                ><span class="ltr:inline rtl:hidden">&rarr;</span
+                ><span class="ltr:hidden rtl:inline">&larr;</span></span
+              >
+            </a>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+        
+          
+            <div class="pt-3">
+              <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+              <div class="pt-3">
+                <div id="cusdis_thread"
+  data-host="https://cusdis.com"
+  data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
+  data-page-id="b2d80a80c35b97c58e6648f571034365"
+  data-page-url="http://localhost:1313/en/software/google-oauth-login/"
+  data-page-title="Implementing Google OAuth Login (Vue / Express)"
+></div>
+<script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+<script>
+  (function () {
+    function getCusdisTheme() {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    function applyTheme() {
+      if (window.CUSDIS) window.CUSDIS.setTheme(getCusdisTheme());
+    }
+    document.addEventListener('DOMContentLoaded', applyTheme);
+    new MutationObserver(applyTheme).observe(
+      document.documentElement,
+      { attributeFilter: ['class'] }
+    );
+  })();
+</script>
+
+              </div>
+            </div>
+          
+        
+      </footer>
+    
+  </article>
+
+      </main>
+      
+        <div
+          class="pointer-events-none absolute bottom-0 end-0 top-[100vh] w-12"
+          id="to-top"
+          hidden="true"
+        >
+          <a
+            href="#the-top"
+            class="pointer-events-auto sticky top-[calc(100vh-5.5rem)] flex h-12 w-12 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 backdrop-blur hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+            aria-label="Scroll to top"
+            title="Scroll to top"
+          >
+            &uarr;
+          </a>
+        </div>
+      <footer class="py-10 print:hidden">
+  
+  
+  <div class="flex items-center justify-between">
+    <div>
+      
+      
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+            &copy;
+            2026
+            Parker
+        </p>
+      
+      
+      
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          
+          
+          Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> &amp; <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://github.com/jpanther/congo" target="_blank" rel="noopener noreferrer">Congo</a>
+        </p>
+      
+    </div>
+    <div class="flex flex-row items-center">
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  
+</footer>
+
+    </div>
+  </body>
+</html>

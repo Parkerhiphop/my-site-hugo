@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Framework on Parker Chang&#39;s Web</title>
+    <link>http://localhost:1313/ja/tags/framework/</link>
+    <description>Recent content in Framework on Parker Chang&#39;s Web</description>
+    <generator>Hugo</generator>
+    <language>ja</language>
+    <lastBuildDate>Sun, 11 Jul 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/ja/tags/framework/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>フロントエンドフレームワーク第0課：フレームワークを学ぶ前に知っておくべきこと</title>
+      <link>http://localhost:1313/ja/software/frontend-framework-101/</link>
+      <pubDate>Sun, 11 Jul 2021 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/ja/software/frontend-framework-101/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;注:&lt;/strong&gt; この記事は AI によって翻訳されています。もし不自然な表現や誤りがありましたら、メールやその他の手段でお知らせいただけると幸いです。フィードバックをいただけると助かります！&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;フロントエンドフレームワークの選択は、多くの初心者（私を含む）にとって常に大きな疑問でした。私は当初、会社が React を使用していたため、React を書くしかありませんでした。最近、縁あって Angular に触れる機会があり、それがきっかけで「フロントエンドフレームワーク」について、「フレームワーク」とは一体何を指すのか？何が「フレームワーク」と呼ばれるのか？なぜフロントエンドでそれを使用する必要があるのか？使用しないとどうなるのか？Vue3 がすごいと聞いたが、学ぶべきか？などの問題について、より深く考えるようになりました。&lt;/p&gt;&#xA;&lt;p&gt;そしてこの記事は、上記の問題のいくつかを解決するための私の思考であり、フレームワークを学び始める前に知っておくべき基本的な概念だとも考えています。&lt;/p&gt;&#xA;&lt;h2 id=&#34;web-の歴史について簡単に&#34; class=&#34;relative group&#34;&gt;Web の歴史について簡単に &lt;span class=&#34;absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100&#34;&gt;&lt;a class=&#34;group-hover:text-primary-300 dark:group-hover:text-neutral-700&#34; style=&#34;text-decoration-line: none !important;&#34; href=&#34;#web-%e3%81%ae%e6%ad%b4%e5%8f%b2%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%e7%b0%a1%e5%8d%98%e3%81%ab&#34; aria-label=&#34;アンカー&#34;&gt;#&lt;/a&gt;&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;技術の発展は日進月歩ですが、技術の本質は「問題解決」にあります。&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;技術の文脈を理解することで、目の前の技術を理解し、将来の発展を想像するのに大いに役立つと信じています。&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;&lt;strong&gt;1990 年代：Web の誕生&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;1990 年 12 月 20 日、ティム・バーナーズ＝リーは&lt;a href=&#34;http://info.cern.ch/hypertext/WWW/TheProject.html&#34; target=&#34;_blank&#34; rel=&#34;noreferrer&#34;&gt;最初のウェブサイト&lt;/a&gt;を書き、World Wide Web を設計しました。&lt;/li&gt;&#xA;&lt;li&gt;この時期は静的なウェブページが主で、せいぜい動的なメニューや画像効果がある程度でした。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;2000 年代：Web 2.0 ＋ Ajax&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;2004 年の Web 2.0 の誕生により、ウェブページの対話性が向上し始めました。Facebook (2004) や Youtube (2005) はこの時期に登場しました。&lt;/li&gt;&#xA;&lt;li&gt;Ajax の非同期リクエストの応用により、ウェブページはブラウザではなく JS を介してリクエストを送信できるようになったため、データを更新するためにリロードする必要がなくなりました。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;2010 年代：Web アプリケーション（Web Application）概念の出現&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;この時期から、Web の複雑さと対話性は大幅に向上し、当初はデスクトップアプリケーション（Desktop Application）でしかできなかったことができるようになってきました。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;このような高い対話性を持つウェブサイトが必要とする基本的な処理に対応するために、フロントエンドフレームワークが誕生しました。&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Angular 1.0 (2010)&lt;/li&gt;&#xA;&lt;li&gt;React (2013)&lt;/li&gt;&#xA;&lt;li&gt;Vue (2014)&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;（より詳細な進化の歴史に興味がある場合は、下部に参考リンクを添付します）&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

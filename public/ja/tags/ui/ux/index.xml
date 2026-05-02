@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>UI/UX on Parker Chang&#39;s Web</title>
+    <link>http://localhost:1313/ja/tags/ui/ux/</link>
+    <description>Recent content in UI/UX on Parker Chang&#39;s Web</description>
+    <generator>Hugo</generator>
+    <language>ja</language>
+    <lastBuildDate>Wed, 22 Sep 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/ja/tags/ui/ux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Design System — フロントエンドエンジニアも知っておくべきこと</title>
+      <link>http://localhost:1313/ja/software/design-system/</link>
+      <pubDate>Wed, 22 Sep 2021 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/ja/software/design-system/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;注:&lt;/strong&gt; この記事は AI によって翻訳されています。もし不自然な表現や誤りがありましたら、メールやその他の手段でお知らせいただけると幸いです。フィードバックをいただけると助かります！&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;Design System について話す前に、一つの概念に触れておきたいと思います。「事前計画 &amp;gt; 実装」。&lt;/p&gt;&#xA;&lt;p&gt;ソフトウェアエンジニアの本質は実は建築家に非常に近く、彼らが家を建てるのに対し、私たちはシステムを構築します。&lt;/p&gt;&#xA;&lt;p&gt;良い家には優れた建築設計が必要であり、設計図の計画、建物全体の構造の理解、事前の計画設計に多くの時間を費やします。&lt;/p&gt;&#xA;&lt;p&gt;この概念はウェブページにおける &lt;strong&gt;Design System&lt;/strong&gt; に相当します！&lt;/p&gt;&#xA;&lt;h2 id=&#34;design-system-の前身--atomic-design&#34; class=&#34;relative group&#34;&gt;Design System の前身 — Atomic Design &lt;span class=&#34;absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100&#34;&gt;&lt;a class=&#34;group-hover:text-primary-300 dark:group-hover:text-neutral-700&#34; style=&#34;text-decoration-line: none !important;&#34; href=&#34;#design-system-%e3%81%ae%e5%89%8d%e8%ba%ab--atomic-design&#34; aria-label=&#34;アンカー&#34;&gt;#&lt;/a&gt;&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;Design System について話す前に、&lt;strong&gt;Atomic Design&lt;/strong&gt; という概念について話す必要があります。&lt;/p&gt;&#xA;&lt;p&gt;結局のところ、ウェブページアーキテクチャ設計全体の先駆者は、2013 年に Atomic Design を提唱し、最初の口火を切った Brad Frost だと言えるでしょう。&lt;/p&gt;&#xA;&lt;p&gt;その後、Google が 2014 年に Material Design を作成し、2016 年に Airbnb がより完全な Design System を提唱しました。詳細は &lt;a href=&#34;https://www.youtube.com/watch?v=TuLY1cYM57g&#34; target=&#34;_blank&#34; rel=&#34;noreferrer&#34;&gt;Karri Saarinen, Principle Designer at Airbnb&lt;/a&gt; の講演を参照してください。&lt;/p&gt;&#xA;&lt;h3 id=&#34;ではatomic-design-とは何でしょうか&#34; class=&#34;relative group&#34;&gt;では、Atomic Design とは何でしょうか？ &lt;span class=&#34;absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100&#34;&gt;&lt;a class=&#34;group-hover:text-primary-300 dark:group-hover:text-neutral-700&#34; style=&#34;text-decoration-line: none !important;&#34; href=&#34;#%e3%81%a7%e3%81%afatomic-design-%e3%81%a8%e3%81%af%e4%bd%95%e3%81%a7%e3%81%97%e3%82%87%e3%81%86%e3%81%8b&#34; aria-label=&#34;アンカー&#34;&gt;#&lt;/a&gt;&lt;/span&gt;&lt;/h3&gt;&lt;p&gt;まずこの画像を見てみましょう：&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

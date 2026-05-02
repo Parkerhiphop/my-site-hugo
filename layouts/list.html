@@ -1,0 +1,45 @@
+{{ define "main" }}
+  {{ if .Params.wip }}
+    <header>
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
+    </header>
+    {{ partial "wip.html" . }}
+  {{ else }}
+    <header>
+      {{ if .Params.showBreadcrumbs | default (.Site.Params.list.showBreadcrumbs | default false) }}
+        {{ partial "breadcrumbs.html" . }}
+      {{ end }}
+      <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
+    </header>
+    {{ with .Content }}
+      <div class="prose mt-4 dark:prose-invert">{{ . | emojify }}</div>
+    {{ end }}
+    {{ if .Data.Pages }}
+      <section class="mt-8">
+        {{ range (.Paginate .Pages).Pages }}
+          <div class="group grid grid-cols-[7rem_1fr] items-baseline gap-x-4 border-b border-neutral-100 py-3 dark:border-neutral-800 last:border-0 sm:grid-cols-[8rem_1fr]">
+            <time class="shrink-0 text-sm tabular-nums text-neutral-400 dark:text-neutral-500">
+              {{ .Date.Format "2006-01-02" }}
+            </time>
+            <div class="min-w-0">
+              <a href="{{ .Permalink }}"
+                 class="font-medium text-neutral-800 decoration-primary-500 hover:underline hover:underline-offset-2 dark:text-neutral">
+                {{ .Title | emojify }}
+              </a>
+              {{ with .Description }}
+                <p class="mt-0.5 text-sm text-neutral-500 dark:text-neutral-400">{{ . }}</p>
+              {{ end }}
+            </div>
+          </div>
+        {{ end }}
+      </section>
+      {{ partial "pagination.html" . }}
+    {{ else }}
+      <section class="prose mt-10 dark:prose-invert">
+        <p class="border-t py-8">
+          <em>{{ i18n "list.no_articles" | emojify }}</em>
+        </p>
+      </section>
+    {{ end }}
+  {{ end }}
+{{ end }}

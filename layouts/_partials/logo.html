@@ -1,0 +1,13 @@
+{{- with .Site.Params.header.logo -}}
+  {{- with resources.Get . -}}
+    <a href="{{ "" | relLangURL }}" class="mr-2">
+      <img
+        src="{{ .RelPermalink }}"
+        width="40"
+        height="40"
+        class="flex max-h-[10rem] max-w-[10rem] object-scale-down object-left"
+        alt="{{ site.Title }}"
+      />
+    </a>
+  {{- end -}}
+{{- end -}}

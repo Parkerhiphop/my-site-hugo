@@ -1,0 +1,1216 @@
+
+
+
+
+
+
+<!doctype html>
+<html
+  lang="zh-TW"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="light"
+  data-auto-appearance="true"
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FFFFFF" />
+  
+  <title>實作 Google 第三方登入（Vue / Express） &middot; Parker Chang&#39;s Web</title>
+    <meta name="title" content="實作 Google 第三方登入（Vue / Express） &middot; Parker Chang&#39;s Web" />
+  
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/appearance.min.8a082f81b27f3cb2ee528df0b0bdc39787034cf2cc34d4669fbc9977c929023c.js"
+    integrity="sha256-iggvgbJ/PLLuUo3wsL3Dl4cDTPLMNNRmn7yZd8kpAjw="
+  ></script>
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.3d626d356703626569364790e95b69715968a53a1054f31d92786caaf3605200.css"
+    integrity="sha256-PWJtNWcDYmVpNkeQ6VtpcVlopToQVPMdknhsqvNgUgA="
+  />
+  
+  
+  
+  
+  
+  
+  
+  <meta
+    name="description"
+    content="
+      使用 Vue 和 Express 做 Google 登入串接的小範例
+    "
+  />
+  
+  
+  
+  
+    <link rel="canonical" href="http://localhost:1313/software/google-oauth-login/" />
+  
+  
+  
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:url" content="http://localhost:1313/software/google-oauth-login/">
+  <meta property="og:site_name" content="Parker Chang&#39;s Web">
+  <meta property="og:title" content="實作 Google 第三方登入（Vue / Express）">
+  <meta property="og:description" content="使用 Vue 和 Express 做 Google 登入串接的小範例">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="software">
+    <meta property="article:published_time" content="2022-10-23T00:00:00+00:00">
+    <meta property="article:modified_time" content="2022-10-23T00:00:00+00:00">
+    <meta property="og:image" content="http://localhost:1313/software/google-oauth-login/cover-en.png">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/software/google-oauth-login/cover-en.png">
+  <meta name="twitter:title" content="實作 Google 第三方登入（Vue / Express）">
+  <meta name="twitter:description" content="使用 Vue 和 Express 做 Google 登入串接的小範例">
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "軟體",
+    "name": "實作 Google 第三方登入（Vue \/ Express）",
+    "headline": "實作 Google 第三方登入（Vue \/ Express）",
+    "description": "使用 Vue 和 Express 做 Google 登入串接的小範例",
+    "abstract": "\u003cp\u003e\n\n\n\n\n\n\n  \n  \n\u003cfigure\u003e\u003cimg src=\u0022https:\/\/cdn-images-1.medium.com\/max\/800\/0*Ewxcp0OIGr31jGoo.png\u0022 alt=\u0022\u0022 class=\u0022mx-auto my-0 rounded-md\u0022 \/\u003e\n\u003c\/figure\u003e\n\u003c\/p\u003e\n\u003ch2 id=\u0022前言\u0022 class=\u0022relative group\u0022\u003e前言 \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#%e5%89%8d%e8%a8%80\u0022 aria-label=\u0022定位點\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e最近公司需要串接第三方登入，因為第一次做，踩了不少坑，也發現 Google 又改版了，爬到的許多文都已經不堪用的，於是來分享紀錄一下串接的流程。\u003c\/p\u003e\n\u003cp\u003e基本上，如果你是用 \u003ca href=\u0022https:\/\/github.com\/google\/google-api-javascript-client\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eGoogle Sign-in JavaScript library\u003c\/a\u003e 串接的話，Google 已經棄用（\u003ca href=\u0022https:\/\/developers.google.com\/identity\/sign-in\/web\/reference\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003edeprecated\u003c\/a\u003e）了，並且將在 2023\/03\/31 完全捨棄，也就是不讓人下載跟使用，所以之前按照 \u003ca href=\u0022https:\/\/developers.google.com\/identity\/sign-in\/web\/reference\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003e這個流程\u003c\/a\u003e 實作的要趕快重構啦！\u003c\/p\u003e\n\u003cblockquote\u003e\n\u003cp\u003e這篇文章會用 Vue3 和 Express 來帶大家來手把手實作簡易的 Google  第三方登入！\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003cp\u003e（除了使用新版的 Sign In With Google button ，也會有新的 Google One Tap 功能）\u003c\/p\u003e\n\u003cp\u003e因為我只有使用 Google 原生的 Library，而沒有使用別人包過的，所以如果是 React 的話語法稍微改一下就也可以用囉！\u003c\/p\u003e\n\u003cp\u003e現在 Google 登入越來越好串，建議不要用別人包裝過的 library 來減少耦合度，因為敝司最近就是因為之前用的 library 沒在維護了才重新串了一遍。\u003c\/p\u003e\n\u003ch2 id=\u0022overview\u0022 class=\u0022relative group\u0022\u003eOverview \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#overview\u0022 aria-label=\u0022定位點\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e串接的流程會分成四個步驟：\u003c\/p\u003e",
+    "inLanguage": "zh-TW",
+    "url" : "http:\/\/localhost:1313\/software\/google-oauth-login\/",
+    "author" : {
+      "@type": "Person",
+      "name": "Parker"
+    },
+    "copyrightYear": "2022",
+    "dateCreated": "2022-10-23T00:00:00\u002b00:00",
+    "datePublished": "2022-10-23T00:00:00\u002b00:00",
+    
+    "dateModified": "2022-10-23T00:00:00\u002b00:00",
+    
+    
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "661"
+  }
+  </script>
+    
+    <script type="application/ld+json">
+    {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/",
+       "name": "首頁",
+       "position": 1
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/software/",
+       "name": "軟體",
+       "position": 2
+     },
+     {
+       "@type": "ListItem",
+       "name": "實作 Google 第三方登入（ Vue Express）",
+       "position": 3
+     }
+   ]
+ }
+  </script>
+
+  
+  
+    <meta name="author" content="Parker" />
+  
+  
+  
+  
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script>
+(function () {
+  
+  if (sessionStorage.getItem('lang-redirected')) return;
+  sessionStorage.setItem('lang-redirected', '1');
+
+  var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+  var path = window.location.pathname;
+
+  
+  var onEn = path === '/en' || path.startsWith('/en/');
+  var onJa = path === '/ja' || path.startsWith('/ja/');
+  
+  var onZh = !onEn && !onJa;
+
+  
+  var preferred;
+  if (/^ja/.test(lang)) {
+    preferred = 'ja';
+  } else if (/^zh/.test(lang)) {
+    preferred = 'zh';
+  } else {
+    preferred = 'en';
+  }
+
+  var alreadyCorrect =
+    (preferred === 'zh' && onZh) ||
+    (preferred === 'en' && onEn) ||
+    (preferred === 'ja' && onJa);
+
+  if (alreadyCorrect) return;
+
+  
+  var stripped = path.replace(/^\/(en|ja)/, '') || '/';
+
+  var target;
+  if (preferred === 'zh') {
+    target = stripped;
+  } else {
+    target = '/' + preferred + stripped;
+  }
+
+  window.location.replace(target);
+})();
+</script>
+
+  
+</head>
+<body
+    class="m-auto flex h-screen max-w-7xl flex-col bg-neutral px-6 text-lg leading-7 text-neutral-900 dark:bg-neutral-800 dark:text-neutral sm:px-14 md:px-24 lg:px-32"
+  >
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="-translate-y-8 rounded-b-lg bg-primary-200 px-3 py-1 text-sm focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content"
+        ><span class="pe-2 font-bold text-primary-600 dark:text-primary-400">&darr;</span
+        >快轉到主要內容</a
+      >
+    </div>
+    
+    
+      <header class="py-6 font-semibold text-neutral-900 dark:text-neutral sm:py-10 print:hidden">
+  <nav class="flex items-center justify-between">
+    <div class="z-40 flex flex-row items-center">
+      
+    </div>
+    
+      <div class="site-header-mobile-actions">
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+              
+              <button
+                id="appearance-switcher-1"
+                type="button"
+                aria-label="appearance switcher"
+                class="site-header-icon-button group"
+              >
+                <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                  </svg>
+                </span>
+                <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                  </svg>
+                </span>
+              </button>
+            
+          
+            
+              
+              
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/software/google-oauth-login/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >EN</a><a
+          href="/ja/software/google-oauth-login/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >日</a></div>
+  
+
+
+            
+          
+        
+      </div>
+      
+      <label id="menu-button" for="menu-controller" class="site-header-menu-button block">
+        <input type="checkbox" id="menu-controller" class="hidden" />
+        <div class="site-header-menu-trigger cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+          <span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+</span>
+        </div>
+        <div
+          id="menu-wrapper"
+          class="invisible fixed inset-0 z-30 m-auto h-full w-full cursor-default overflow-auto bg-neutral-100/50 opacity-0 backdrop-blur-sm transition-opacity dark:bg-neutral-900/50"
+        >
+          <ul
+            class="site-header-mobile-menu mx-auto flex w-full max-w-7xl list-none flex-col items-end overflow-visible px-6 py-6 text-end sm:px-14 sm:py-10 md:px-24 lg:px-32"
+          >
+            <li class="site-header-menu-close flex w-full items-end justify-end">
+              <span class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400"
+                ><span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span></span
+              >
+            </li>
+            
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/life/"
+                    title="生活"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >生活</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/software/"
+                    title="軟體"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >軟體</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/novel/"
+                    title="小說"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >小說</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/thoughts/"
+                    title="感想"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >感想</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/about/"
+                    title="關於"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >關於</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/now/"
+                    title="現在"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >近況</span
+                    ></a
+                  >
+                </li>
+              
+                
+                  
+                
+                  
+            
+          </ul>
+        </div>
+      </label>
+      
+      <ul class="site-header-desktop-nav hidden list-none flex-row items-center gap-6">
+        
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/life/"
+                  title="生活"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >生活</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/software/"
+                  title="軟體"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >軟體</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/novel/"
+                  title="小說"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >小說</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/thoughts/"
+                  title="感想"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >感想</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/about/"
+                  title="關於"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >關於</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/now/"
+                  title="現在"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >近況</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                <button
+                  id="appearance-switcher-2"
+                  type="button"
+                  aria-label="appearance switcher"
+                  class="flex items-center"
+                >
+                  <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                    </svg>
+                  </span>
+                  <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="4" />
+                      <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                    </svg>
+                  </span>
+                </button>
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/software/google-oauth-login/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >EN</a><a
+          href="/ja/software/google-oauth-login/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >日</a></div>
+  
+
+
+              
+            </li>
+          
+        
+      </ul>
+    
+  </nav>
+</header>
+
+    
+    <div class="relative flex grow flex-col">
+      <main id="main-content" class="grow">
+        
+  <article>
+    <header class="max-w-prose">
+      
+      <h1 class="mb-8 mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        實作 Google 第三方登入（Vue / Express）
+      </h1>
+      
+        <div class="mb-10 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+          
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+    
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2022-10-23 00:00:00 &#43;0000 UTC">2022年10月23日</time><span class="px-2 text-primary-500">&middot;</span><span title="預計閱讀時間">4 分鐘</span>
+    
+
+    
+    
+  </div>
+
+  
+  
+
+
+        </div>
+      
+      
+        
+          <div class="prose">
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+  
+    <picture
+      class="mb-6 rounded-md"
+      
+    >
+      
+      
+      
+      
+        <source
+          
+            srcset="http://localhost:1313/software/google-oauth-login/cover-zh-TW_hu_9ee0bf9886557d.webp 330w,http://localhost:1313/software/google-oauth-login/cover-zh-TW_hu_c7a4b645e37023a.webp 660w
+            
+              ,http://localhost:1313/software/google-oauth-login/cover-zh-TW_hu_ccef856fc5c16337.webp 1024w
+            
+            
+              
+                ,http://localhost:1313/software/google-oauth-login/cover-zh-TW_hu_d1c2390a4daa5dd5.webp 1200w
+              
+            "
+          
+          sizes="100vw"
+          type="image/webp"
+        />
+      
+      <img
+        width="1200"
+        height="630"
+        class="mb-6 rounded-md"
+        
+        
+        
+          src="http://localhost:1313/software/google-oauth-login/cover-zh-TW_hu_34a68f020efed5c9.png" srcset="http://localhost:1313/software/google-oauth-login/cover-zh-TW_hu_bfeb592a20048fb1.png 330w,http://localhost:1313/software/google-oauth-login/cover-zh-TW_hu_34a68f020efed5c9.png 660w
+          
+            ,http://localhost:1313/software/google-oauth-login/cover-zh-TW_hu_57961e1806163b0e.png 1024w
+          
+          
+            ,http://localhost:1313/software/google-oauth-login/cover-zh-TW.png 1200w
+          "
+          sizes="100vw"
+        
+      />
+    </picture>
+  
+
+
+            
+          </div>
+        
+      
+    </header>
+    
+      <section class="prose mt-0 flex max-w-full flex-col dark:prose-invert lg:flex-row">
+        
+          <div class="order-first px-0 lg:order-last lg:max-w-xs lg:ps-8">
+            <div class="toc pe-5 lg:sticky lg:top-10 print:hidden">
+              <details open class="-ms-5 mt-0 overflow-hidden rounded-lg ps-5">
+  <summary
+    class="block cursor-pointer bg-neutral-100 py-1 ps-5 text-lg font-semibold text-neutral-800 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden"
+  >
+    目錄
+  </summary>
+  <div class="border-s border-dotted border-neutral-300 py-2 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#overview">Overview</a>
+      <ul>
+        <li><a href="#一google-cloud-設定">一、Google Cloud  設定</a></li>
+        <li><a href="#二前端初始化--顯示-google-button--on-taplogin">二、前端：初始化 ＆ 顯示 Google Button / On Tap Login</a></li>
+        <li><a href="#三前端使用者同意後取得-token-並登入">三、前端：使用者同意後取得 Token  並登入</a></li>
+        <li><a href="#四後端接收驗證回傳-user-data--and-authorization-token">四、後端：接收、驗證，回傳 User Data ( and Authorization Token )</a></li>
+      </ul>
+    </li>
+    <li><a href="#demo">Demo</a>
+      <ul>
+        <li><a href="#frontend-vue-sign-in-withgoogle">Frontend: Vue Sign In With Google</a></li>
+        <li><a href="#backend-express-sign-in-withgoogle">Backend: Express Sign In With Google</a></li>
+        <li><a href="#結語">結語</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+            </div>
+          </div>
+        
+        <div class="min-h-0 min-w-0 max-w-prose grow">
+          <p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/0*Ewxcp0OIGr31jGoo.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<h2 id="前言" class="relative group">前言 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e5%89%8d%e8%a8%80" aria-label="定位點">#</a></span></h2><p>最近公司需要串接第三方登入，因為第一次做，踩了不少坑，也發現 Google 又改版了，爬到的許多文都已經不堪用的，於是來分享紀錄一下串接的流程。</p>
+<p>基本上，如果你是用 <a href="https://github.com/google/google-api-javascript-client" target="_blank" rel="noreferrer">Google Sign-in JavaScript library</a> 串接的話，Google 已經棄用（<a href="https://developers.google.com/identity/sign-in/web/reference" target="_blank" rel="noreferrer">deprecated</a>）了，並且將在 2023/03/31 完全捨棄，也就是不讓人下載跟使用，所以之前按照 <a href="https://developers.google.com/identity/sign-in/web/reference" target="_blank" rel="noreferrer">這個流程</a> 實作的要趕快重構啦！</p>
+<blockquote>
+<p>這篇文章會用 Vue3 和 Express 來帶大家來手把手實作簡易的 Google  第三方登入！</p>
+</blockquote>
+<p>（除了使用新版的 Sign In With Google button ，也會有新的 Google One Tap 功能）</p>
+<p>因為我只有使用 Google 原生的 Library，而沒有使用別人包過的，所以如果是 React 的話語法稍微改一下就也可以用囉！</p>
+<p>現在 Google 登入越來越好串，建議不要用別人包裝過的 library 來減少耦合度，因為敝司最近就是因為之前用的 library 沒在維護了才重新串了一遍。</p>
+<h2 id="overview" class="relative group">Overview <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#overview" aria-label="定位點">#</a></span></h2><p>串接的流程會分成四個步驟：</p>
+<ol>
+<li>在 Google Cloud 設定 OAuth Consent Screen 和 Credentials</li>
+<li>前端：初始化 ＆ 顯示 Google Button</li>
+<li>前端：使用者按下同意後，會 POST Google Credential 給後端，並拿著回傳過來的 Authorization Token 後就可以順利登入並取得 User Data 啦！</li>
+<li>後端：在 POST 的 Route 接到 Google Credential 後，用 Google Auth Library 驗證，並得到 Google User Data，把這些 User Data 存到 DB 或回傳對應的 Authorization Token 跟 User Data 給前端。</li>
+</ol>
+<p>相信看完這個步驟，還是會有些疑惑，以下就來手把手實作囉！</p>
+<h3 id="一google-cloud-設定" class="relative group">一、Google Cloud  設定 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e4%b8%80google-cloud-%e8%a8%ad%e5%ae%9a" aria-label="定位點">#</a></span></h3><ol>
+<li>在 <a href="https://console.cloud.google.com/apis" target="_blank" rel="noreferrer">Google Cloud</a> 選擇或新增一個你要使用 Google Login 專案 (img)</li>
+</ol>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*U7RXhmA7apJa7uAgr5kRwg.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol start="2">
+<li>接著進去 OAuth 同意畫面（ OAuth Consent Screen ）的地方</li>
+</ol>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*ylYSIsJBIm_c4oE-3YmhYA.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol start="3">
+<li>註冊一個 App，照著步驟填寫欄位就好！</li>
+</ol>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*VRMef2aHjtekX6yw9ekMkA.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>Scopes 是你允許 App 來存取已授權使用者的哪些資料。 基本的就是像圖上的 <code>auth/userInfo.email</code> 和 <code>auth/userInfo.profile</code> (img)</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*hkZLtL311mJOvGjF2hdQcQ.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>Test User 就是在測試時，你允許登入的帳號們。</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*ehTtRiKqgW25y44nfJoc0w.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol start="4">
+<li>建立完 OAuth Consent Screen 的 APP 之後，就要來設定 憑證（Credential）</li>
+</ol>
+<p>點左側的 憑證 orCredential 之後，再點擊上面的 CREATE CREDENTIALS</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*ew9PwDoWfFg1LoH277GXBA.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol start="5">
+<li>設定 Authorized JavaScript origins 和 Authorized redirect URIs</li>
+</ol>
+<p>Authorized JavaScript origins：是指前端的網域 Authorized redirect URIs：是指使用者按下同意後，會向後端的哪個 URI 發送 POST Request 來接 Google Credential。</p>
+<p>以待會的 Demo 來說，前端會是在 <code>http://localhost:5173</code> ，後端則是用 <code>http://localhost:3000/verify-token</code> 來接收 POST Request 需要注意的是在網域這邊，本地測試時需要特別加上 <code>http://localhost</code> 然後 Google 不允許用 IP 當作來源，像是 <code>127.0.0.1</code> 是不行的。</p>
+<p>（然後正式上線後，記得要改成正式的網域跟 URI 噢）</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*vO99i3FUkkfSp97qysHojw.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol start="6">
+<li>建立完成後就可以在列表上看到你的 Client ID，待會會用到它！</li>
+</ol>
+<p>（Client 的意思是，我們對 Google 來說是 Client，Google 是我們要跟他們拿憑證跟使用者資料的 Server）</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*sCw3rHXoSxJ7oq0uvarN8Q.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<blockquote>
+<p>恭喜，我們成功地完成了 Google Cloud  的設定。</p>
+</blockquote>
+<p>取得了 Client ID 和 授權我們的前端 Origin 跟後端 URI 後，接下來就分別來實作前後端啦！</p>
+<h3 id="二前端初始化--顯示-google-button--on-taplogin" class="relative group">二、前端：初始化 ＆ 顯示 Google Button / On Tap Login <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e4%ba%8c%e5%89%8d%e7%ab%af%e5%88%9d%e5%a7%8b%e5%8c%96--%e9%a1%af%e7%a4%ba-google-button--on-taplogin" aria-label="定位點">#</a></span></h3><p>基本上是照著這流程： <a href="https://developers.google.com/identity/gsi/web/guides/display-button" target="_blank" rel="noreferrer">Display the Sign in with Google Button</a>，但以下也會走一遍給大家看！</p>
+<p>在入口 index.html 載入 google library script</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>// index.html
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">”https://accounts.google.com/gsi/client&#34;</span> <span style="color:#a6e22e">async</span> <span style="color:#a6e22e">defer</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">body</span>&gt;
+</span></span></code></pre></div><p>這時候 window 會被註冊一個 google 的物件，後續的操作都會使用到這個物件！</p>
+<p>讓我們用瀏覽器直接 log window.google 看看底下有哪些東西</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*e-PjDrm2kjrRNGsgAmY6kw.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol>
+<li>
+<p>初始化設定直接調用 <code>window.google.accounts.id.initialize</code></p>
+<ul>
+<li>Client ID：直接從 Credentials 上複製就好</li>
+<li>callback：就是當使用者在 Google 的登入 Popup 按下同意後會觸發的 Callback Function</li>
+<li>Cancel On Tap Outside：點擊 Tap 外的區塊能不能關掉 Tap Login Model</li>
+<li>Context： <code>signin | signout | login</code></li>
+</ul>
+</li>
+<li>
+<p>渲染 Button 會使用 <code>window.google.accounts.id.renderButton</code></p>
+</li>
+<li>
+<p>顯示 On Tap Login 則是靠呼叫 <code>window.google.accounts.id.prompt()</code></p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">onMounted</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>  window.<span style="color:#a6e22e">onload</span> <span style="color:#f92672">=</span> () =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">CLIENT_ID</span>) {
+</span></span><span style="display:flex;"><span>      window.<span style="color:#a6e22e">google</span>.<span style="color:#a6e22e">accounts</span>.<span style="color:#a6e22e">id</span>.<span style="color:#a6e22e">initialize</span>({
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">client_id</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CLIENT_ID</span>, <span style="color:#75715e">// required
+</span></span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">callback</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">onLogin</span>, <span style="color:#75715e">// invoke while user login in the popup
+</span></span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">cancel_on_tap_outside</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>, <span style="color:#75715e">// optional
+</span></span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">context</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;signin&#39;</span>, <span style="color:#75715e">// optional
+</span></span></span><span style="display:flex;"><span>      });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      window.<span style="color:#a6e22e">google</span>.<span style="color:#a6e22e">accounts</span>.<span style="color:#a6e22e">id</span>.<span style="color:#a6e22e">renderButton</span>(
+</span></span><span style="display:flex;"><span>        document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;googleButton&#39;</span>),
+</span></span><span style="display:flex;"><span>        { <span style="color:#a6e22e">theme</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;outline&#39;</span>, <span style="color:#a6e22e">size</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;large&#39;</span> } <span style="color:#75715e">// customization attributes
+</span></span></span><span style="display:flex;"><span>      );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      window.<span style="color:#a6e22e">google</span>.<span style="color:#a6e22e">accounts</span>.<span style="color:#a6e22e">id</span>.<span style="color:#a6e22e">prompt</span>(); <span style="color:#75715e">// show one-tap popup
+</span></span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#34;client_id doesn&#39;t exist!&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><h3 id="三前端使用者同意後取得-token-並登入" class="relative group">三、前端：使用者同意後取得 Token  並登入 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e4%b8%89%e5%89%8d%e7%ab%af%e4%bd%bf%e7%94%a8%e8%80%85%e5%90%8c%e6%84%8f%e5%be%8c%e5%8f%96%e5%be%97-token-%e4%b8%a6%e7%99%bb%e5%85%a5" aria-label="定位點">#</a></span></h3><p>這步驟就是在實作上面 <code>initialize</code> 時會丟進去的 callbcak。</p>
+<p>而這也是使用者在 Google 的登入畫面上登入後會執行的 function。</p>
+<p>因此我們會在這邊實作我們自己的登入邏輯，像這樣：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">onLogin</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">res</span>) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">axiosOptions</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">headers</span><span style="color:#f92672">:</span> { <span style="color:#e6db74">&#39;Access-Control-Allow-Origin&#39;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CLIENT_URL</span> },
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">axios</span>
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">API_URL</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/verify-token`</span>, <span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">axiosOptions</span>)
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">res</span>) =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;res&#39;</span>, <span style="color:#a6e22e">res</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">userData</span>.<span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">data</span>;
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>    .<span style="color:#66d9ef">catch</span>((<span style="color:#a6e22e">error</span>) =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;error&#39;</span>, <span style="color:#a6e22e">error</span>);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>callback 會接到來自 Google 的 response（ onLogin 的 <code>res</code>），response 裡又會包含這些資料，我們會拿其中的 <code>credential</code> 打去後端來做驗證。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;clientId&#34;</span>: <span style="color:#e6db74">&#34;123456789.apps.googleusercontent.com&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;credential&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;select_by&#34;</span>: <span style="color:#e6db74">&#34;btn&#34;</span> <span style="color:#75715e">// or &#39;user&#39;
+</span></span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>前端的處理到此結束啦！</p>
+</blockquote>
+<p>簡單複習一下，我們引入 <code>gsi client</code>，在 window 底下建立了 <code>google</code> 物件，接著用 google 物件提供的 <code>initialize</code> 、<code>renderButton</code> 來初始化跟渲染 Google Button，而我們自己的登入邏輯 <code>onLogin</code> function 則是在 <code>initialize</code> 時傳進 <code>callback</code> 來讓使用者登入後調用。</p>
+<h3 id="四後端接收驗證回傳-user-data--and-authorization-token" class="relative group">四、後端：接收、驗證，回傳 User Data ( and Authorization Token ) <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e5%9b%9b%e5%be%8c%e7%ab%af%e6%8e%a5%e6%94%b6%e9%a9%97%e8%ad%89%e5%9b%9e%e5%82%b3-user-data--and-authorization-token" aria-label="定位點">#</a></span></h3><p>在上面我們看到了 onLogin 是 POST 到 <code>/verify-token</code>，接著我們就要在這個 Route 去驗證並取得 Google User Data。</p>
+<p>基本上就是照著 <a href="https://developers.google.com/identity/gsi/web/guides/verify-google-id-token" target="_blank" rel="noreferrer">Google 的 範例</a> 去做，然後記得處理 CORS 就好！</p>
+<p>自此，第三方串接就完成了！</p>
+<blockquote>
+<p>接下來後端讓前端知道已登入成功這件事即可。</p>
+</blockquote>
+<p>而在這邊就單純把 User Data 回傳給前端。</p>
+<p>在公司的專案裡則採用跟一般註冊或登入一樣去把資料存到 DB 或是取得 Authorization Token 、User Data 給前端的作法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">cors</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;cors&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#a6e22e">cors</span>());
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">CLIENT_ID</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;YOUR CLIENT ID&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/** Handle the POST request from onLogin callback in frontend */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/verify-token&#39;</span>, (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// use google-auth-library to verify token
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">OAuth2Client</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;google-auth-library&#39;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">client</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">OAuth2Client</span>(<span style="color:#a6e22e">CLIENT_ID</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">verify</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// get credential from google
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">token</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">credential</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;token from credential&#39;</span>, <span style="color:#a6e22e">token</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">ticket</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">verifyIdToken</span>({
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">idToken</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">token</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">audience</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CLIENT_ID</span>,
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">payload</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">ticket</span>.<span style="color:#a6e22e">getPayload</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// You can store user data in DB and return Authorization Token here.
+</span></span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">json</span>({
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">email</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">email</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">email_verified</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">email_verified</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">picture</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">picture</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">name</span>,
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">verify</span>().<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>);
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><h2 id="demo" class="relative group">Demo <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#demo" aria-label="定位點">#</a></span></h2><p>下面提供的 Repo 都跑起來後會像這樣：</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*ZWMMJvk3tpZrNFnvYojxuQ.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>初始的登入畫面</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*jOQkAVvJ1VldfqVoYKBlSQ.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>使用者登入後</p>
+<h3 id="frontend-vue-sign-in-withgoogle" class="relative group">Frontend: <a href="https://github.com/Parkerhiphop/Vue-Sign-In-With-Google" target="_blank" rel="noreferrer">Vue Sign In With Google</a> <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#frontend-vue-sign-in-withgoogle" aria-label="定位點">#</a></span></h3><ul>
+<li>clone 下來後 npm install + npm run dev 會跑在 port:5173，這也正是我們在 Google Cloud — Credentials 那邊設定的 Authorized JavaScript origins</li>
+<li>自己開發時，記得要去改成自己的 Port ，上線後也要改成正式的網域哦！</li>
+</ul>
+<h3 id="backend-express-sign-in-withgoogle" class="relative group">Backend: <a href="https://github.com/Parkerhiphop/Express-Sign-In-With-Google" target="_blank" rel="noreferrer">Express Sign In With Google</a> <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#backend-express-sign-in-withgoogle" aria-label="定位點">#</a></span></h3><ul>
+<li>clone 下來後 npm install + npm run start 會跑在 port:3000，這也正是我們在 Google Cloud — Credentials 那邊設定的 Authorized redirect URIs</li>
+</ul>
+<h3 id="結語" class="relative group">結語 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e7%b5%90%e8%aa%9e" aria-label="定位點">#</a></span></h3><p>第三方串接讀了一堆文件，做的懵懵懂懂， 剛寫完沒幾天，要來寫文章時還是有些細節會有點忘記，但是整理成一篇文章就清楚多了！</p>
+<p>希望這篇文章對有串接 Google 登入需求的大家有幫助啦！</p>
+<p>我要接下來繼續串 Facebook 登入了，不得不說串接 Google 與 Facebook 和 Twitter 的比較起來，真的是友善很多很多很多呢。</p>
+
+        </div>
+      </section>
+      <footer class="max-w-prose pt-8 print:hidden">
+        
+  <div class="flex">
+    
+    
+    
+    <div class="place-self-center">
+      
+        <div class="text-[0.6rem] uppercase leading-3 text-neutral-500 dark:text-neutral-400">
+          作者
+        </div>
+        <div class="font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
+          Parker
+        </div>
+      
+      
+      <div class="text-2xl sm:text-lg">
+</div>
+    </div>
+  </div>
+
+
+        
+
+        
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="group flex" href="http://localhost:1313/software/talk-about-web-font/">
+              <span
+                class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+                ><span class="ltr:inline rtl:hidden">&larr;</span
+                ><span class="ltr:hidden rtl:inline">&rarr;</span></span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >談談網頁中的字體 — 設計、檔案格式與前端載入</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2021-10-28 00:00:00 &#43;0000 UTC">2021年10月28日</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+            <a class="group flex text-right" href="http://localhost:1313/software/from-callback-to-async/">
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >從 Callback 到 Async/Await：以次序淡入動畫為例</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2023-08-21 00:00:00 &#43;0000 UTC">2023年8月21日</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ms-2 text-neutral-700 transition-transform group-hover:-translate-x-[-2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+                ><span class="ltr:inline rtl:hidden">&rarr;</span
+                ><span class="ltr:hidden rtl:inline">&larr;</span></span
+              >
+            </a>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+        
+          
+            <div class="pt-3">
+              <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+              <div class="pt-3">
+                <div id="cusdis_thread"
+  data-host="https://cusdis.com"
+  data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
+  data-page-id="b2d80a80c35b97c58e6648f571034365"
+  data-page-url="http://localhost:1313/software/google-oauth-login/"
+  data-page-title="實作 Google 第三方登入（Vue / Express）"
+></div>
+<script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+<script>
+  (function () {
+    function getCusdisTheme() {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    function applyTheme() {
+      if (window.CUSDIS) window.CUSDIS.setTheme(getCusdisTheme());
+    }
+    document.addEventListener('DOMContentLoaded', applyTheme);
+    new MutationObserver(applyTheme).observe(
+      document.documentElement,
+      { attributeFilter: ['class'] }
+    );
+  })();
+</script>
+
+              </div>
+            </div>
+          
+        
+      </footer>
+    
+  </article>
+
+      </main>
+      
+        <div
+          class="pointer-events-none absolute bottom-0 end-0 top-[100vh] w-12"
+          id="to-top"
+          hidden="true"
+        >
+          <a
+            href="#the-top"
+            class="pointer-events-auto sticky top-[calc(100vh-5.5rem)] flex h-12 w-12 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 backdrop-blur hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+            aria-label="捲動到頁頂"
+            title="捲動到頁頂"
+          >
+            &uarr;
+          </a>
+        </div>
+      <footer class="py-10 print:hidden">
+  
+  
+  <div class="flex items-center justify-between">
+    <div>
+      
+      
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+            &copy;
+            2026
+            Parker
+        </p>
+      
+      
+      
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          
+          
+          以 <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> & <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://github.com/jpanther/congo" target="_blank" rel="noopener noreferrer">Congo</a> 製作
+        </p>
+      
+    </div>
+    <div class="flex flex-row items-center">
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  
+</footer>
+
+    </div>
+  </body>
+</html>

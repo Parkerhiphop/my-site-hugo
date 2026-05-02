@@ -1,0 +1,125 @@
+<header class="py-6 font-semibold text-neutral-900 dark:text-neutral sm:py-10 print:hidden">
+  <nav class="flex items-center justify-between">
+    <div class="z-40 flex flex-row items-center">
+      {{ partial "logo.html" . }}
+    </div>
+    {{ if or .Site.Menus.main (.Site.Params.enableSearch | default false) }}
+      <div class="site-header-mobile-actions">
+        {{ if .Site.Menus.main }}
+          {{ range .Site.Menus.main }}
+            {{ if eq .Params.action "appearance" }}
+              {{ $.Scratch.Add "switchCount" 1 }}
+              <button
+                id="appearance-switcher-{{ $.Scratch.Get "switchCount" }}"
+                type="button"
+                aria-label="appearance switcher"
+                class="site-header-icon-button group"
+              >
+                <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                  </svg>
+                </span>
+                <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                  </svg>
+                </span>
+              </button>
+            {{ else if eq .Params.action "locale" }}
+              {{ $.Scratch.Add "localeCount" 1 }}
+              {{ partial "translations.html" . }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      </div>
+      {{/* Hamburger menu: mobile only. */}}
+      <label id="menu-button" for="menu-controller" class="site-header-menu-button block">
+        <input type="checkbox" id="menu-controller" class="hidden" />
+        <div class="site-header-menu-trigger cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+          {{ partial "icon.html" "bars" }}
+        </div>
+        <div
+          id="menu-wrapper"
+          class="invisible fixed inset-0 z-30 m-auto h-full w-full cursor-default overflow-auto bg-neutral-100/50 opacity-0 backdrop-blur-sm transition-opacity dark:bg-neutral-900/50"
+        >
+          <ul
+            class="site-header-mobile-menu mx-auto flex w-full max-w-7xl list-none flex-col items-end overflow-visible px-6 py-6 text-end sm:px-14 sm:py-10 md:px-24 lg:px-32"
+          >
+            <li class="site-header-menu-close flex w-full items-end justify-end">
+              <span class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400"
+                >{{ partial "icon.html" "xmark" }}</span
+              >
+            </li>
+            {{ if .Site.Menus.main }}
+              {{ range .Site.Menus.main }}
+                {{ if or (eq .Params.action "locale") (eq .Params.action "appearance") }}
+                  {{ continue }}
+                {{ end }}
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="{{ .URL }}"
+                    title="{{ .Title }}"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    {{ with .Params.rel }}rel="{{ . }}"{{ end }}
+                    {{ with .Params.target }}target="{{ . }}"{{ end }}
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >{{ .Name | markdownify | emojify }}</span
+                    ></a
+                  >
+                </li>
+              {{ end }}
+            {{ end }}
+          </ul>
+        </div>
+      </label>
+      {{/* Inline nav: desktop and tablet, with language controls staying at the far right. */}}
+      <ul class="site-header-desktop-nav hidden list-none flex-row items-center gap-6">
+        {{ if .Site.Menus.main }}
+          {{ range .Site.Menus.main }}
+            {{ if and (eq .Params.action "locale") (or (not page.IsTranslated) (not hugo.IsMultilingual)) }}
+              {{ continue }}
+            {{ end }}
+            <li class="group mr-7">
+              {{ if eq .Params.action "appearance" }}
+                {{ $.Scratch.Add "switchCount" 1 }}
+                <button
+                  id="appearance-switcher-{{ $.Scratch.Get "switchCount" }}"
+                  type="button"
+                  aria-label="appearance switcher"
+                  class="flex items-center"
+                >
+                  <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                    </svg>
+                  </span>
+                  <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="4" />
+                      <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                    </svg>
+                  </span>
+                </button>
+              {{ else if eq .Params.action "locale" }}
+                {{ $.Scratch.Add "localeCount" 1 }}
+                {{ partial "translations.html" . }}
+              {{ else }}
+                <a
+                  href="{{ .URL }}"
+                  title="{{ .Title }}"
+                  {{ with .Params.rel }}rel="{{ . }}"{{ end }}
+                  {{ with .Params.target }}target="{{ . }}"{{ end }}
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >{{ .Name | markdownify | emojify }}</span
+                  ></a
+                >
+              {{ end }}
+            </li>
+          {{ end }}
+        {{ end }}
+      </ul>
+    {{ end }}
+  </nav>
+</header>

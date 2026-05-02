@@ -1,0 +1,1162 @@
+
+
+
+
+
+
+<!doctype html>
+<html
+  lang="zh-TW"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="light"
+  data-auto-appearance="true"
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FFFFFF" />
+  
+  <title>談談 JavaScript 中的 eval、風險及替代方案 &middot; Parker Chang&#39;s Web</title>
+    <meta name="title" content="談談 JavaScript 中的 eval、風險及替代方案 &middot; Parker Chang&#39;s Web" />
+  
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/appearance.min.8a082f81b27f3cb2ee528df0b0bdc39787034cf2cc34d4669fbc9977c929023c.js"
+    integrity="sha256-iggvgbJ/PLLuUo3wsL3Dl4cDTPLMNNRmn7yZd8kpAjw="
+  ></script>
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.3d626d356703626569364790e95b69715968a53a1054f31d92786caaf3605200.css"
+    integrity="sha256-PWJtNWcDYmVpNkeQ6VtpcVlopToQVPMdknhsqvNgUgA="
+  />
+  
+  
+  
+  
+  
+  
+  
+  <meta
+    name="description"
+    content="
+      介紹 JavaScript 中的 eval，再談談為什麼不要用它，最後以 App script 爬蟲時需要讀取`&lt;script /&gt;` 和 取得 JS 運算結果的面試考題來看它的應用，以及它的替代方案。
+    "
+  />
+  
+  
+  
+  
+    <link rel="canonical" href="http://localhost:1313/software/talk-about-js-eval/" />
+  
+  
+  
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:url" content="http://localhost:1313/software/talk-about-js-eval/">
+  <meta property="og:site_name" content="Parker Chang&#39;s Web">
+  <meta property="og:title" content="談談 JavaScript 中的 eval、風險及替代方案">
+  <meta property="og:description" content="介紹 JavaScript 中的 eval，再談談為什麼不要用它，最後以 App script 爬蟲時需要讀取`">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="software">
+    <meta property="article:published_time" content="2023-09-30T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-09-30T00:00:00+00:00">
+    <meta property="og:image" content="http://localhost:1313/software/talk-about-js-eval/cover-en.png">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/software/talk-about-js-eval/cover-en.png">
+  <meta name="twitter:title" content="談談 JavaScript 中的 eval、風險及替代方案">
+  <meta name="twitter:description" content="介紹 JavaScript 中的 eval，再談談為什麼不要用它，最後以 App script 爬蟲時需要讀取`">
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "軟體",
+    "name": "談談 JavaScript 中的 eval、風險及替代方案",
+    "headline": "談談 JavaScript 中的 eval、風險及替代方案",
+    "description": "介紹 JavaScript 中的 eval，再談談為什麼不要用它，最後以 App script 爬蟲時需要讀取\u0060\u003cscript \/\u003e\u0060 和 取得 JS 運算結果的面試考題來看它的應用，以及它的替代方案。",
+    "abstract": "\u003ch2 id=\u0022前言\u0022 class=\u0022relative group\u0022\u003e前言 \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#%e5%89%8d%e8%a8%80\u0022 aria-label=\u0022定位點\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e最近用 Google Sheets 提供的 App Script 幫朋友寫了個小爬蟲，來自動化搬運跟整理網頁上資訊，發現 HTML Source 裡\u003ccode\u003e\u0026lt;script \/\u0026gt;\u003c\/code\u003e 的資訊無法直接被讀取，在問 ChatGPT 時，它突然給了我一個有用到 \u003ccode\u003eeval\u003c\/code\u003e 的實作，之前只知道不要用它，這次決定來認真理解一下 \u003cstrong\u003e什麼時候可能用到\u003c\/strong\u003e ， \u003cstrong\u003e為什麼不要用\u003c\/strong\u003e ，以及 \u003cstrong\u003e有什麼替代方案\u003c\/strong\u003e 。\u003c\/p\u003e\n\u003cp\u003e這篇文章會簡單介紹 \u003ccode\u003eeval\u003c\/code\u003e 後，並帶上一個使用情境跟一個面試考題。\u003c\/p\u003e\n\u003ch2 id=\u0022eval-基本介紹\u0022 class=\u0022relative group\u0022\u003e\u003ccode\u003eeval\u003c\/code\u003e 基本介紹 \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#eval-%e5%9f%ba%e6%9c%ac%e4%bb%8b%e7%b4%b9\u0022 aria-label=\u0022定位點\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e\u003ccode\u003eeval(script);\u003c\/code\u003e 是一個 JavaScript 內建函數。\u003c\/p\u003e\n\u003cp\u003e它可以將傳入的 script String 視為 JavaScript 表達式（Expression）或語句（Statement）來執行。\u003c\/p\u003e\n\u003cblockquote\u003e\n\u003cp\u003e\u003cstrong\u003e使用情境：「你信任你要執行的 script 以及 想把 String 當 JS Code 來執行」\u003c\/strong\u003e\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003ch3 id=\u0022return-value\u0022 class=\u0022relative group\u0022\u003eReturn value \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#return-value\u0022 aria-label=\u0022定位點\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h3\u003e\u003cp\u003e若參數為 String，則會回應 JS 實際執行的結果，如果該 String 不是可執行的 JS Code，則回傳 \u003ccode\u003eError: {script} is not defined\u003c\/code\u003e\u003c\/p\u003e",
+    "inLanguage": "zh-TW",
+    "url" : "http:\/\/localhost:1313\/software\/talk-about-js-eval\/",
+    "author" : {
+      "@type": "Person",
+      "name": "Parker"
+    },
+    "copyrightYear": "2023",
+    "dateCreated": "2023-09-30T00:00:00\u002b00:00",
+    "datePublished": "2023-09-30T00:00:00\u002b00:00",
+    
+    "dateModified": "2023-09-30T00:00:00\u002b00:00",
+    
+    
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "1016"
+  }
+  </script>
+    
+    <script type="application/ld+json">
+    {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/",
+       "name": "首頁",
+       "position": 1
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/software/",
+       "name": "軟體",
+       "position": 2
+     },
+     {
+       "@type": "ListItem",
+       "name": "談談 Java Script 中的 Eval、風險及替代方案",
+       "position": 3
+     }
+   ]
+ }
+  </script>
+
+  
+  
+    <meta name="author" content="Parker" />
+  
+  
+  
+  
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script>
+(function () {
+  
+  if (sessionStorage.getItem('lang-redirected')) return;
+  sessionStorage.setItem('lang-redirected', '1');
+
+  var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+  var path = window.location.pathname;
+
+  
+  var onEn = path === '/en' || path.startsWith('/en/');
+  var onJa = path === '/ja' || path.startsWith('/ja/');
+  
+  var onZh = !onEn && !onJa;
+
+  
+  var preferred;
+  if (/^ja/.test(lang)) {
+    preferred = 'ja';
+  } else if (/^zh/.test(lang)) {
+    preferred = 'zh';
+  } else {
+    preferred = 'en';
+  }
+
+  var alreadyCorrect =
+    (preferred === 'zh' && onZh) ||
+    (preferred === 'en' && onEn) ||
+    (preferred === 'ja' && onJa);
+
+  if (alreadyCorrect) return;
+
+  
+  var stripped = path.replace(/^\/(en|ja)/, '') || '/';
+
+  var target;
+  if (preferred === 'zh') {
+    target = stripped;
+  } else {
+    target = '/' + preferred + stripped;
+  }
+
+  window.location.replace(target);
+})();
+</script>
+
+  
+</head>
+<body
+    class="m-auto flex h-screen max-w-7xl flex-col bg-neutral px-6 text-lg leading-7 text-neutral-900 dark:bg-neutral-800 dark:text-neutral sm:px-14 md:px-24 lg:px-32"
+  >
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="-translate-y-8 rounded-b-lg bg-primary-200 px-3 py-1 text-sm focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content"
+        ><span class="pe-2 font-bold text-primary-600 dark:text-primary-400">&darr;</span
+        >快轉到主要內容</a
+      >
+    </div>
+    
+    
+      <header class="py-6 font-semibold text-neutral-900 dark:text-neutral sm:py-10 print:hidden">
+  <nav class="flex items-center justify-between">
+    <div class="z-40 flex flex-row items-center">
+      
+    </div>
+    
+      <div class="site-header-mobile-actions">
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+              
+              <button
+                id="appearance-switcher-1"
+                type="button"
+                aria-label="appearance switcher"
+                class="site-header-icon-button group"
+              >
+                <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                  </svg>
+                </span>
+                <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                  </svg>
+                </span>
+              </button>
+            
+          
+            
+              
+              
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/software/talk-about-js-eval/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >EN</a><a
+          href="/ja/software/talk-about-js-eval/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >日</a></div>
+  
+
+
+            
+          
+        
+      </div>
+      
+      <label id="menu-button" for="menu-controller" class="site-header-menu-button block">
+        <input type="checkbox" id="menu-controller" class="hidden" />
+        <div class="site-header-menu-trigger cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+          <span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+</span>
+        </div>
+        <div
+          id="menu-wrapper"
+          class="invisible fixed inset-0 z-30 m-auto h-full w-full cursor-default overflow-auto bg-neutral-100/50 opacity-0 backdrop-blur-sm transition-opacity dark:bg-neutral-900/50"
+        >
+          <ul
+            class="site-header-mobile-menu mx-auto flex w-full max-w-7xl list-none flex-col items-end overflow-visible px-6 py-6 text-end sm:px-14 sm:py-10 md:px-24 lg:px-32"
+          >
+            <li class="site-header-menu-close flex w-full items-end justify-end">
+              <span class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400"
+                ><span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span></span
+              >
+            </li>
+            
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/life/"
+                    title="生活"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >生活</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/software/"
+                    title="軟體"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >軟體</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/novel/"
+                    title="小說"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >小說</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/thoughts/"
+                    title="感想"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >感想</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/about/"
+                    title="關於"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >關於</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/now/"
+                    title="現在"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >近況</span
+                    ></a
+                  >
+                </li>
+              
+                
+                  
+                
+                  
+            
+          </ul>
+        </div>
+      </label>
+      
+      <ul class="site-header-desktop-nav hidden list-none flex-row items-center gap-6">
+        
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/life/"
+                  title="生活"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >生活</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/software/"
+                  title="軟體"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >軟體</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/novel/"
+                  title="小說"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >小說</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/thoughts/"
+                  title="感想"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >感想</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/about/"
+                  title="關於"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >關於</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/now/"
+                  title="現在"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >近況</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                <button
+                  id="appearance-switcher-2"
+                  type="button"
+                  aria-label="appearance switcher"
+                  class="flex items-center"
+                >
+                  <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                    </svg>
+                  </span>
+                  <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="4" />
+                      <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                    </svg>
+                  </span>
+                </button>
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/software/talk-about-js-eval/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >EN</a><a
+          href="/ja/software/talk-about-js-eval/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >日</a></div>
+  
+
+
+              
+            </li>
+          
+        
+      </ul>
+    
+  </nav>
+</header>
+
+    
+    <div class="relative flex grow flex-col">
+      <main id="main-content" class="grow">
+        
+  <article>
+    <header class="max-w-prose">
+      
+      <h1 class="mb-8 mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        談談 JavaScript 中的 eval、風險及替代方案
+      </h1>
+      
+        <div class="mb-10 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+          
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+    
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2023-09-30 00:00:00 &#43;0000 UTC">2023年9月30日</time><span class="px-2 text-primary-500">&middot;</span><span title="預計閱讀時間">5 分鐘</span>
+    
+
+    
+    
+  </div>
+
+  
+  
+
+
+        </div>
+      
+      
+        
+          <div class="prose">
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+  
+    <picture
+      class="mb-6 rounded-md"
+      
+    >
+      
+      
+      
+      
+        <source
+          
+            srcset="http://localhost:1313/software/talk-about-js-eval/cover-zh-TW_hu_6df2c23d3fc501fc.webp 330w,http://localhost:1313/software/talk-about-js-eval/cover-zh-TW_hu_ba1f4453a385aa67.webp 660w
+            
+              ,http://localhost:1313/software/talk-about-js-eval/cover-zh-TW_hu_96335cc7b9aa2324.webp 1024w
+            
+            
+              
+                ,http://localhost:1313/software/talk-about-js-eval/cover-zh-TW_hu_48d57479f71d2c3f.webp 1200w
+              
+            "
+          
+          sizes="100vw"
+          type="image/webp"
+        />
+      
+      <img
+        width="1200"
+        height="630"
+        class="mb-6 rounded-md"
+        
+        
+        
+          src="http://localhost:1313/software/talk-about-js-eval/cover-zh-TW_hu_6c9808d072df8605.png" srcset="http://localhost:1313/software/talk-about-js-eval/cover-zh-TW_hu_c79f4c5ecd63485b.png 330w,http://localhost:1313/software/talk-about-js-eval/cover-zh-TW_hu_6c9808d072df8605.png 660w
+          
+            ,http://localhost:1313/software/talk-about-js-eval/cover-zh-TW_hu_48e208be74aeaf59.png 1024w
+          
+          
+            ,http://localhost:1313/software/talk-about-js-eval/cover-zh-TW.png 1200w
+          "
+          sizes="100vw"
+        
+      />
+    </picture>
+  
+
+
+            
+          </div>
+        
+      
+    </header>
+    
+      <section class="prose mt-0 flex max-w-full flex-col dark:prose-invert lg:flex-row">
+        
+          <div class="order-first px-0 lg:order-last lg:max-w-xs lg:ps-8">
+            <div class="toc pe-5 lg:sticky lg:top-10 print:hidden">
+              <details open class="-ms-5 mt-0 overflow-hidden rounded-lg ps-5">
+  <summary
+    class="block cursor-pointer bg-neutral-100 py-1 ps-5 text-lg font-semibold text-neutral-800 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden"
+  >
+    目錄
+  </summary>
+  <div class="border-s border-dotted border-neutral-300 py-2 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#eval-基本介紹"><code>eval</code> 基本介紹</a>
+      <ul>
+        <li><a href="#return-value">Return value</a></li>
+      </ul>
+    </li>
+    <li><a href="#never-use-eval">Never use <code>eval()</code>!</a>
+      <ul>
+        <li><a href="#1-security-risks">1. Security Risks</a></li>
+        <li><a href="#2-performance-impact">2. Performance Impact</a></li>
+        <li><a href="#3-variable-name-lookups">3. Variable Name Lookups</a></li>
+        <li><a href="#4-minification-issues">4. Minification Issues</a></li>
+      </ul>
+    </li>
+    <li><a href="#使用情境">使用情境</a>
+      <ul>
+        <li><a href="#1-app-script-爬蟲時讀取-script--的內容">1. App Script 爬蟲時讀取 <code>&lt;script /&gt;</code> 的內容</a></li>
+        <li><a href="#2-面試題取得-js-計算結果">2. 面試題：取得 JS 計算結果</a></li>
+        <li><a href="#3-vue-devtools">3. Vue devtools</a></li>
+        <li><a href="#4-angular-i18n">4. Angular i18n</a></li>
+      </ul>
+    </li>
+    <li><a href="#當你不信任-eval-要執行的-script-時">當你不信任 <code>eval</code> 要執行的 script 時</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#結語">結語</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+            </div>
+          </div>
+        
+        <div class="min-h-0 min-w-0 max-w-prose grow">
+          <h2 id="前言" class="relative group">前言 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e5%89%8d%e8%a8%80" aria-label="定位點">#</a></span></h2><p>最近用 Google Sheets 提供的 App Script 幫朋友寫了個小爬蟲，來自動化搬運跟整理網頁上資訊，發現 HTML Source 裡<code>&lt;script /&gt;</code> 的資訊無法直接被讀取，在問 ChatGPT 時，它突然給了我一個有用到 <code>eval</code> 的實作，之前只知道不要用它，這次決定來認真理解一下 <strong>什麼時候可能用到</strong> ， <strong>為什麼不要用</strong> ，以及 <strong>有什麼替代方案</strong> 。</p>
+<p>這篇文章會簡單介紹 <code>eval</code> 後，並帶上一個使用情境跟一個面試考題。</p>
+<h2 id="eval-基本介紹" class="relative group"><code>eval</code> 基本介紹 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#eval-%e5%9f%ba%e6%9c%ac%e4%bb%8b%e7%b4%b9" aria-label="定位點">#</a></span></h2><p><code>eval(script);</code> 是一個 JavaScript 內建函數。</p>
+<p>它可以將傳入的 script String 視為 JavaScript 表達式（Expression）或語句（Statement）來執行。</p>
+<blockquote>
+<p><strong>使用情境：「你信任你要執行的 script 以及 想把 String 當 JS Code 來執行」</strong></p>
+</blockquote>
+<h3 id="return-value" class="relative group">Return value <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#return-value" aria-label="定位點">#</a></span></h3><p>若參數為 String，則會回應 JS 實際執行的結果，如果該 String 不是可執行的 JS Code，則回傳 <code>Error: {script} is not defined</code></p>
+<p>若參數不是 String，則直接回傳參數。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(eval(<span style="color:#e6db74">&#39;2 + 2&#39;</span>));
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Expected output: 4
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(eval(<span style="color:#66d9ef">new</span> String(<span style="color:#e6db74">&#39;2 + 2&#39;</span>)));
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Expected output: 2 + 2
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(eval(<span style="color:#e6db74">&#39;2 + 2&#39;</span>) <span style="color:#f92672">===</span> eval(<span style="color:#e6db74">&#39;4&#39;</span>));
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Expected output: true
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(eval(<span style="color:#e6db74">&#39;2 + 2&#39;</span>) <span style="color:#f92672">===</span> eval(<span style="color:#66d9ef">new</span> String(<span style="color:#e6db74">&#39;2 + 2&#39;</span>)));
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Expected output: false
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(eval(<span style="color:#ae81ff">123</span>));
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Expected output: 123
+</span></span></span></code></pre></div><h2 id="never-use-eval" class="relative group">Never use <code>eval()</code>! <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#never-use-eval" aria-label="定位點">#</a></span></h2><p>可以直接把字串拿來當 JS 執行聽起來就很不妙，可以看到 MDN 在 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!" target="_blank" rel="noreferrer">Never use <code>eval()</code>!</a> 中指出了使用 <code>eval</code> 可能有的四個原因：</p>
+<h3 id="1-security-risks" class="relative group">1. Security Risks <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#1-security-risks" aria-label="定位點">#</a></span></h3><p>只要攻擊者能有辦法置換傳入的 <code>script</code> 參數就能透過它執行惡意程式（取得你本地的資料、透過你發請求等等）。</p>
+<h3 id="2-performance-impact" class="relative group">2. Performance Impact <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-performance-impact" aria-label="定位點">#</a></span></h3><p>它會直接呼叫 JS 直譯器，所以無法使用現代 JS engines 在讀取 JS 時做的各種優化。</p>
+<h3 id="3-variable-name-lookups" class="relative group">3. Variable Name Lookups <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#3-variable-name-lookups" aria-label="定位點">#</a></span></h3><p>雖然 JS 是直譯語言，但任何語言要讓機器（ex: 電腦）來執行時，依然還是要轉成機器語言（machine code），電腦才能讀得懂並執行。</p>
+<p>但因為 eval 可能會宣告變數(Variable) ，所以如果在瀏覽器上執行的話，瀏覽器會需要去檢視 JS 直譯器轉譯 JavaScript 得出的機器語言（machine code）中的變數名稱有沒有存在、重疊或改變。</p>
+<p>這個過程非常耗效能。</p>
+<h3 id="4-minification-issues" class="relative group">4. Minification Issues <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#4-minification-issues" aria-label="定位點">#</a></span></h3><blockquote>
+<p>Minifiers 是一個可以縮小 JS Code 的工具。
+當我們在寫程式時會為了可讀性放很多空格、標點符號或是好讀的變數名稱，但電腦要執行的話，這些都是不需要的，透過 Minifiers 就能讓 JS Code 極簡化，節省空間。</p>
+</blockquote>
+<p>因為 eval 一定是在 runtime 讀到才能執行， Minifiers 這種工具通常是在 build time 打包程式碼時進行處理。</p>
+<p>所以如果 <code>eval(script)</code> 的 <code>script</code> 很大一包就會浪費很多空間，無法進行優化。</p>
+<hr>
+<h2 id="使用情境" class="relative group">使用情境 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e4%bd%bf%e7%94%a8%e6%83%85%e5%a2%83" aria-label="定位點">#</a></span></h2><h3 id="1-app-script-爬蟲時讀取-script--的內容" class="relative group">1. App Script 爬蟲時讀取 <code>&lt;script /&gt;</code> 的內容 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#1-app-script-%e7%88%ac%e8%9f%b2%e6%99%82%e8%ae%80%e5%8f%96-script--%e7%9a%84%e5%85%a7%e5%ae%b9" aria-label="定位點">#</a></span></h3><p>只要填入「 YouTuber 網址」，再去 App Script 上按執行就可以自動填入 YouTuber 的「頻道名稱」和「訂閱人數」。</p>
+<p>雖然 App scripts 不能模擬出瀏覽器，但可以讀取 HTML source，而就算 JS 再怎麼 uglify，要顯示的 String 一定還會是原狀，所以只需要找一下想要的資料在整包 HTML 裡面位於哪個地方就好。</p>
+<p>在 YouTuber 的 about 頁面點右鍵再選取「View Page Source」，可以找到「頻道名稱」和「訂閱人數」是在以下這段 <code>script</code> 裡面的 <code>ytInitialData</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- HTML source contains: --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">ytInitialData</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">header</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">c4TabbedHeaderRenderer</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;YouTuber Name&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">subscriberCountText</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">simpleText</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;xxx subscribers&#39;</span>,
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span></code></pre></div><p>在 App Script 中，可以用 <code>UrlFetchApp.fetch</code> 去 GET 一個 url，並用 <code>getContentText</code> 取得該頁面所有的 HTML Code。</p>
+<p>再根據先前對於 HTML 結構的觀察，我們可以再透過正則表達式取得我們想要的程式碼段落。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">response</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">UrlFetchApp</span>.<span style="color:#a6e22e">fetch</span>(<span style="color:#a6e22e">youtubeUrl</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">pageSource</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">getContentText</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">jsCodeMatch</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">pageSource</span>.<span style="color:#a6e22e">match</span>(<span style="color:#e6db74">/var ytInitialData = (\{[^]+?\});/</span>);
+</span></span></code></pre></div><p>接下來是不是只要再寫一次正則來 match 就可以取得我們要的資料了呢？</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">titleMatch</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">pageSource</span>.<span style="color:#a6e22e">match</span>(<span style="color:#e6db74">/title: &#39;([^&#39;]+)&#39;/</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">subscriberCountMatch</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">pageSource</span>.<span style="color:#a6e22e">match</span>(<span style="color:#e6db74">/simpleText: &#39;([^&#39;]+)&#39;/</span>);
+</span></span></code></pre></div><p><strong>很可惜地不行！</strong></p>
+<p>從上面的的 raw data 可以看到它是被包在 <code>&lt;script /&gt;</code> 裡面，而 HTML source 裡面的 <code>&lt;script /&gt;</code> 雖然我們看得到，但對程式來說其實是 visible 的，無法直接讀取。</p>
+<h4 id="透過-eval-執行-html-source-的-script--並取得底下變數" class="relative group">透過 <code>eval</code> 執行 HTML Source 的 <code>&lt;script /&gt;</code> 並取得底下變數 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e9%80%8f%e9%81%8e-eval-%e5%9f%b7%e8%a1%8c-html-source-%e7%9a%84-script--%e4%b8%a6%e5%8f%96%e5%be%97%e5%ba%95%e4%b8%8b%e8%ae%8a%e6%95%b8" aria-label="定位點">#</a></span></h4><p>這時候 <code>eval</code> 就登場啦，<code>eval</code> 可以執行作為 String 被傳入的 JS Code，而我們若把找到的那段 script 丟進去 <code>eval</code> 執行，<code>ytInitialData</code> 就會在此被宣告跟建立，因此我們也就可以直接去存取 <code>ytInitialData</code> 取得它底下 Property 啦！</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// Use eval to execute the script to declare the `ytInitialData` variable inside script
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">jsCodeMatch</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">pageSource</span>.<span style="color:#a6e22e">match</span>(<span style="color:#e6db74">/var ytInitialData = \{[^]+?\};/</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">jsCodeMatch</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">jsCodeMatch</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Extract the JavaScript code block
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">jsCode</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">jsCodeMatch</span>[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Execute the JavaScript code using eval()
+</span></span></span><span style="display:flex;"><span>  eval(<span style="color:#a6e22e">jsCode</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// ytInitialData is declared.
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">title</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">ytInitialData</span>.<span style="color:#a6e22e">header</span>.<span style="color:#a6e22e">c4TabbedHeaderRenderer</span>.<span style="color:#a6e22e">title</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">subscriberCount</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">ytInitialData</span>.<span style="color:#a6e22e">header</span>.<span style="color:#a6e22e">c4TabbedHeaderRenderer</span>.<span style="color:#a6e22e">subscriberCountText</span>.<span style="color:#a6e22e">simpleText</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>到這邊功能就已經做完了，但其實 <code>eval</code> 如上所述有很多問題，基本上不建議使用。</p>
+<h4 id="替代方案-jsonparse" class="relative group">替代方案 <code>JSON.parse</code> <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e6%9b%bf%e4%bb%a3%e6%96%b9%e6%a1%88-jsonparse" aria-label="定位點">#</a></span></h4><p>可以呼叫 <code>JSON.parse()</code> 來把那段 script 解析出來，並且一樣可以直接存取解析出來的 JSON data，這樣就不用像是開後門一樣使用 <code>eval</code> 執行外部的程式碼了！</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// Use regular expressions to find the JavaScript code block
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">jsCodeMatch</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">pageSource</span>.<span style="color:#a6e22e">match</span>(<span style="color:#e6db74">/var ytInitialData = (\{[^]+?\});/</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">jsCodeMatch</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">jsCodeMatch</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">2</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Extract the JavaScript code block containing JSON data
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">jsCode</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">jsCodeMatch</span>[<span style="color:#ae81ff">1</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Parse the JSON data
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">jsonData</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">jsCode</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Access the extracted data
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">jsonData</span>.<span style="color:#a6e22e">header</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">jsonData</span>.<span style="color:#a6e22e">header</span>.<span style="color:#a6e22e">c4TabbedHeaderRenderer</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">title</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">jsonData</span>.<span style="color:#a6e22e">header</span>.<span style="color:#a6e22e">c4TabbedHeaderRenderer</span>.<span style="color:#a6e22e">title</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">subscriberCount</span> <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">jsonData</span>.<span style="color:#a6e22e">header</span>.<span style="color:#a6e22e">c4TabbedHeaderRenderer</span>.<span style="color:#a6e22e">subscriberCountText</span>.<span style="color:#a6e22e">simpleText</span>.<span style="color:#a6e22e">replace</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;subscribers&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>      );
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="2-面試題取得-js-計算結果" class="relative group">2. 面試題：取得 JS 計算結果 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-%e9%9d%a2%e8%a9%a6%e9%a1%8c%e5%8f%96%e5%be%97-js-%e8%a8%88%e7%ae%97%e7%b5%90%e6%9e%9c" aria-label="定位點">#</a></span></h3><blockquote>
+<p>在 <code>const a = '1 + 2 + 3';</code> 中，a 是一個包含 JavaScript Expression 的 String</p>
+<p>該如何取得 a 變數運算完的結果？</p>
+</blockquote>
+<p>這題是來自於：<a href="https://israynotarray.com/javascript/20230321/3298342448/" target="_blank" rel="noreferrer">是 Ray 不是 Array</a> 的文章。</p>
+<p>透過 <code>eval</code> 可以很快地得到結果，但它有如上所述的問題，有沒有更萬無一失的作法？</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;1 + 2 + 3&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>eval(<span style="color:#a6e22e">a</span>); <span style="color:#75715e">// 6
+</span></span></span></code></pre></div><h4 id="string-轉-array-並用-array-操作來運算" class="relative group">String 轉 Array 並用 Array 操作來運算 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#string-%e8%bd%89-array-%e4%b8%a6%e7%94%a8-array-%e6%93%8d%e4%bd%9c%e4%be%86%e9%81%8b%e7%ae%97" aria-label="定位點">#</a></span></h4><p>如果是 String 的話，還有一種常見的作法就是把它轉成 Array，接著就可以使用 Array 很多方便的 methods 來執行了。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;1 + 2 + 3&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">b</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">&#39; + &#39;</span>); <span style="color:#75715e">// [ &#34;1&#34;, &#34;2&#34;, &#34;3&#34; ]，將字串依照內容切割成陣列
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">map</span>(Number); <span style="color:#75715e">// [ 1, 2, 3 ]，將裡面的陣列轉換成數字
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">total</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">reduce</span>((<span style="color:#a6e22e">acc</span>, <span style="color:#a6e22e">cur</span>) =&gt; <span style="color:#a6e22e">acc</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">cur</span>); <span style="color:#75715e">// 6，使用 reduce 來做相加
+</span></span></span></code></pre></div><h3 id="3-vue-devtools" class="relative group">3. Vue devtools <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#3-vue-devtools" aria-label="定位點">#</a></span></h3><p>在 <a href="https://github.com/vuejs/devtools/tree/v6.5.0" target="_blank" rel="noreferrer">Vue devtools</a> 中其實有一個很方便的功能「<a href="https://devtools.vuejs.org/guide/open-in-editor.html" target="_blank" rel="noreferrer">Open component in editor</a>」，可以直接在輯器上打開對應的 Component Source Code。</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="/software-development/talk-about-js-eval/vue-devtools.png" alt="Vue devtools" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>而這個功能的執行就有使用到 <code>eval</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">openInEditor</span>(<span style="color:#a6e22e">file</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Console display
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">fileName</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/\\/g</span>, <span style="color:#e6db74">&#39;\\\\&#39;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">src</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`fetch(&#39;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">SharedData</span>.<span style="color:#a6e22e">openInEditorHost</span><span style="color:#e6db74">}</span><span style="color:#e6db74">__open-in-editor?file=</span><span style="color:#e6db74">${</span>encodeURI(
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">file</span>
+</span></span><span style="display:flex;"><span>  )<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;).then(response =&gt; {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    if (response.ok) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      console.log(&#39;File </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">fileName</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> opened in editor&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    } else {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      const msg = &#39;Opening component </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">fileName</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> failed&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      const target = typeof window !== &#39;undefined&#39; ? window : typeof global !== &#39;undefined&#39; ? global : {}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      if (target.__VUE_DEVTOOLS_TOAST__) {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        target.__VUE_DEVTOOLS_TOAST__(msg, &#39;error&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      } else {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        console.log(&#39;%c&#39; + msg, &#39;color:red&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      console.log(&#39;Check the setup of your project, see https://devtools.vuejs.org/guide/open-in-editor.html&#39;)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  })`</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">isChrome</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">chrome</span>.<span style="color:#a6e22e">devtools</span>.<span style="color:#a6e22e">inspectedWindow</span>.eval(<span style="color:#a6e22e">src</span>);
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// eslint-disable-next-line no-eval
+</span></span></span><span style="display:flex;"><span>    eval(<span style="color:#a6e22e">src</span>); <span style="color:#75715e">// &lt;---
+</span></span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><a href="https://github.com/vuejs/devtools/blob/v6.5.0/packages/shared-utils/src/util.ts#L716" target="_blank" rel="noreferrer">點我看 Source Code</a></p>
+<p>簡單分析一下這段程式碼：</p>
+<ol>
+<li>處理反斜線，確保 filename 是正確路徑</li>
+<li>對 <code>{your_localhost}/_open-in-editor?file=/path/to/xxx.vue</code> 發送一個 GET Request，這個 request 會去呼叫 <a href="https://github.com/yyx990803/launch-editor" target="_blank" rel="noreferrer">launch-editor</a> 這個套件來打開編輯及對應文件。
+<ul>
+<li>更多細節可參考 <a href="https://juejin.cn/post/7180730804467662907" target="_blank" rel="noreferrer">Vue Devtools 的『Open component in editor』功能是如何实现的？</a></li>
+</ul>
+</li>
+<li>Log 成功或失敗的訊息在 Browser Console</li>
+</ol>
+<p>其中 <code>2.</code> 跟 <code>3.</code> 的步驟都在包成字串再用 <code>eval</code> 去執行的。</p>
+<p>這邊使用 <code>eval</code> 的原因是要<strong>在不同環境執行同一段程式碼</strong>，所以先把這段 JS code 用 string 存起來，再根據環境（Chrome 或 非 Chrome）決定使用原生 <code>eval</code> 還是 Chrome API 提供的 <a href="https://developer.chrome.com/docs/extensions/reference/devtools_inspectedWindow/#method-eval" target="_blank" rel="noreferrer">chrome.devtools.inspectedWindow.eval</a>。</p>
+<h3 id="4-angular-i18n" class="relative group">4. Angular i18n <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#4-angular-i18n" aria-label="定位點">#</a></span></h3><p>這是 Angular 之前再處理 i18n 的數字符號跟貨幣符號時，可以透過 <code>eval(content.toString())</code> 執行後可以讓傳入的 <code>content</code> 中的變數被宣告跟存取。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">extractNumberSymbols</span>(<span style="color:#a6e22e">content</span>, <span style="color:#a6e22e">localeInfo</span>, <span style="color:#a6e22e">currencySymbols</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//eval script in the current context so that we get access to all the symbols
+</span></span></span><span style="display:flex;"><span>  <span style="color:#75715e">// eslint-disable-next-line no-eval
+</span></span></span><span style="display:flex;"><span>  eval(<span style="color:#a6e22e">content</span>.<span style="color:#a6e22e">toString</span>());
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">propName</span> <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">goog</span>.<span style="color:#a6e22e">i18n</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">localeID</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">findLocaleId</span>(<span style="color:#a6e22e">propName</span>, <span style="color:#e6db74">&#39;num&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">localeID</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">info</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">getInfoForLocale</span>(<span style="color:#a6e22e">localeInfo</span>, <span style="color:#a6e22e">localeID</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">info</span>.<span style="color:#a6e22e">NUMBER_FORMATS</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">converter</span>.<span style="color:#a6e22e">convertNumberData</span>(<span style="color:#a6e22e">goog</span>.<span style="color:#a6e22e">i18n</span>[<span style="color:#a6e22e">propName</span>], <span style="color:#a6e22e">currencySymbols</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>由於要詳細解釋完比較複雜，所以就先點到這邊，其餘可以進行去 <a href="https://github.com/angular/angular.js/blob/master/i18n/src/closureI18nExtractor.js" target="_blank" rel="noreferrer">Source Code</a> 上看！</p>
+<h2 id="當你不信任-eval-要執行的-script-時" class="relative group">當你不信任 <code>eval</code> 要執行的 script 時 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e7%95%b6%e4%bd%a0%e4%b8%8d%e4%bf%a1%e4%bb%bb-eval-%e8%a6%81%e5%9f%b7%e8%a1%8c%e7%9a%84-script-%e6%99%82" aria-label="定位點">#</a></span></h2><p>在 JavaScript 本身的以及不同的執行環境（Node.js 和 瀏覽器 ）都有對應的解決方法，但大致上都是與原本的執行環境進行隔離。</p>
+<h4 id="1-javascript-shadowrealm提案中" class="relative group">1. JavaScript： <a href="https://github.com/tc39/proposal-shadowrealm" target="_blank" rel="noreferrer">ShadowRealm（提案中）</a> <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#1-javascript-shadowrealm%e6%8f%90%e6%a1%88%e4%b8%ad" aria-label="定位點">#</a></span></h4><p>ShadowRealm 是一個獨特的全域環境，擁有自己的全域對象，其中包含自己的內在函數和內建函數（未綁定
+到全域變數的標準對象，例如 Object.prototype 的初始值）。</p>
+<p>有望能解決 JavaScript 中 <code>eval</code> 和 <code>new Function</code> 等方法可能引發的安全問題，使得不信任的程式碼無法訪問主應用程式的內部變數或資源，提供更安全的程式碼隔離機制。</p>
+<p><strong>由於 ShadowRealm 還在提案中，尚未被所有瀏覽器完全實現</strong>，這邊也就先點到為止，有興趣的人可以去深究。</p>
+<h4 id="2-瀏覽器-iframe--sandbox--srcdoc" class="relative group">2. 瀏覽器： iframe + sandbox + srcdoc <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-%e7%80%8f%e8%a6%bd%e5%99%a8-iframe--sandbox--srcdoc" aria-label="定位點">#</a></span></h4><p>建一個帶有 <code>sandbox</code> 屬性的 <code>&lt;iframe&gt;</code> ，並使用 srcdoc 屬性將想要執行的 JS Code 嵌入。</p>
+<p><code>sandbox</code> 屬性會給予 iframe 諸多限制，像是禁止表單送出、禁止發送 API 等等。可以用於隔離不信任的程式碼。</p>
+<ul>
+<li>但注意 <code>allow-scripts</code> 和 <code>allow-same-origin</code> 一起用時，iframe 就可以運行 script 並訪問 parent DOM ，甚至會導致 sandbox 底下的屬性可以被重置，失去了原本的功用。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;runCodeButton&#34;</span>&gt;執行不信任的程式碼&lt;/<span style="color:#f92672">button</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;output&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>    document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;runCodeButton&#39;</span>).<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, () =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">untrustedCode</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        let ytInitialData = {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          header: {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            c4TabbedHeaderRenderer: {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              title: &#39;YouTuber Name&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              subscriberCountText: {
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                simpleText: &#39;xxx subscribers&#39;,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              },
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            },
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          },
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        };
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        ytInitialData;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      `</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">iframe</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;iframe&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 使用 sandbox 屬性來隔離程式碼
+</span></span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">iframe</span>.<span style="color:#a6e22e">sandbox</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;allow-scripts&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 使用 srcdoc 屬性設定要運行的程式碼
+</span></span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">iframe</span>.<span style="color:#a6e22e">srcdoc</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;script&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">untrustedCode</span><span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          top.postMessage({data: ytInitialData}, &#39;*&#39;);
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;\/script&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">      `</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">onmessage</span> <span style="color:#f92672">=</span> () =&gt; (<span style="color:#a6e22e">event</span>) =&gt; {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;message received&#39;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">event</span>.<span style="color:#a6e22e">data</span>); <span style="color:#75715e">// 取得資料！
+</span></span></span><span style="display:flex;"><span>      });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">iframe</span>.<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">display</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;none&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 將 iframe 添加到文檔中
+</span></span></span><span style="display:flex;"><span>      document.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">appendChild</span>(<span style="color:#a6e22e">iframe</span>);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">body</span>&gt;
+</span></span></code></pre></div><h4 id="3-nodejs-isolated-vm" class="relative group">3. Node.js： <a href="https://www.npmjs.com/package/isolated-vm" target="_blank" rel="noreferrer">isolated-vm</a> <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#3-nodejs-isolated-vm" aria-label="定位點">#</a></span></h4><p>透過 isolated-vm 這個套件可以在一個獨立的、與主線程隔離的虛擬機(virtual machine)中執行 JavaScript 程式碼，讓不信任的程式碼將在一個受到限制的環境中運行，就不會影響到原本的程式碼。</p>
+<h2 id="結語" class="relative group">結語 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e7%b5%90%e8%aa%9e" aria-label="定位點">#</a></span></h2><p>這篇文章剛寫好時，其實只包含了前兩個使用情境，並且對於 <code>eval</code> 的使用採取極端否定的態度，但其實仔細找還是有不少使用的情境，只要掌握觀念，分析好當前情境就可以使用，而對於 <code>eval</code> 的判斷依據就是「信不信任你要執行的 script」，以及避免 <strong>Never use eval()!</strong> 提到的效能問題。</p>
+<p>會有這樣的轉變主要是分享到 Twitter 後，得到 <a href="https://blog.huli.tw/about/" target="_blank" rel="noreferrer">Huli</a> 提供 Vue devtools 和 Angular 的使用案例（<a href="https://twitter.com/hulitw/status/1708017887821328486?s=21&amp;t=yUI4r6jzTXeexUO11Jh8rg" target="_blank" rel="noreferrer">Original Tweet</a>）和 <a href="https://twitter.com/flandrekawaii/status/1708020622981546198?s=21&amp;t=yUI4r6jzTXeexUO11Jh8rg" target="_blank" rel="noreferrer">flandre</a>　的建議，原本隨筆紀錄，然後以為沒什麼的東西意外延伸了很多知識挺有趣的，同時也非常感謝！</p>
+<p>另外這次會接觸到 <code>eval</code> 是在 ChatGPT 上看到的，深感 <strong>ChatGPT 確實能擴充我對於「不知道的不知道(Unknown Unknown)」的知識邊界</strong> ，但擴充了之後仍然需要去理解，因為它提供的解法雖然可以符合需求，但可能沒有考慮那麼多，也不一定會提供符合當前情境的最佳解，像這次就是提供 <code>eval</code> 的解法，但其實是可以使用更安全的 <code>JSON.parse()</code> 解法，在深入探討後，也發現了 <code>eval</code> 竟然可以應用在 dev tools 和 開發工具上，這算是完全沒想到的連結。</p>
+<p><strong>一言以蔽之，平常要多擴充自己的知識，來增加對於這些資訊的判斷力！</strong></p>
+<p>如果有人想補充或知道 <code>eval</code> 其他的使用情境，歡迎留言告訴我 🤩！</p>
+
+        </div>
+      </section>
+      <footer class="max-w-prose pt-8 print:hidden">
+        
+  <div class="flex">
+    
+    
+    
+    <div class="place-self-center">
+      
+        <div class="text-[0.6rem] uppercase leading-3 text-neutral-500 dark:text-neutral-400">
+          作者
+        </div>
+        <div class="font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
+          Parker
+        </div>
+      
+      
+      <div class="text-2xl sm:text-lg">
+</div>
+    </div>
+  </div>
+
+
+        
+
+        
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="group flex" href="http://localhost:1313/software/from-callback-to-async/">
+              <span
+                class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+                ><span class="ltr:inline rtl:hidden">&larr;</span
+                ><span class="ltr:hidden rtl:inline">&rarr;</span></span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >從 Callback 到 Async/Await：以次序淡入動畫為例</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2023-08-21 00:00:00 &#43;0000 UTC">2023年8月21日</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+            <a class="group flex text-right" href="http://localhost:1313/software/my-first-tech-post/">
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >用 Hugo 建立靜態網站</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2024-03-02 00:00:00 &#43;0000 UTC">2024年3月2日</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ms-2 text-neutral-700 transition-transform group-hover:-translate-x-[-2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+                ><span class="ltr:inline rtl:hidden">&rarr;</span
+                ><span class="ltr:hidden rtl:inline">&larr;</span></span
+              >
+            </a>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+        
+          
+            <div class="pt-3">
+              <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+              <div class="pt-3">
+                <div id="cusdis_thread"
+  data-host="https://cusdis.com"
+  data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
+  data-page-id="96a7c4e42c3b28f61f7566a3605d42ed"
+  data-page-url="http://localhost:1313/software/talk-about-js-eval/"
+  data-page-title="談談 JavaScript 中的 eval、風險及替代方案"
+></div>
+<script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+<script>
+  (function () {
+    function getCusdisTheme() {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    function applyTheme() {
+      if (window.CUSDIS) window.CUSDIS.setTheme(getCusdisTheme());
+    }
+    document.addEventListener('DOMContentLoaded', applyTheme);
+    new MutationObserver(applyTheme).observe(
+      document.documentElement,
+      { attributeFilter: ['class'] }
+    );
+  })();
+</script>
+
+              </div>
+            </div>
+          
+        
+      </footer>
+    
+  </article>
+
+      </main>
+      
+        <div
+          class="pointer-events-none absolute bottom-0 end-0 top-[100vh] w-12"
+          id="to-top"
+          hidden="true"
+        >
+          <a
+            href="#the-top"
+            class="pointer-events-auto sticky top-[calc(100vh-5.5rem)] flex h-12 w-12 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 backdrop-blur hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+            aria-label="捲動到頁頂"
+            title="捲動到頁頂"
+          >
+            &uarr;
+          </a>
+        </div>
+      <footer class="py-10 print:hidden">
+  
+  
+  <div class="flex items-center justify-between">
+    <div>
+      
+      
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+            &copy;
+            2026
+            Parker
+        </p>
+      
+      
+      
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          
+          
+          以 <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> & <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://github.com/jpanther/congo" target="_blank" rel="noopener noreferrer">Congo</a> 製作
+        </p>
+      
+    </div>
+    <div class="flex flex-row items-center">
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  
+</footer>
+
+    </div>
+  </body>
+</html>

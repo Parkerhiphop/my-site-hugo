@@ -1,0 +1,4 @@
+---
+title: "Anime"
+thoughtsCategory: "anime"
+---

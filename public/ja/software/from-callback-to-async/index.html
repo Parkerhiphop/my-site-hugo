@@ -1,0 +1,1334 @@
+
+
+
+
+
+
+<!doctype html>
+<html
+  lang="ja"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="light"
+  data-auto-appearance="true"
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FFFFFF" />
+  
+  <title>CallbackからAsync/Awaitへ：順次フェードインアニメーションを例に &middot; Parker Chang&#39;s Web</title>
+    <meta name="title" content="CallbackからAsync/Awaitへ：順次フェードインアニメーションを例に &middot; Parker Chang&#39;s Web" />
+  
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/appearance.min.8a082f81b27f3cb2ee528df0b0bdc39787034cf2cc34d4669fbc9977c929023c.js"
+    integrity="sha256-iggvgbJ/PLLuUo3wsL3Dl4cDTPLMNNRmn7yZd8kpAjw="
+  ></script>
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.3d626d356703626569364790e95b69715968a53a1054f31d92786caaf3605200.css"
+    integrity="sha256-PWJtNWcDYmVpNkeQ6VtpcVlopToQVPMdknhsqvNgUgA="
+  />
+  
+  
+  
+  
+  
+  
+  
+  <meta
+    name="description"
+    content="
+      順序的なフェードインアニメーションの実装を通して、JSにおける非同期処理を学びます。CallbackからPromiseへの移行、そしてAsync/Awaitを使ったより簡潔で読みやすいコードへのリファクタリングを解説します。
+    "
+  />
+  
+  
+  
+  
+    <link rel="canonical" href="http://localhost:1313/ja/software/from-callback-to-async/" />
+  
+  
+  
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:url" content="http://localhost:1313/ja/software/from-callback-to-async/">
+  <meta property="og:site_name" content="Parker Chang&#39;s Web">
+  <meta property="og:title" content="CallbackからAsync/Awaitへ：順次フェードインアニメーションを例に">
+  <meta property="og:description" content="順序的なフェードインアニメーションの実装を通して、JSにおける非同期処理を学びます。CallbackからPromiseへの移行、そしてAsync/Awaitを使ったより簡潔で読みやすいコードへのリファクタリングを解説します。">
+  <meta property="og:locale" content="ja">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="software">
+    <meta property="article:published_time" content="2023-08-21T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-08-21T00:00:00+00:00">
+    <meta property="og:image" content="http://localhost:1313/ja/software/from-callback-to-async/cover-en.png">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/ja/software/from-callback-to-async/cover-en.png">
+  <meta name="twitter:title" content="CallbackからAsync/Awaitへ：順次フェードインアニメーションを例に">
+  <meta name="twitter:description" content="順序的なフェードインアニメーションの実装を通して、JSにおける非同期処理を学びます。CallbackからPromiseへの移行、そしてAsync/Awaitを使ったより簡潔で読みやすいコードへのリファクタリングを解説します。">
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "ソフトウェア",
+    "name": "CallbackからAsync\/Awaitへ：順次フェードインアニメーションを例に",
+    "headline": "CallbackからAsync\/Awaitへ：順次フェードインアニメーションを例に",
+    "description": "順序的なフェードインアニメーションの実装を通して、JSにおける非同期処理を学びます。CallbackからPromiseへの移行、そしてAsync\/Awaitを使ったより簡潔で読みやすいコードへのリファクタリングを解説します。",
+    "abstract": "\u003cblockquote\u003e\n\u003cp\u003e\u003cstrong\u003e注:\u003c\/strong\u003e この記事は AI によって翻訳されています。もし不自然な表現や誤りがありましたら、メールやその他の手段でお知らせいただけると幸いです。フィードバックをいただけると助かります！\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003ch2 id=\u0022まえがき\u0022 class=\u0022relative group\u0022\u003eまえがき \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#%e3%81%be%e3%81%88%e3%81%8c%e3%81%8d\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003eこの記事は、Callback Hell、Promise、Async\/Await という言葉は聞いたことがあるけれど、実務で触れたことがない、あるいはその進化の過程がよくわからないという方向けに書かれています。「クリック後に要素を一つずつフェードインさせる」機能を実装しながら、これら 3 つの方法でどのように実装するかをステップバイステップで見ていきます。\u003c\/p\u003e\n\u003cp\u003e機能の MVP（実用最小限の製品）は以下のようになります：\u003c\/p\u003e\n\u003cp\u003e\n\n\n\n\n\n\n  \n  \n\u003cfigure\u003e\u003cimg src=\u0022\/software-development\/from-callback-to-async\/fading-example.gif\u0022 alt=\u0022Fading Example\u0022 class=\u0022mx-auto my-0 rounded-md\u0022 \/\u003e\n\u003c\/figure\u003e\n\u003c\/p\u003e\n\u003cp\u003e直感的な考え方：\u003c\/p\u003e\n\u003col\u003e\n\u003cli\u003eフェードインは要素に transition を設定し、クリック時に opacity を変更すればいい。\u003c\/li\u003e\n\u003cli\u003e一つずつフェードイン？ということは、後ろの要素のフェードインは前の要素のフェードイン完了を「待つ」必要がある？\u003c\/li\u003e\n\u003cli\u003eJS で「待つ」といえば setTimeout が第一候補。一つずつ待つなら、一つの setTimeout が終わったら、別の setTimeout を呼べばいい。\u003c\/li\u003e\n\u003c\/ol\u003e\n\u003cp\u003eそこで、以下のようなコードを書きました：\u003c\/p\u003e\n\u003cdiv class=\u0022highlight\u0022\u003e\u003cpre tabindex=\u00220\u0022 style=\u0022color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;\u0022\u003e\u003ccode class=\u0022language-javascript\u0022 data-lang=\u0022javascript\u0022\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003estartBtn\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;startBtn\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003econtainer\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;container\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003efirst\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;first\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003esecond\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;second\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003ethird\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;third\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003eforth\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;forth\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003efifth\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;fifth\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003eresetBtn\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;reset\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#a6e22e\u0022\u003estartBtn\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eaddEventListener\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;click\u0026#39;\u003c\/span\u003e, \u003cspan style=\u0022color:#66d9ef\u0022\u003efunction\u003c\/span\u003e () {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e  \u003cspan style=\u0022color:#66d9ef\u0022\u003ethis\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003estyle\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003edisplay\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e \u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;none\u0026#39;\u003c\/span\u003e;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e  \u003cspan style=\u0022color:#a6e22e\u0022\u003econtainer\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e  \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    \u003cspan style=\u0022color:#a6e22e\u0022\u003efirst\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e      \u003cspan style=\u0022color:#a6e22e\u0022\u003esecond\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e      \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e        \u003cspan style=\u0022color:#a6e22e\u0022\u003ethird\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e        \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e          \u003cspan style=\u0022color:#a6e22e\u0022\u003eforth\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e          \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e            \u003cspan style=\u0022color:#a6e22e\u0022\u003efifth\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e            \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e              \u003cspan style=\u0022color:#a6e22e\u0022\u003eresetBtn\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e            }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e          }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e        }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e      }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e  }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e});\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/code\u003e\u003c\/pre\u003e\u003c\/div\u003e\u003cp\u003e書き終わりました。各要素は 0.5 秒ごとに順次フェードインします。これで完了\u0026hellip;ですか？\u003c\/p\u003e",
+    "inLanguage": "ja",
+    "url" : "http:\/\/localhost:1313\/ja\/software\/from-callback-to-async\/",
+    "author" : {
+      "@type": "Person",
+      "name": "Parker"
+    },
+    "copyrightYear": "2023",
+    "dateCreated": "2023-08-21T00:00:00\u002b00:00",
+    "datePublished": "2023-08-21T00:00:00\u002b00:00",
+    
+    "dateModified": "2023-08-21T00:00:00\u002b00:00",
+    
+    
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "767"
+  }
+  </script>
+    
+    <script type="application/ld+json">
+    {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/ja/",
+       "name": "ホーム",
+       "position": 1
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/ja/software/",
+       "name": "ソフトウェア",
+       "position": 2
+     },
+     {
+       "@type": "ListItem",
+       "name": "Callbackから Async Awaitへ：順次フェードインアニメーションを例に",
+       "position": 3
+     }
+   ]
+ }
+  </script>
+
+  
+  
+    <meta name="author" content="Parker" />
+  
+  
+  
+  
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script>
+(function () {
+  
+  if (sessionStorage.getItem('lang-redirected')) return;
+  sessionStorage.setItem('lang-redirected', '1');
+
+  var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+  var path = window.location.pathname;
+
+  
+  var onEn = path === '/en' || path.startsWith('/en/');
+  var onJa = path === '/ja' || path.startsWith('/ja/');
+  
+  var onZh = !onEn && !onJa;
+
+  
+  var preferred;
+  if (/^ja/.test(lang)) {
+    preferred = 'ja';
+  } else if (/^zh/.test(lang)) {
+    preferred = 'zh';
+  } else {
+    preferred = 'en';
+  }
+
+  var alreadyCorrect =
+    (preferred === 'zh' && onZh) ||
+    (preferred === 'en' && onEn) ||
+    (preferred === 'ja' && onJa);
+
+  if (alreadyCorrect) return;
+
+  
+  var stripped = path.replace(/^\/(en|ja)/, '') || '/';
+
+  var target;
+  if (preferred === 'zh') {
+    target = stripped;
+  } else {
+    target = '/' + preferred + stripped;
+  }
+
+  window.location.replace(target);
+})();
+</script>
+
+  
+</head>
+<body
+    class="m-auto flex h-screen max-w-7xl flex-col bg-neutral px-6 text-lg leading-7 text-neutral-900 dark:bg-neutral-800 dark:text-neutral sm:px-14 md:px-24 lg:px-32"
+  >
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="-translate-y-8 rounded-b-lg bg-primary-200 px-3 py-1 text-sm focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content"
+        ><span class="pe-2 font-bold text-primary-600 dark:text-primary-400">&darr;</span
+        >メインコンテンツへスキップ</a
+      >
+    </div>
+    
+    
+      <header class="py-6 font-semibold text-neutral-900 dark:text-neutral sm:py-10 print:hidden">
+  <nav class="flex items-center justify-between">
+    <div class="z-40 flex flex-row items-center">
+      
+    </div>
+    
+      <div class="site-header-mobile-actions">
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+              
+              <button
+                id="appearance-switcher-1"
+                type="button"
+                aria-label="appearance switcher"
+                class="site-header-icon-button group"
+              >
+                <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                  </svg>
+                </span>
+                <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                  </svg>
+                </span>
+              </button>
+            
+          
+            
+              
+              
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/software/from-callback-to-async/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >EN</a><a
+          href="/ja/software/from-callback-to-async/"
+          aria-current="true"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-primary-600 dark:text-primary-400"
+        >日</a></div>
+  
+
+
+            
+          
+        
+      </div>
+      
+      <label id="menu-button" for="menu-controller" class="site-header-menu-button block">
+        <input type="checkbox" id="menu-controller" class="hidden" />
+        <div class="site-header-menu-trigger cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+          <span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+</span>
+        </div>
+        <div
+          id="menu-wrapper"
+          class="invisible fixed inset-0 z-30 m-auto h-full w-full cursor-default overflow-auto bg-neutral-100/50 opacity-0 backdrop-blur-sm transition-opacity dark:bg-neutral-900/50"
+        >
+          <ul
+            class="site-header-mobile-menu mx-auto flex w-full max-w-7xl list-none flex-col items-end overflow-visible px-6 py-6 text-end sm:px-14 sm:py-10 md:px-24 lg:px-32"
+          >
+            <li class="site-header-menu-close flex w-full items-end justify-end">
+              <span class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400"
+                ><span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span></span
+              >
+            </li>
+            
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/life/"
+                    title="生活"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >生活</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/software/"
+                    title="ソフトウェア"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >ソフトウェア</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/novel/"
+                    title="小説"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >小説</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/thoughts/"
+                    title="感想"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >感想</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/about/"
+                    title="このサイトについて"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >このサイトについて</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/now/"
+                    title="今"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >今</span
+                    ></a
+                  >
+                </li>
+              
+                
+                  
+                
+                  
+            
+          </ul>
+        </div>
+      </label>
+      
+      <ul class="site-header-desktop-nav hidden list-none flex-row items-center gap-6">
+        
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/life/"
+                  title="生活"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >生活</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/software/"
+                  title="ソフトウェア"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >ソフトウェア</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/novel/"
+                  title="小説"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >小説</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/thoughts/"
+                  title="感想"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >感想</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/about/"
+                  title="このサイトについて"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >このサイトについて</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/now/"
+                  title="今"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >今</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                <button
+                  id="appearance-switcher-2"
+                  type="button"
+                  aria-label="appearance switcher"
+                  class="flex items-center"
+                >
+                  <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                    </svg>
+                  </span>
+                  <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="4" />
+                      <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                    </svg>
+                  </span>
+                </button>
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/software/from-callback-to-async/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >EN</a><a
+          href="/ja/software/from-callback-to-async/"
+          aria-current="true"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-primary-600 dark:text-primary-400"
+        >日</a></div>
+  
+
+
+              
+            </li>
+          
+        
+      </ul>
+    
+  </nav>
+</header>
+
+    
+    <div class="relative flex grow flex-col">
+      <main id="main-content" class="grow">
+        
+  <article>
+    <header class="max-w-prose">
+      
+      <h1 class="mb-8 mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        CallbackからAsync/Awaitへ：順次フェードインアニメーションを例に
+      </h1>
+      
+        <div class="mb-10 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+          
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+    
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2023-08-21 00:00:00 &#43;0000 UTC">2023年8月21日</time><span class="px-2 text-primary-500">&middot;</span><span title="読むのに必要な時間">4 分</span>
+    
+
+    
+    
+  </div>
+
+  
+  
+
+
+        </div>
+      
+      
+        
+          <div class="prose">
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+  
+    <picture
+      class="mb-6 rounded-md"
+      
+    >
+      
+      
+      
+      
+        <source
+          
+            srcset="http://localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_64419efc0464fb16.webp 330w,http://localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_cc99d88aef444a42.webp 660w
+            
+              ,http://localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_959167241e545bcc.webp 1024w
+            
+            
+              
+                ,http://localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_f68906814c3d968e.webp 1200w
+              
+            "
+          
+          sizes="100vw"
+          type="image/webp"
+        />
+      
+      <img
+        width="1200"
+        height="630"
+        class="mb-6 rounded-md"
+        
+        
+        
+          src="http://localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_624f23668165406c.png" srcset="http://localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_4eba8a6db79189f4.png 330w,http://localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_624f23668165406c.png 660w
+          
+            ,http://localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_9a27d786ee489d43.png 1024w
+          
+          
+            ,http://localhost:1313/ja/software/from-callback-to-async/cover-ja.png 1200w
+          "
+          sizes="100vw"
+        
+      />
+    </picture>
+  
+
+
+            
+          </div>
+        
+      
+    </header>
+    
+      <section class="prose mt-0 flex max-w-full flex-col dark:prose-invert lg:flex-row">
+        
+          <div class="order-first px-0 lg:order-last lg:max-w-xs lg:ps-8">
+            <div class="toc pe-5 lg:sticky lg:top-10 print:hidden">
+              <details open class="-ms-5 mt-0 overflow-hidden rounded-lg ps-5">
+  <summary
+    class="block cursor-pointer bg-neutral-100 py-1 ps-5 text-lg font-semibold text-neutral-800 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden"
+  >
+    目次
+  </summary>
+  <div class="border-s border-dotted border-neutral-300 py-2 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#まえがき">まえがき</a></li>
+    <li><a href="#地獄について語る前にそもそも-callback-とは">地獄について語る前に、そもそも Callback とは？</a></li>
+    <li><a href="#ではcallback-hell-とは">では、Callback Hell とは？</a></li>
+    <li><a href="#promise">Promise</a>
+      <ul>
+        <li><a href="#パラメータ">パラメータ</a></li>
+        <li><a href="#完了または失敗する可能性のある操作はpromise-に-3-つの状態があることを意味します">「完了または失敗する可能性のある操作」は、Promise に 3 つの状態があることを意味します：</a></li>
+        <li><a href="#promise-の他の-4-つの静的メソッド">Promise の他の 4 つの静的メソッド</a></li>
+        <li><a href="#promise-で-callback-hell-を解決する"><strong>Promise で Callback Hell を解決する</strong></a></li>
+        <li><a href="#promise-使用後の違い">Promise 使用後の違い</a></li>
+      </ul>
+    </li>
+    <li><a href="#asyncawaitpromise-のシンタックスシュガー"><code>Async/Await</code>：Promise のシンタックスシュガー</a>
+      <ul>
+        <li><a href="#シンタックスシュガー糖衣構文とは">シンタックスシュガー（糖衣構文）とは？</a></li>
+        <li><a href="#async-と-await-キーワード">Async と Await キーワード</a></li>
+        <li><a href="#asyncawait-のメリット">Async/Await のメリット</a></li>
+        <li><a href="#asyncawait-でさらに簡略化した最終版"><strong>Async/Await でさらに簡略化した最終版</strong></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+            </div>
+          </div>
+        
+        <div class="min-h-0 min-w-0 max-w-prose grow">
+          <blockquote>
+<p><strong>注:</strong> この記事は AI によって翻訳されています。もし不自然な表現や誤りがありましたら、メールやその他の手段でお知らせいただけると幸いです。フィードバックをいただけると助かります！</p>
+</blockquote>
+<h2 id="まえがき" class="relative group">まえがき <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e3%81%be%e3%81%88%e3%81%8c%e3%81%8d" aria-label="アンカー">#</a></span></h2><p>この記事は、Callback Hell、Promise、Async/Await という言葉は聞いたことがあるけれど、実務で触れたことがない、あるいはその進化の過程がよくわからないという方向けに書かれています。「クリック後に要素を一つずつフェードインさせる」機能を実装しながら、これら 3 つの方法でどのように実装するかをステップバイステップで見ていきます。</p>
+<p>機能の MVP（実用最小限の製品）は以下のようになります：</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="/software-development/from-callback-to-async/fading-example.gif" alt="Fading Example" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>直感的な考え方：</p>
+<ol>
+<li>フェードインは要素に transition を設定し、クリック時に opacity を変更すればいい。</li>
+<li>一つずつフェードイン？ということは、後ろの要素のフェードインは前の要素のフェードイン完了を「待つ」必要がある？</li>
+<li>JS で「待つ」といえば setTimeout が第一候補。一つずつ待つなら、一つの setTimeout が終わったら、別の setTimeout を呼べばいい。</li>
+</ol>
+<p>そこで、以下のようなコードを書きました：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">startBtn</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;startBtn&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">container</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;container&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">first</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;first&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">second</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;second&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">third</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;third&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">forth</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;forth&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">fifth</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;fifth&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">resetBtn</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;reset&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">startBtn</span>.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">display</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;none&#39;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">container</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">first</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">second</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">third</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">forth</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">fifth</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>              <span style="color:#a6e22e">resetBtn</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>            }, <span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>          }, <span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>        }, <span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>      }, <span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>    }, <span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>  }, <span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p>書き終わりました。各要素は 0.5 秒ごとに順次フェードインします。これで完了&hellip;ですか？</p>
+<p>うーん&hellip;見れば見るほどおかしい&hellip;これがあの有名な <strong>Callback Hell（コールバック地獄）</strong> ではないでしょうか？</p>
+<h2 id="地獄について語る前にそもそも-callback-とは" class="relative group">地獄について語る前に、そもそも Callback とは？ <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e5%9c%b0%e7%8d%84%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%e8%aa%9e%e3%82%8b%e5%89%8d%e3%81%ab%e3%81%9d%e3%82%82%e3%81%9d%e3%82%82-callback-%e3%81%a8%e3%81%af" aria-label="アンカー">#</a></span></h2><blockquote>
+<p>関数 A が別の関数 B の引数として渡され、その後呼び出される場合、関数 A が Callback（コールバック）です。</p>
+</blockquote>
+<p>以下の例で言えば：「<code>greet</code>の 2 番目の引数がコールバック関数であり、<code>console.log</code>の後に呼び出されます」。この例では、<code>sayGoodbye</code>をコールバックとして渡しています。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">greet</span>(<span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">callback</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Hello, &#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">name</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;!&#39;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">callback</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">sayGoodbye</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Goodbye!&#39;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">greet</span>(<span style="color:#e6db74">&#39;John&#39;</span>, <span style="color:#a6e22e">sayGoodbye</span>);
+</span></span></code></pre></div><h2 id="ではcallback-hell-とは" class="relative group">では、Callback Hell とは？ <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e3%81%a7%e3%81%afcallback-hell-%e3%81%a8%e3%81%af" aria-label="アンカー">#</a></span></h2><blockquote>
+<p>JS で非同期処理を扱う際、ネストされたコールバック関数を使いすぎる状況のことです。別名「Pyramid of Doom（破滅のピラミッド）」や「Haduken Code（波動拳コード）」とも呼ばれます。</p>
+</blockquote>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="/software-development/from-callback-to-async/Haduken.jpeg" alt="Haduken Code" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="/software-development/from-callback-to-async/pyramid-of-doom.webp" alt="Pyramid Of Doom" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>あの波動拳を見た後、<del>開発者に波動拳を打ち込みたくなったかもしれませんが</del>、焦らないでください。まずは Callback Hell の罪状を挙げてみましょう：</p>
+<ol>
+<li>
+<p><strong>可読性が悪い</strong>、<strong>メンテナンスが困難</strong></p>
+<ul>
+<li>
+<p>コールバック関数が層状にネストされているため、コードを読むのも理解するのも、フローを追うのも難しくなります。コールバック関数の一つを追加、修正、削除するのも容易ではありません。</p>
+</li>
+<li>
+<p>フェードインアニメーションの例で言えば、途中のある要素だけ遅延時間を長くしたい場合、すぐに見つけられますか？実務のシナリオではロジックはもっと複雑になります。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>エラー処理が複雑</strong>：</p>
+<ul>
+<li>ここではまだエラー処理を入れていませんが、すでに読むのが難しいです。各コールバックやその中のいくつかにエラー処理が必要な場合、どれほど面倒になるか想像してみてください。</li>
+</ul>
+</li>
+<li>
+<p><strong>テスト性（Testability）が悪い</strong>：</p>
+<ul>
+<li>コールバック関数が結合してしまっているため、それぞれの単体テストを書くのが難しくなります。</li>
+</ul>
+</li>
+<li>
+<p><strong>パフォーマンスの問題</strong>：</p>
+<ul>
+<li>過剰なネストされたコールバックが Call stack に積み重なり、最終的に Stack Overflow（そう、あのウェブサイトの名前です）を引き起こす可能性があります。簡単に言えば、Stack がいっぱいになり、プログラムが動作しなくなります。</li>
+</ul>
+</li>
+</ol>
+<p><strong>補足：Call Stack</strong>：JS が関数を実行するメカニズムです。各関数はこの Stack に入り、Stack というデータ構造の後入れ先出し（LIFO）原則に従って実行されます。ここではこれ以上深く触れません。</p>
+<blockquote>
+<p>では、Callback Hell に対抗する方法はあるのでしょうか？ <del>天国に行けるチャンスはあるのでしょうか？</del></p>
+</blockquote>
+<p>あります。ES6 で提案された <a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="noreferrer">Promise</a> です！</p>
+<h2 id="promise" class="relative group">Promise <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#promise" aria-label="アンカー">#</a></span></h2><blockquote>
+<p>Promise は非同期処理を扱うためのオブジェクトです。それは最終的に完了（して結果を返す）するか、失敗（して理由を投げる）する可能性のある非同期操作を表します。</p>
+</blockquote>
+<h3 id="パラメータ" class="relative group">パラメータ <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e3%83%91%e3%83%a9%e3%83%a1%e3%83%bc%e3%82%bf" aria-label="アンカー">#</a></span></h3><p><code>executor</code>という関数を一つだけ受け取ります。この<code>executor</code>もコールバック関数です：<code>function(resolve, reject) { ... }</code></p>
+<ul>
+<li>
+<p><code>...</code>の部分で、どのような条件で完了（resolve）とみなすか、失敗（reject）とみなすかを設定できます。</p>
+</li>
+<li>
+<p>また、Promise を使用すると、以下の例のように<code>then</code>で非同期操作を連鎖させることができます。</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">executor</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#75715e">/* 条件成立 */</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">resolve</span>(<span style="color:#e6db74">&#39;成功しました！&#39;</span>);
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">reject</span>(<span style="color:#e6db74">&#39;失敗しました！&#39;</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">myPromise</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Promise(<span style="color:#a6e22e">executor</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">myPromise</span>
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">then</span>(<span style="color:#a6e22e">result</span> =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Fulfilled：&#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">result</span>); <span style="color:#75715e">// Fulfilled：成功しました！
+</span></span></span><span style="display:flex;"><span>  })
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">then</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ずっと then を繋げられます
+</span></span></span><span style="display:flex;"><span>  })
+</span></span><span style="display:flex;"><span>  .<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">error</span> =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#39;Rejected：&#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">error</span>); <span style="color:#75715e">// Rejected: 失敗しました！
+</span></span></span><span style="display:flex;"><span>  });
+</span></span></code></pre></div><h3 id="完了または失敗する可能性のある操作はpromise-に-3-つの状態があることを意味します" class="relative group">「完了または失敗する可能性のある操作」は、Promise に 3 つの状態があることを意味します： <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e5%ae%8c%e4%ba%86%e3%81%be%e3%81%9f%e3%81%af%e5%a4%b1%e6%95%97%e3%81%99%e3%82%8b%e5%8f%af%e8%83%bd%e6%80%a7%e3%81%ae%e3%81%82%e3%82%8b%e6%93%8d%e4%bd%9c%e3%81%afpromise-%e3%81%ab-3-%e3%81%a4%e3%81%ae%e7%8a%b6%e6%85%8b%e3%81%8c%e3%81%82%e3%82%8b%e3%81%93%e3%81%a8%e3%82%92%e6%84%8f%e5%91%b3%e3%81%97%e3%81%be%e3%81%99" aria-label="アンカー">#</a></span></h3><ol>
+<li>
+<p><strong>Pending（待機中）</strong>：成功でも拒否でもない状態。</p>
+<ul>
+<li>Promise 実行後、まだ結果が出ていない遅延状態。</li>
+</ul>
+</li>
+<li>
+<p><strong>Fulfilled（履行/成功）</strong>：操作が成功して完了。</p>
+<ul>
+<li>Executor 内の条件が成功し、resolve が実行された時。</li>
+</ul>
+</li>
+<li>
+<p><strong>Rejected（拒否/失敗）</strong>：操作が失敗。</p>
+<ul>
+<li>Executor 内の条件が失敗し、reject が実行された時。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>Promise オブジェクトが作成され実行が開始された時、その状態は Pending です。その後、非同期操作の結果に応じて、Fulfilled（成功）または Rejected（失敗）のいずれかになります。</p>
+</blockquote>
+<p>ここでは、常に HTTP レスポンスを resolve する <a href="https://developer.mozilla.org/ja/docs/Web/API/Fetch_API/Using_Fetch" target="_blank" rel="noreferrer"><code>fetch</code></a> 関数を例に挙げます：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fetchStarWarsCharacter</span>(<span style="color:#a6e22e">id</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fetch</span>(<span style="color:#e6db74">`https://swapi.dev/api/people/</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">id</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/`</span>)
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">response</span>) =&gt; {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">ok</span>) {
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">json</span>();
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e">// Fetchが返すPromiseはデフォルトではレスポンスを受け取ればresolveします
+</span></span></span><span style="display:flex;"><span>          <span style="color:#75715e">// そのため、HTTPステータスコードが2xxでない状況に対してrejectする必要があります
+</span></span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">reject</span>(<span style="color:#e6db74">&#39;リクエスト失敗&#39;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      })
+</span></span><span style="display:flex;"><span>      .<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">character</span>) =&gt; {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">character</span>); <span style="color:#75715e">// 人物情報の取得に成功、JSONを解析してPromiseを完了
+</span></span></span><span style="display:flex;"><span>      })
+</span></span><span style="display:flex;"><span>      .<span style="color:#66d9ef">catch</span>((<span style="color:#a6e22e">error</span>) =&gt; {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">reject</span>(<span style="color:#e6db74">&#39;予期せぬエラー&#39;</span>); <span style="color:#75715e">// ネットワークエラーやリクエストを中断させるその他の状況
+</span></span></span><span style="display:flex;"><span>      });
+</span></span><span style="display:flex;"><span>  });
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 呼び出し
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">fetchStarWarsCharacter</span>(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>  .<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">character</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Name: Luke Skywalker
+</span></span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Name:&#39;</span>, <span style="color:#a6e22e">character</span>.<span style="color:#a6e22e">name</span>);
+</span></span><span style="display:flex;"><span>  })
+</span></span><span style="display:flex;"><span>  .<span style="color:#66d9ef">catch</span>((<span style="color:#a6e22e">error</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Error: リクエスト失敗 or Error: 予期せぬエラー
+</span></span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;Error:&#39;</span>, <span style="color:#a6e22e">error</span>);
+</span></span><span style="display:flex;"><span>  });
+</span></span></code></pre></div><h3 id="promise-の他の-4-つの静的メソッド" class="relative group">Promise の他の 4 つの静的メソッド <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#promise-%e3%81%ae%e4%bb%96%e3%81%ae-4-%e3%81%a4%e3%81%ae%e9%9d%99%e7%9a%84%e3%83%a1%e3%82%bd%e3%83%83%e3%83%89" aria-label="アンカー">#</a></span></h3><ol>
+<li>Promise.resolve</li>
+</ol>
+<ul>
+<li>非 Promise 値を Promise に変換したり、即座に受け入れられる Promise を作成する際に使えます。
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>Promise.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">value</span>);
+</span></span><span style="display:flex;"><span>Promise.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">promise</span>);
+</span></span><span style="display:flex;"><span>Promise.<span style="color:#a6e22e">resolve</span>(<span style="color:#a6e22e">thenable</span>);
+</span></span></code></pre></div></li>
+</ul>
+<ol start="2">
+<li>Promise.reject</li>
+</ol>
+<ul>
+<li>非 Promise 値を Promise に変換したり、即座に失敗する Promise を作成する際に使えます。
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>Promise.<span style="color:#a6e22e">reject</span>(<span style="color:#a6e22e">reason</span>);
+</span></span></code></pre></div></li>
+</ul>
+<ol start="3">
+<li>
+<p>Promise.all</p>
+<ul>
+<li>一つの promise を返します。iterable 内のすべての promise が履行された時に履行され、またはいずれかの promise が拒否された時に即座に拒否されます。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>Promise.<span style="color:#a6e22e">all</span>(<span style="color:#a6e22e">iterable</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Example
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">p1</span> <span style="color:#f92672">=</span> Promise.<span style="color:#a6e22e">resolve</span>(<span style="color:#ae81ff">3</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">p2</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1337</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">p3</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">reject</span>) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">setTimeout</span>(<span style="color:#a6e22e">resolve</span>, <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#39;foo&#39;</span>);
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Promise.<span style="color:#a6e22e">all</span>([<span style="color:#a6e22e">p1</span>, <span style="color:#a6e22e">p2</span>, <span style="color:#a6e22e">p3</span>]).<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">values</span>) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">values</span>); <span style="color:#75715e">// [3, 1337, &#34;foo&#34;]
+</span></span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p><code>Promise.all</code>をもっと知りたい方は、Leetcode - JS30 の <a href="https://leetcode.com/problems/execute-asynchronous-functions-in-parallel/description/" target="_blank" rel="noreferrer">2721. Execute Asynchronous Functions in Parallel</a> をやってみることをお勧めします。</p>
+</li>
+<li>
+<p>Promise.race</p>
+<ul>
+<li>渡された iterable の中でいずれかの promise が履行または拒否された時、即座にその履行または拒否された <a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="noreferrer"><code>Promise</code></a> を返します。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>Promise.<span style="color:#a6e22e">race</span>(<span style="color:#a6e22e">iterable</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Example
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">resolvedPromisesArray</span> <span style="color:#f92672">=</span> [Promise.<span style="color:#a6e22e">resolve</span>(<span style="color:#ae81ff">33</span>), Promise.<span style="color:#a6e22e">resolve</span>(<span style="color:#ae81ff">44</span>)];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">p</span> <span style="color:#f92672">=</span> Promise.<span style="color:#a6e22e">race</span>(<span style="color:#a6e22e">resolvedPromisesArray</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">p</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">setTimeout</span>(<span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;the stack is now empty&#39;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">p</span>);
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// logs, in order:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Promise { &lt;state&gt;: &#34;pending&#34; }
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// the stack is now empty
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Promise { &lt;state&gt;: &#34;fulfilled&#34;, &lt;value&gt;: 33 }
+</span></span></span></code></pre></div><p>Leetcode - JS30 にも同様に <a href="https://leetcode.com/problems/promise-time-limit/description/" target="_blank" rel="noreferrer">2637. Promise Time Limit</a> という練習問題があります！</p>
+</li>
+</ol>
+<blockquote>
+<p>ここでの<code>Promise.resolve</code>と<code>Promise.reject</code>は、<code>new Promise((resolve, reject) =&gt; {...}</code>の中のパラメータの命名慣習と同じ名前ですが、実は概念が異なります。</p>
+</blockquote>
+<p>これらは静的メソッドで、解決済みまたは拒否済みの Promise を作成するために使われます。一方、executor コールバック内の resolve と reject 関数は、Promise オブジェクトの状態（Pending / Fulfilled / Rejected）を制御するために使われます。</p>
+<p>他にも <a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise#%E9%9D%99%E7%9A%84%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89" target="_blank" rel="noreferrer">MDN - Promise Methods</a> が参考になります。</p>
+<h3 id="promise-で-callback-hell-を解決する" class="relative group"><strong>Promise で Callback Hell を解決する</strong> <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#promise-%e3%81%a7-callback-hell-%e3%82%92%e8%a7%a3%e6%b1%ba%e3%81%99%e3%82%8b" aria-label="アンカー">#</a></span></h3><p>例に戻ると、まず setTimeout を Promise で包んだ delay 関数にし、その後 Promise の連鎖特性を使って各操作を繋げ、操作が完了するたびに delay を呼び出し、対応する秒数を入れることができます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">delay</span>(<span style="color:#a6e22e">ms</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>) =&gt; <span style="color:#a6e22e">setTimeout</span>(<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">ms</span>));
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">startBtn</span>.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">display</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;none&#39;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">opacity</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">container</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">delay</span>(<span style="color:#ae81ff">500</span>)
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">then</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">first</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">delay</span>(<span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">then</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">second</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">delay</span>(<span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">then</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">third</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">delay</span>(<span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">then</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">forth</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">delay</span>(<span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">then</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">fifth</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">delay</span>(<span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">then</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">resetBtn</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">delay</span>(<span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><h3 id="promise-使用後の違い" class="relative group">Promise 使用後の違い <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#promise-%e4%bd%bf%e7%94%a8%e5%be%8c%e3%81%ae%e9%81%95%e3%81%84" aria-label="アンカー">#</a></span></h3><ol>
+<li>
+<p>ネスト構造からチェーン構造へ変化</p>
+<ul>
+<li>
+<p>関数を関数の中に放り込むのではなく、.then を通して鎖のように繋げていきます。</p>
+</li>
+<li>
+<p>チェーンのどの位置に関数があるか順に下へ見ていけばよく、callback を扱う時のような左右や上下への視線移動は不要です。</p>
+<ul>
+<li>例えば<code>third</code>という要素が表示された後、遅延を長くしたい場合、その次の行の<code>return delay(500</code>だとすぐにわかります。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>.catch</code>を通じてエラー処理が容易に行える（このコードではエラー処理は不要ですが）</p>
+<ul>
+<li>エラーを一箇所で処理でき、コードがすっきりし、関心の分離も達成できます。</li>
+</ul>
+</li>
+</ol>
+<center><h2>**でも...もっとスッキリさせるチャンスはあるでしょうか？**</h2></center>
+<p>あります！真剣な子にはご褒美があります。美味しくて香ばしい Promise のシンタックスシュガー、<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/async_function" target="_blank" rel="noreferrer">Async/Await</a> をいただきましょう！</p>
+<h2 id="asyncawaitpromise-のシンタックスシュガー" class="relative group"><code>Async/Await</code>：Promise のシンタックスシュガー <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#asyncawaitpromise-%e3%81%ae%e3%82%b7%e3%83%b3%e3%82%bf%e3%83%83%e3%82%af%e3%82%b9%e3%82%b7%e3%83%a5%e3%82%ac%e3%83%bc" aria-label="アンカー">#</a></span></h2><h3 id="シンタックスシュガー糖衣構文とは" class="relative group">シンタックスシュガー（糖衣構文）とは？ <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e3%82%b7%e3%83%b3%e3%82%bf%e3%83%83%e3%82%af%e3%82%b9%e3%82%b7%e3%83%a5%e3%82%ac%e3%83%bc%e7%b3%96%e8%a1%a3%e6%a7%8b%e6%96%87%e3%81%a8%e3%81%af" aria-label="アンカー">#</a></span></h3><blockquote>
+<p>重要なポイントを覚えておいてください：<strong>シンタックスシュガーは機能を追加するものではなく、純粋に開発者体験（DX）を向上させるものです</strong></p>
+</blockquote>
+<ul>
+<li>
+<p>シンタックスシュガーはプログラミング言語の用語で、人間である開発者にとってコードをより書きやすく、読みやすくするための構文機能を指します。</p>
+</li>
+<li>
+<p>なので、使うかどうかは個人やチームのスタイル次第ですが、私自身は Async/Await は本当に素晴らしいと思います。</p>
+</li>
+</ul>
+<h3 id="async-と-await-キーワード" class="relative group">Async と Await キーワード <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#async-%e3%81%a8-await-%e3%82%ad%e3%83%bc%e3%83%af%e3%83%bc%e3%83%89" aria-label="アンカー">#</a></span></h3><ol>
+<li>
+<p><strong><code>async</code></strong>：関数の中に非同期操作があることを宣言するためのキーワード。</p>
+</li>
+<li>
+<p><strong><code>await</code></strong>：**<code>async</code>**関数内部でのみ使用可能なキーワード。この後ろには Promise を返す非同期操作が続きます。</p>
+</li>
+</ol>
+<blockquote>
+<p>Promise の前に置くと、現在の**<code>async</code>**関数の実行を一時停止し、Promise が完了するまで待ち、その後 Promise の結果を返します。</p>
+</blockquote>
+<p>私の Async Await の理解の仕方を共有します：「<strong>非同期コードをまるで同期コードのように書けるようにするもの</strong>」。元々のように一行一行コードを読んでいき、await に出会ったら、await の後ろのプログラムが実行し終わるのを待ってから次の行に進む、という感じです。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fetchData</span>() {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">response</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">fetch</span>(<span style="color:#e6db74">&#39;url&#39;</span>); <span style="color:#75715e">// fetchが確実に実行完了し、responseに値が入ってから次へ
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">response</span>.<span style="color:#a6e22e">json</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">data</span>);
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">error</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#39;エラーです：&#39;</span>, <span style="color:#a6e22e">error</span>); <span style="color:#75715e">// fetchやresponse.jsonでエラーがあればrejectされ、ここに入ります
+</span></span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>ここのエラー処理が<code>try…catch</code>を使っていることに気づきましたか？</li>
+<li><code>Promise</code>が<code>.catch</code>でエラーを捕捉できるように、<code>async/await</code>の標準装備は<code>try…catch</code>です。個人的には成功領域とエラー領域を分けることで、より良い可読性が提供されると思います。</li>
+</ul>
+<h3 id="asyncawait-のメリット" class="relative group">Async/Await のメリット <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#asyncawait-%e3%81%ae%e3%83%a1%e3%83%aa%e3%83%83%e3%83%88" aria-label="アンカー">#</a></span></h3><ul>
+<li>可読性、DX が向上し、非同期処理に<code>try…catch</code>を使用できる。</li>
+</ul>
+<h3 id="asyncawait-でさらに簡略化した最終版" class="relative group"><strong>Async/Await でさらに簡略化した最終版</strong> <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#asyncawait-%e3%81%a7%e3%81%95%e3%82%89%e3%81%ab%e7%b0%a1%e7%95%a5%e5%8c%96%e3%81%97%e3%81%9f%e6%9c%80%e7%b5%82%e7%89%88" aria-label="アンカー">#</a></span></h3><blockquote>
+<p>最後はやはり例に戻りましょう。<code>async/await</code>を使って Promise 構築のコードをさらに簡略化する方法を見てみましょう：</p>
+</blockquote>
+<p>まず同様に delay 関数を用意し、次に IIFE の方法で async 関数を呼び出します。そして遅延が必要な各時点で<code>await delay(ms)</code>を呼び出します。await の行を実行する時、名実ともにその行の実行完了を待ってから次の行へ進みます。</p>
+<ul>
+<li>補足：IIFE は即時実行関数式（Immediately Invoked Function Expression）で、関数を定義した後すぐにそれをトリガーすることを指します。通常名前を付けないため、自己実行無名関数（Self-Executing Anonymous Function）とも呼ばれます。定義してすぐトリガーするので、命名の手順も不要です。例ではさらにアロー関数を使って、<code>function</code>というキーワードさえ書かずに済むようにしました！</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">delay</span>(<span style="color:#a6e22e">ms</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise((<span style="color:#a6e22e">resolve</span>) =&gt; <span style="color:#a6e22e">setTimeout</span>(<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">ms</span>));
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">startBtn</span>.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">display</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;none&#39;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">opacity</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">container</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  (<span style="color:#66d9ef">async</span> () =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">delay</span>(<span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">first</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">delay</span>(<span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">second</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">delay</span>(<span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">third</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">delay</span>(<span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">forth</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">delay</span>(<span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fifth</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">delay</span>(<span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">resetBtn</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hidden&#39;</span>);
+</span></span><span style="display:flex;"><span>  })();
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p>最初のネストされた Callback hell から、チェーン状の Promise、そして簡潔な Async Await へ。随分違うと感じませんか？</p>
+<p>この実務で遭遇した要件を利用して、皆さんが Callback Hell、Promise、Async/Await の概念と、Callback を Async/Await へとステップバイステップで簡略化する方法を理解する助けになれば幸いです！</p>
+<p>質問があれば、コメントやその他の方法で私に教えてくださいね！</p>
+<ul>
+<li>最後に完全な <a href="https://codepen.io/ParkerZhang/pen/VwqYZEm?editors=1010" target="_blank" rel="noreferrer">Demo Code</a> を添付します。</li>
+</ul>
+
+        </div>
+      </section>
+      <footer class="max-w-prose pt-8 print:hidden">
+        
+  <div class="flex">
+    
+    
+    
+    <div class="place-self-center">
+      
+        <div class="text-[0.6rem] uppercase leading-3 text-neutral-500 dark:text-neutral-400">
+          著者
+        </div>
+        <div class="font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
+          Parker
+        </div>
+      
+      
+      <div class="text-2xl sm:text-lg">
+</div>
+    </div>
+  </div>
+
+
+        
+
+        
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="group flex" href="http://localhost:1313/ja/software/google-oauth-login/">
+              <span
+                class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+                ><span class="ltr:inline rtl:hidden">&larr;</span
+                ><span class="ltr:hidden rtl:inline">&rarr;</span></span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Googleサードパーティログインの実装（Vue / Express）</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2022-10-23 00:00:00 &#43;0000 UTC">2022年10月23日</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+            <a class="group flex text-right" href="http://localhost:1313/ja/software/talk-about-js-eval/">
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >JavaScriptにおけるeval、リスク、そして代替案について</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2023-09-30 00:00:00 &#43;0000 UTC">2023年9月30日</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ms-2 text-neutral-700 transition-transform group-hover:-translate-x-[-2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+                ><span class="ltr:inline rtl:hidden">&rarr;</span
+                ><span class="ltr:hidden rtl:inline">&larr;</span></span
+              >
+            </a>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+        
+          
+            <div class="pt-3">
+              <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+              <div class="pt-3">
+                <div id="cusdis_thread"
+  data-host="https://cusdis.com"
+  data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
+  data-page-id="b3a35c5778e26bf3e8df834f6650c380"
+  data-page-url="http://localhost:1313/ja/software/from-callback-to-async/"
+  data-page-title="CallbackからAsync/Awaitへ：順次フェードインアニメーションを例に"
+></div>
+<script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+<script>
+  (function () {
+    function getCusdisTheme() {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    function applyTheme() {
+      if (window.CUSDIS) window.CUSDIS.setTheme(getCusdisTheme());
+    }
+    document.addEventListener('DOMContentLoaded', applyTheme);
+    new MutationObserver(applyTheme).observe(
+      document.documentElement,
+      { attributeFilter: ['class'] }
+    );
+  })();
+</script>
+
+              </div>
+            </div>
+          
+        
+      </footer>
+    
+  </article>
+
+      </main>
+      
+        <div
+          class="pointer-events-none absolute bottom-0 end-0 top-[100vh] w-12"
+          id="to-top"
+          hidden="true"
+        >
+          <a
+            href="#the-top"
+            class="pointer-events-auto sticky top-[calc(100vh-5.5rem)] flex h-12 w-12 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 backdrop-blur hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+            aria-label="TOPへスクロール"
+            title="TOPへスクロール"
+          >
+            &uarr;
+          </a>
+        </div>
+      <footer class="py-10 print:hidden">
+  
+  
+  <div class="flex items-center justify-between">
+    <div>
+      
+      
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+            &copy;
+            2026
+            Parker
+        </p>
+      
+      
+      
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          
+          
+          Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> &amp; <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://github.com/jpanther/congo" target="_blank" rel="noopener noreferrer">Congo</a>
+        </p>
+      
+    </div>
+    <div class="flex flex-row items-center">
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  
+</footer>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,154 @@
+{{ define "main" }}
+  {{- $lang := lower site.Language.Lang -}}
+  {{- $categories := slice
+    (dict "key" "manga" "zh-tw" "漫畫" "en" "Manga" "ja" "漫画")
+    (dict "key" "anime" "zh-tw" "動畫" "en" "Anime" "ja" "アニメ")
+    (dict "key" "movie" "zh-tw" "電影" "en" "Movie" "ja" "映画")
+    (dict "key" "series" "zh-tw" "影集" "en" "Series" "ja" "ドラマ")
+    (dict "key" "novel" "zh-tw" "小說" "en" "Novel" "ja" "小説")
+    (dict "key" "tools" "zh-tw" "工具書" "en" "Tools" "ja" "実用書")
+  -}}
+  {{- $empty := dict "zh-tw" "目前沒有作品" "en" "No works yet" "ja" "まだ作品がありません" -}}
+  {{- $allLabel := dict "zh-tw" "全部" "en" "All" "ja" "すべて" -}}
+  {{- $searchLabel := dict "zh-tw" "搜尋標題" "en" "Search title" "ja" "タイトル検索" -}}
+  {{- $noResults := dict "zh-tw" "找不到符合的作品" "en" "No matching works" "ja" "一致する作品がありません" -}}
+  {{- $columnLabels := dict
+    "zh-tw" (dict "finishedDate" "讀完日期" "workDate" "作品日期" "creator" "作者" "publisher" "出版社 / 製作公司" "rating" "評分" "tags" "標籤" "note" "備註")
+    "en" (dict "finishedDate" "Finished" "workDate" "Released" "creator" "Creator" "publisher" "Publisher / Studio" "rating" "Rating" "tags" "Tags" "note" "Note")
+    "ja" (dict "finishedDate" "読了日" "workDate" "作品日" "creator" "作者" "publisher" "出版社 / 制作会社" "rating" "評価" "tags" "タグ" "note" "メモ")
+  -}}
+  {{- $columns := index $columnLabels $lang | default (index $columnLabels "en") -}}
+  {{- $works := hugo.Data.works.items | default slice -}}
+  {{- $root := site.GetPage "works" -}}
+  {{- $currentCategory := .Params.worksCategory | default "all" -}}
+  {{- $visibleCategories := $categories -}}
+  {{- if ne $currentCategory "all" -}}
+    {{- $visibleCategories = where $categories "key" $currentCategory -}}
+  {{- end -}}
+
+  <header>
+    <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
+    {{ with .Description }}
+      <p class="mt-3 max-w-3xl text-base leading-7 text-neutral-500 dark:text-neutral-400">{{ . }}</p>
+    {{ end }}
+  </header>
+
+  {{ if $works }}
+    <div class="works-database" data-works-database>
+      <div class="works-controls">
+        <nav class="thoughts-category-menu works-category-menu" aria-label="{{ .Title }}">
+          <a class="thoughts-category-pill {{ if eq $currentCategory "all" }}is-active{{ end }}" href="{{ $root.RelPermalink }}">
+            {{ index $allLabel $lang | default "All" }}
+            <span class="thoughts-category-count">{{ len $works }}</span>
+          </a>
+          {{ range $categories }}
+            {{- $key := .key -}}
+            {{- $items := where $works "category" $key -}}
+            {{- $label := index . $lang | default (index . "en") -}}
+            {{ with site.GetPage (printf "works/%s" $key) }}
+              <a class="thoughts-category-pill {{ if eq $currentCategory $key }}is-active{{ end }}" href="{{ .RelPermalink }}">
+                {{ $label }}
+                <span class="thoughts-category-count">{{ len $items }}</span>
+              </a>
+            {{ end }}
+          {{ end }}
+        </nav>
+        <label class="works-search">
+          <span>{{ index $searchLabel $lang | default "Search title" }}</span>
+          <input type="search" data-works-search placeholder="{{ index $searchLabel $lang | default "Search title" }}" autocomplete="off">
+        </label>
+      </div>
+
+      {{ range $visibleCategories }}
+        {{- $key := .key -}}
+        {{- $items := where $works "category" $key -}}
+        {{- $label := index . $lang | default (index . "en") -}}
+        {{ if $items }}
+          <section class="works-section" data-works-section>
+            <div class="works-section-heading">
+              <h2>{{ $label }}</h2>
+              <span>{{ len $items }}</span>
+            </div>
+            <div class="works-table">
+              <div class="works-row works-row-header">
+                <div>{{ index $columns "finishedDate" }}</div>
+                <div>{{ index $columns "workDate" }}</div>
+                <div>{{ index $columns "creator" }}</div>
+                <div>{{ index $columns "publisher" }}</div>
+                <div>{{ index $columns "rating" }}</div>
+                <div>{{ index $columns "tags" }}</div>
+              </div>
+              {{ range $items }}
+                <article class="works-row" data-work-row data-title="{{ .title }}">
+                  <div class="works-title-cell">
+                    {{ if .thought }}
+                      <a class="works-title works-title-linked" href="{{ .thought }}">{{ .title }}</a>
+                    {{ else }}
+                      <span class="works-title">{{ .title }}</span>
+                    {{ end }}
+                  </div>
+                  <div class="works-field works-finished-date" data-label="{{ index $columns "finishedDate" }}">{{ .finishedDate | default "—" }}</div>
+                  <div class="works-field" data-label="{{ index $columns "workDate" }}">{{ .workDate | default "—" }}</div>
+                  <div class="works-field" data-label="{{ index $columns "creator" }}">{{ .creator | default "—" }}</div>
+                  <div class="works-field" data-label="{{ index $columns "publisher" }}">{{ .publisher | default "—" }}</div>
+                  <div class="works-field" data-label="{{ index $columns "rating" }}">{{ .rating | default "—" }}</div>
+                  <div class="works-field works-tags" data-label="{{ index $columns "tags" }}">
+                    {{- if .tags -}}
+                      {{- delimit .tags "、" -}}
+                    {{- else -}}
+                      —
+                    {{- end -}}
+                  </div>
+                  {{ with .note }}
+                    <p class="works-note" data-label="{{ index $columns "note" }}">{{ . }}</p>
+                  {{ end }}
+                </article>
+              {{ end }}
+            </div>
+          </section>
+        {{ end }}
+      {{ end }}
+      <p class="thoughts-empty works-search-empty" data-works-empty hidden>{{ index $noResults $lang | default "No matching works" }}</p>
+    </div>
+  {{ else }}
+    <p class="thoughts-empty">{{ index $empty $lang | default "No works yet" }}</p>
+  {{ end }}
+  <script>
+    (() => {
+      const database = document.querySelector("[data-works-database]");
+      if (!database) return;
+
+      const search = database.querySelector("[data-works-search]");
+      const empty = database.querySelector("[data-works-empty]");
+      const sections = Array.from(database.querySelectorAll("[data-works-section]"));
+      const normalize = (value) => value.trim().toLocaleLowerCase();
+
+      const update = () => {
+        const query = normalize(search.value);
+        let visibleCount = 0;
+
+        sections.forEach((section) => {
+          const rows = Array.from(section.querySelectorAll("[data-work-row]"));
+          let sectionVisibleCount = 0;
+
+          rows.forEach((row) => {
+            const title = normalize(row.dataset.title || "");
+            const isVisible = !query || title.includes(query);
+            row.hidden = !isVisible;
+            sectionVisibleCount += isVisible ? 1 : 0;
+          });
+
+          section.hidden = sectionVisibleCount === 0;
+          visibleCount += sectionVisibleCount;
+        });
+
+        if (empty) empty.hidden = visibleCount !== 0;
+      };
+
+      if (search) {
+        search.addEventListener("input", update);
+        update();
+      }
+    })();
+  </script>
+{{ end }}

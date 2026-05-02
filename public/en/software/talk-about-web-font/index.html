@@ -1,0 +1,1117 @@
+
+
+
+
+
+
+<!doctype html>
+<html
+  lang="en"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="light"
+  data-auto-appearance="true"
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FFFFFF" />
+  
+  <title>Talk about Web Fonts — Design, File Formats and Frontend Loading &middot; Parker Chang&#39;s Web</title>
+    <meta name="title" content="Talk about Web Fonts — Design, File Formats and Frontend Loading &middot; Parker Chang&#39;s Web" />
+  
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/appearance.min.8a082f81b27f3cb2ee528df0b0bdc39787034cf2cc34d4669fbc9977c929023c.js"
+    integrity="sha256-iggvgbJ/PLLuUo3wsL3Dl4cDTPLMNNRmn7yZd8kpAjw="
+  ></script>
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.3d626d356703626569364790e95b69715968a53a1054f31d92786caaf3605200.css"
+    integrity="sha256-PWJtNWcDYmVpNkeQ6VtpcVlopToQVPMdknhsqvNgUgA="
+  />
+  
+  
+  
+  
+  
+  
+  
+  <meta
+    name="description"
+    content="
+      Introduce font design process (unprofessional version), what are font files, and how web pages use fonts.
+    "
+  />
+  
+  
+  
+  
+    <link rel="canonical" href="http://localhost:1313/en/software/talk-about-web-font/" />
+  
+  
+  
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:url" content="http://localhost:1313/en/software/talk-about-web-font/">
+  <meta property="og:site_name" content="Parker Chang&#39;s Web">
+  <meta property="og:title" content="Talk about Web Fonts — Design, File Formats and Frontend Loading">
+  <meta property="og:description" content="Introduce font design process (unprofessional version), what are font files, and how web pages use fonts.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="software">
+    <meta property="article:published_time" content="2021-10-28T00:00:00+00:00">
+    <meta property="article:modified_time" content="2021-10-28T00:00:00+00:00">
+    <meta property="article:tag" content="Software Development">
+    <meta property="article:tag" content="Web Development">
+    <meta property="article:tag" content="CSS">
+    <meta property="article:tag" content="Font">
+    <meta property="article:tag" content="Design">
+    <meta property="og:image" content="http://localhost:1313/en/software/talk-about-web-font/cover-en.png">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/en/software/talk-about-web-font/cover-en.png">
+  <meta name="twitter:title" content="Talk about Web Fonts — Design, File Formats and Frontend Loading">
+  <meta name="twitter:description" content="Introduce font design process (unprofessional version), what are font files, and how web pages use fonts.">
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Software",
+    "name": "Talk about Web Fonts — Design, File Formats and Frontend Loading",
+    "headline": "Talk about Web Fonts — Design, File Formats and Frontend Loading",
+    "description": "Introduce font design process (unprofessional version), what are font files, and how web pages use fonts.",
+    "abstract": "\u003cblockquote\u003e\n\u003cp\u003e\u003cstrong\u003eNote:\u003c\/strong\u003e This post is translated by AI. If you find any unnatural phrasing or errors, please feel free to contact me via email or other channels. Your feedback is appreciated!\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003cp\u003eA while ago, the font bundle from \u003ca href=\u0022https:\/\/www.instagram.com\/designnotdeep\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eDesign Not Deep\u003c\/a\u003e caused a wave of font claiming craze. Besides slides, posters, and social media posts, have you ever thought about how fonts are used on web pages?\u003c\/p\u003e\n\u003cp\u003e\n\n\n\n\n\n\n  \n  \n\u003cfigure\u003e\u003cimg src=\u0022https:\/\/cdn-images-1.medium.com\/max\/800\/0*OEf5PYLRWXCaS_Op\u0022 alt=\u0022typewritter\u0022 class=\u0022mx-auto my-0 rounded-md\u0022 \/\u003e\n\u003c\/figure\u003e\n\u003c\/p\u003e\n\u003cp\u003ephoto by \u003ca href=\u0022https:\/\/unsplash.com\/@diklein\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eDavid Klein\u003c\/a\u003e on \u003ca href=\u0022https:\/\/unsplash.com\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eUnsplash\u003c\/a\u003e\u003c\/p\u003e",
+    "inLanguage": "en",
+    "url" : "http:\/\/localhost:1313\/en\/software\/talk-about-web-font\/",
+    "author" : {
+      "@type": "Person",
+      "name": "Parker"
+    },
+    "copyrightYear": "2021",
+    "dateCreated": "2021-10-28T00:00:00\u002b00:00",
+    "datePublished": "2021-10-28T00:00:00\u002b00:00",
+    
+    "dateModified": "2021-10-28T00:00:00\u002b00:00",
+    
+    "keywords": ["Software Development","Web Development","CSS","Font","Design"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "1654"
+  }
+  </script>
+    
+    <script type="application/ld+json">
+    {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/en/",
+       "name": "Home",
+       "position": 1
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/en/software/",
+       "name": "Software",
+       "position": 2
+     },
+     {
+       "@type": "ListItem",
+       "name": "Talk About Web Fonts — Design, File Formats and Frontend Loading",
+       "position": 3
+     }
+   ]
+ }
+  </script>
+
+  
+  
+    <meta name="author" content="Parker" />
+  
+  
+  
+  
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script>
+(function () {
+  
+  if (sessionStorage.getItem('lang-redirected')) return;
+  sessionStorage.setItem('lang-redirected', '1');
+
+  var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+  var path = window.location.pathname;
+
+  
+  var onEn = path === '/en' || path.startsWith('/en/');
+  var onJa = path === '/ja' || path.startsWith('/ja/');
+  
+  var onZh = !onEn && !onJa;
+
+  
+  var preferred;
+  if (/^ja/.test(lang)) {
+    preferred = 'ja';
+  } else if (/^zh/.test(lang)) {
+    preferred = 'zh';
+  } else {
+    preferred = 'en';
+  }
+
+  var alreadyCorrect =
+    (preferred === 'zh' && onZh) ||
+    (preferred === 'en' && onEn) ||
+    (preferred === 'ja' && onJa);
+
+  if (alreadyCorrect) return;
+
+  
+  var stripped = path.replace(/^\/(en|ja)/, '') || '/';
+
+  var target;
+  if (preferred === 'zh') {
+    target = stripped;
+  } else {
+    target = '/' + preferred + stripped;
+  }
+
+  window.location.replace(target);
+})();
+</script>
+
+  
+</head>
+<body
+    class="m-auto flex h-screen max-w-7xl flex-col bg-neutral px-6 text-lg leading-7 text-neutral-900 dark:bg-neutral-800 dark:text-neutral sm:px-14 md:px-24 lg:px-32"
+  >
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="-translate-y-8 rounded-b-lg bg-primary-200 px-3 py-1 text-sm focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content"
+        ><span class="pe-2 font-bold text-primary-600 dark:text-primary-400">&darr;</span
+        >Skip to main content</a
+      >
+    </div>
+    
+    
+      <header class="py-6 font-semibold text-neutral-900 dark:text-neutral sm:py-10 print:hidden">
+  <nav class="flex items-center justify-between">
+    <div class="z-40 flex flex-row items-center">
+      
+    </div>
+    
+      <div class="site-header-mobile-actions">
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+              
+              <button
+                id="appearance-switcher-1"
+                type="button"
+                aria-label="appearance switcher"
+                class="site-header-icon-button group"
+              >
+                <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                  </svg>
+                </span>
+                <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                  </svg>
+                </span>
+              </button>
+            
+          
+            
+              
+              
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/software/talk-about-web-font/"
+          aria-current="true"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-primary-600 dark:text-primary-400"
+        >EN</a><a
+          href="/ja/software/talk-about-web-font/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >日</a></div>
+  
+
+
+            
+          
+        
+      </div>
+      
+      <label id="menu-button" for="menu-controller" class="site-header-menu-button block">
+        <input type="checkbox" id="menu-controller" class="hidden" />
+        <div class="site-header-menu-trigger cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+          <span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+</span>
+        </div>
+        <div
+          id="menu-wrapper"
+          class="invisible fixed inset-0 z-30 m-auto h-full w-full cursor-default overflow-auto bg-neutral-100/50 opacity-0 backdrop-blur-sm transition-opacity dark:bg-neutral-900/50"
+        >
+          <ul
+            class="site-header-mobile-menu mx-auto flex w-full max-w-7xl list-none flex-col items-end overflow-visible px-6 py-6 text-end sm:px-14 sm:py-10 md:px-24 lg:px-32"
+          >
+            <li class="site-header-menu-close flex w-full items-end justify-end">
+              <span class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400"
+                ><span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span></span
+              >
+            </li>
+            
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/life/"
+                    title="Life"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >Life</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/software/"
+                    title="Software"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >Software</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/novel/"
+                    title="Novel"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >Novel</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/thoughts/"
+                    title="Thoughts"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >Thoughts</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/about/"
+                    title="About"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >About</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/now/"
+                    title="Now"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >Now</span
+                    ></a
+                  >
+                </li>
+              
+                
+                  
+                
+                  
+            
+          </ul>
+        </div>
+      </label>
+      
+      <ul class="site-header-desktop-nav hidden list-none flex-row items-center gap-6">
+        
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/life/"
+                  title="Life"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >Life</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/software/"
+                  title="Software"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >Software</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/novel/"
+                  title="Novel"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >Novel</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/thoughts/"
+                  title="Thoughts"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >Thoughts</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/about/"
+                  title="About"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >About</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/now/"
+                  title="Now"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >Now</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                <button
+                  id="appearance-switcher-2"
+                  type="button"
+                  aria-label="appearance switcher"
+                  class="flex items-center"
+                >
+                  <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                    </svg>
+                  </span>
+                  <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="4" />
+                      <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                    </svg>
+                  </span>
+                </button>
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/software/talk-about-web-font/"
+          aria-current="true"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-primary-600 dark:text-primary-400"
+        >EN</a><a
+          href="/ja/software/talk-about-web-font/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >日</a></div>
+  
+
+
+              
+            </li>
+          
+        
+      </ul>
+    
+  </nav>
+</header>
+
+    
+    <div class="relative flex grow flex-col">
+      <main id="main-content" class="grow">
+        
+  <article>
+    <header class="max-w-prose">
+      
+      <h1 class="mb-8 mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        Talk about Web Fonts — Design, File Formats and Frontend Loading
+      </h1>
+      
+        <div class="mb-10 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+          
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+    
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2021-10-28 00:00:00 &#43;0000 UTC">28 October 2021</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">8 mins</span>
+    
+
+    
+    
+  </div>
+
+  
+  
+
+
+        </div>
+      
+      
+        
+          <div class="prose">
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+  
+    <picture
+      class="mb-6 rounded-md"
+      
+    >
+      
+      
+      
+      
+        <source
+          
+            srcset="http://localhost:1313/en/software/talk-about-web-font/cover-en_hu_51869f9f77245066.webp 330w,http://localhost:1313/en/software/talk-about-web-font/cover-en_hu_a5b6625c83b9c4d0.webp 660w
+            
+              ,http://localhost:1313/en/software/talk-about-web-font/cover-en_hu_7c29df164bad9a60.webp 1024w
+            
+            
+              
+                ,http://localhost:1313/en/software/talk-about-web-font/cover-en_hu_2d634946e66c59a5.webp 1200w
+              
+            "
+          
+          sizes="100vw"
+          type="image/webp"
+        />
+      
+      <img
+        width="1200"
+        height="630"
+        class="mb-6 rounded-md"
+        
+        
+        
+          src="http://localhost:1313/en/software/talk-about-web-font/cover-en_hu_3d1a4d7f58f1274a.png" srcset="http://localhost:1313/en/software/talk-about-web-font/cover-en_hu_a75527847328f32e.png 330w,http://localhost:1313/en/software/talk-about-web-font/cover-en_hu_3d1a4d7f58f1274a.png 660w
+          
+            ,http://localhost:1313/en/software/talk-about-web-font/cover-en_hu_1dca6ac1e23eac36.png 1024w
+          
+          
+            ,http://localhost:1313/en/software/talk-about-web-font/cover-en.png 1200w
+          "
+          sizes="100vw"
+        
+      />
+    </picture>
+  
+
+
+            
+          </div>
+        
+      
+    </header>
+    
+      <section class="prose mt-0 flex max-w-full flex-col dark:prose-invert lg:flex-row">
+        
+          <div class="order-first px-0 lg:order-last lg:max-w-xs lg:ps-8">
+            <div class="toc pe-5 lg:sticky lg:top-10 print:hidden">
+              <details open class="-ms-5 mt-0 overflow-hidden rounded-lg ps-5">
+  <summary
+    class="block cursor-pointer bg-neutral-100 py-1 ps-5 text-lg font-semibold text-neutral-800 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden"
+  >
+    Table of Contents
+  </summary>
+  <div class="border-s border-dotted border-neutral-300 py-2 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#font-design-process">Font Design Process</a>
+      <ul>
+        <li><a href="#how-many-traditional-chinese-characters-need-to-be-designed-for-web-pages">How many Traditional Chinese characters need to be designed for web pages?</a></li>
+      </ul>
+    </li>
+    <li><a href="#in-what-file-formats-are-fonts-generally-stored">In what file formats are fonts generally stored?</a>
+      <ul>
+        <li><a href="#1-ttf-truetype-font">1. <code>.ttf</code> (TrueType Font)</a></li>
+        <li><a href="#2-otf-opentype-font">2. <code>.otf</code> (OpenType Font)</a></li>
+        <li><a href="#3-ttc-truetype-collection">3. <code>.ttc</code> (TrueType Collection)</a></li>
+        <li><a href="#4-eot">4. <code>.eot</code></a></li>
+        <li><a href="#5-woff-web-open-font-format">5. <code>.woff</code> (Web Open Font Format)</a></li>
+        <li><a href="#6-woff2">6. <code>.woff2</code></a></li>
+        <li><a href="#7-svg-scalable-vector-graphics">7. <code>.svg</code> (Scalable Vector Graphics)</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-to-load-fonts-on-web-pages">How to load fonts on web pages?</a>
+      <ul>
+        <li><a href="#font-face">font-face</a></li>
+        <li><a href="#font-family"><strong>font-family</strong></a></li>
+        <li><a href="#src">src</a></li>
+        <li><a href="#unicode-range">unicode-range</a></li>
+        <li><a href="#font-display">font-display</a></li>
+      </ul>
+    </li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+            </div>
+          </div>
+        
+        <div class="min-h-0 min-w-0 max-w-prose grow">
+          <blockquote>
+<p><strong>Note:</strong> This post is translated by AI. If you find any unnatural phrasing or errors, please feel free to contact me via email or other channels. Your feedback is appreciated!</p>
+</blockquote>
+<p>A while ago, the font bundle from <a href="https://www.instagram.com/designnotdeep/" target="_blank" rel="noreferrer">Design Not Deep</a> caused a wave of font claiming craze. Besides slides, posters, and social media posts, have you ever thought about how fonts are used on web pages?</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/0*OEf5PYLRWXCaS_Op" alt="typewritter" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>photo by <a href="https://unsplash.com/@diklein" target="_blank" rel="noreferrer">David Klein</a> on <a href="https://unsplash.com/" target="_blank" rel="noreferrer">Unsplash</a></p>
+<p>A while ago, the font bundle from <a href="https://www.instagram.com/designnotdeep/" target="_blank" rel="noreferrer">Design Not Deep</a> caused a wave of font claiming craze. Besides slides, posters, and social media posts, have you ever thought about how fonts are used on web pages?</p>
+<p>So today I will share some knowledge and technical details about using fonts on web pages. The first half is general knowledge, and the second half talks more about technical details of how web pages use fonts. If you are not a frontend engineer, read at your own discretion!</p>
+<p><strong>Through this article, I will tell you 👇</strong></p>
+<ol>
+<li>Birth of a font (Unprofessional version)</li>
+<li>What are font files</li>
+<li>How web pages use fonts</li>
+</ol>
+<h2 id="font-design-process" class="relative group">Font Design Process <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#font-design-process" aria-label="Anchor">#</a></span></h2><p>Before starting the introduction, because I was really curious about how fonts are designed, I asked a designer friend some questions about font design. Here is a brief introduction to the process.</p>
+<p>For Traditional Chinese, several fixed characters will be made first. These characters can roughly cover the stroke rules of Chinese characters, such as &ldquo;永&rdquo; includes all different strokes, and &ldquo;鷹&rdquo; can check the situation with many horizontal strokes, etc.</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/0*Yn16A9M8O252zZw9.jpg" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p><a href="https://www.easyatm.com.tw/wiki/%E6%B0%B8%E5%AD%97%E5%85%AB%E6%B3%95" target="_blank" rel="noreferrer">https://www.easyatm.com.tw/wiki/%E6%B0%B8%E5%AD%97%E5%85%AB%E6%B3%95</a></p>
+<p>Then softwares like <a href="https://glyphsapp.com/" target="_blank" rel="noreferrer"><strong>Glyphs</strong></a> or <a href="https://fontforge.org/en-US/" target="_blank" rel="noreferrer"><strong>FontForge</strong></a> might be used to adjust various details. After making most Chinese characters, they are put together to check consistency. Finally, it&rsquo;s a sprint to finish the remaining characters.</p>
+<h3 id="how-many-traditional-chinese-characters-need-to-be-designed-for-web-pages" class="relative group">How many Traditional Chinese characters need to be designed for web pages? <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#how-many-traditional-chinese-characters-need-to-be-designed-for-web-pages" aria-label="Anchor">#</a></span></h3><p>Regarding the total number of Chinese characters, the Ministry of Education&rsquo;s <a href="https://dict.variants.moe.edu.tw/variants/rbt/home.do" target="_blank" rel="noreferrer">Dictionary of Chinese Character Variants</a> contains more than 100,000 characters. According to the <a href="https://richer.tw/google_font_info/noto-serif-tc-cut" target="_blank" rel="noreferrer">Noto Sans TC</a> files provided by Google Font, the number of characters that need to be loaded on web pages is about 15,000.</p>
+<p>After the unprofessional introduction to the general process, I will not mislead people with design details here. Those interested can go to <a href="https://blog.justfont.com/" target="_blank" rel="noreferrer">justfont blog</a> to see more good articles about fonts.</p>
+<h2 id="in-what-file-formats-are-fonts-generally-stored" class="relative group">In what file formats are fonts generally stored? <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#in-what-file-formats-are-fonts-generally-stored" aria-label="Anchor">#</a></span></h2><p>Initially, computer text was presented as bitmaps. There was still a big gap between this stage and printed text, so even if the font was designed, it was difficult to fully present its beauty on the computer.</p>
+<p>But after Adobe introduced PostScript in 1984, computers began to be able to display vector versions of text, with effects even comparable to printed text, thus opening up the possibility of applying various fonts on computers.</p>
+<p>Difference between bitmap and vector image 👇</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/0*oABgV6XVSdJyuDPP.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p><a href="https://digitalmediaandvisualarts.blogspot.com/2016/10/raster-vs-vector.html" target="_blank" rel="noreferrer">https://digitalmediaandvisualarts.blogspot.com/2016/10/raster-vs-vector.html</a></p>
+<p>Then major software giants competed to develop font formats. Those interested in history can verify <a href="https://blog.justfont.com/2017/07/opentype-wars/" target="_blank" rel="noreferrer">Format War: The font file you use is the product of the war between giants</a>. Here I will introduce these seven font file formats after the war one by one. Except for ttc, they are all fonts that can be loaded by web pages.</p>
+<h3 id="1-ttf-truetype-font" class="relative group">1. <code>.ttf</code> (TrueType Font) <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#1-ttf-truetype-font" aria-label="Anchor">#</a></span></h3><ul>
+<li>In 1989, because Adobe was unwilling to publish PostScript&rsquo;s trade secrets, Apple and MicroSoft cooperated to develop a new font format TrueType (.ttf).</li>
+<li>It is the earliest and most widely used format. Most fonts downloaded on the Internet are in ttf format.</li>
+</ul>
+<h3 id="2-otf-opentype-font" class="relative group">2. <code>.otf</code> (OpenType Font) <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-otf-opentype-font" aria-label="Anchor">#</a></span></h3><ul>
+<li>In 1997, MicroSoft and Adobe developed OpenType (.otf), which is an extension of TrueType and also supports Unicode.</li>
+<li>In 2005, it was incorporated into the ISO standard, called Open Font Format (off).</li>
+</ul>
+<h3 id="3-ttc-truetype-collection" class="relative group">3. <code>.ttc</code> (TrueType Collection) <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#3-ttc-truetype-collection" aria-label="Anchor">#</a></span></h3><ul>
+<li>Released in 1989, it is a collection of TTF or .OTF, mainly to integrate files of the same font type. For example, the Noto series can be packed into a ttc file to reduce file size.</li>
+<li><strong>Web pages cannot load it directly, you can only load a certain ttf or otf file inside it individually.</strong></li>
+</ul>
+<h3 id="4-eot" class="relative group">4. <code>.eot</code> <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#4-eot" aria-label="Anchor">#</a></span></h3><ul>
+<li>People who have dealt with fonts for a long time may have seen this format. It is the format mainly used by IE, but it is also going into history with IE.</li>
+</ul>
+<h3 id="5-woff-web-open-font-format" class="relative group">5. <code>.woff</code> (Web Open Font Format) <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#5-woff-web-open-font-format" aria-label="Anchor">#</a></span></h3><ul>
+<li>In 2010, the <a href="https://developer.mozilla.org/zh-TW/docs/Web/Guide/WOFF" target="_blank" rel="noreferrer">Web Open Font Format</a> developed jointly by Mozilla, Type Supply, LettError and other organizations.</li>
+<li>woff format font files are compressed. Compared to ttf and otf, they can significantly reduce the burden of browsers loading fonts and speed up loading.</li>
+<li>One of the mainstream web fonts currently.</li>
+</ul>
+<h3 id="6-woff2" class="relative group">6. <code>.woff2</code> <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#6-woff2" aria-label="Anchor">#</a></span></h3><ul>
+<li>woff 2.0, mainly compressed more thoroughly. The same font can be about 20% to 30% smaller than woff.</li>
+<li>In current development, you can prioritize using woff2 format and handle it according to support.</li>
+</ul>
+<h3 id="7-svg-scalable-vector-graphics" class="relative group">7. <code>.svg</code> (Scalable Vector Graphics) <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#7-svg-scalable-vector-graphics" aria-label="Anchor">#</a></span></h3><ul>
+<li>A major evolution of computers in fonts was evolving from bitmaps to vector graphics, so fonts can certainly be represented in pure vector graphic formats.</li>
+<li>The main application of svg is in icon font, used to reduce image usage rate, and also allow icons to resize, change weight and color like text.</li>
+</ul>
+<h2 id="how-to-load-fonts-on-web-pages" class="relative group">How to load fonts on web pages? <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#how-to-load-fonts-on-web-pages" aria-label="Anchor">#</a></span></h2><p>When loading fonts on web pages, they are mainly loaded as CSS resources using the <strong>font-face</strong> property.</p>
+<h3 id="font-face" class="relative group">font-face <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#font-face" aria-label="Anchor">#</a></span></h3><blockquote>
+<p>Import external font files and customize related CSS properties.</p>
+</blockquote>
+<p>Here I will use the <a href="https://developer.mozilla.org/zh-TW/docs/Web/CSS/@font-face" target="_blank" rel="noreferrer">MDN</a> example directly to explain the basic syntax to everyone 👇</p>
+<p>Actual use looks something like this 👇</p>
+<p><a href="https://media.prod.mdn.mozit.cloud/attachments/2012/07/09/2469/ca10cbddcc6c17a120ada25291da053c/webfont-sample.html" target="_blank" rel="noreferrer">MDN Demo</a></p>
+<p><strong><em>After getting some feeling about using font-face, let&rsquo;s explain in detail how we can use it 👇</em></strong></p>
+<h3 id="font-family" class="relative group"><strong>font-family</strong> <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#font-family" aria-label="Anchor">#</a></span></h3><blockquote>
+<p>Define the name of font-face. It doesn&rsquo;t have to be the same as the original font file. Later in font-family, you only need to use this name to use the whole set of font-face properties.</p>
+</blockquote>
+<p>Wait, font-family inside font-face can connect fallback fonts through comma, and fonts will be used in order.</p>
+<h3 id="src" class="relative group">src <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#src" aria-label="Anchor">#</a></span></h3><blockquote>
+<p>Use url to specify the external font file path to load, local to use local font.</p>
+</blockquote>
+<p>The example below will first use the Helvetica Neue Bold font in the user&rsquo;s computer. When neither of the two Local fonts are available, it will additionally download the MgOpenModernaBold.ttf font.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>@<span style="color:#66d9ef">font-face</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">font-family</span><span style="color:#f92672">:</span> <span style="color:#f92672">MyHelvetica</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">src</span><span style="color:#f92672">:</span> <span style="color:#f92672">local</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Helvetica Neue Bold&#39;</span><span style="color:#f92672">),</span> <span style="color:#f92672">local</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;HelveticaNeue-Bold&#39;</span><span style="color:#f92672">),</span> <span style="color:#f92672">url</span><span style="color:#f92672">(</span><span style="color:#f92672">MgOpenModernaBold</span>.<span style="color:#a6e22e">ttf</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">font-weight</span><span style="color:#f92672">:</span> <span style="color:#f92672">bold</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Not only can load multiple fonts, but can also use <strong>format</strong> to load multiple font formats to handle browser support issues.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>@<span style="color:#66d9ef">font-face</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">font-family</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;MyWebFont&#39;</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">src</span><span style="color:#f92672">:</span> <span style="color:#f92672">url</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;myfont.woff2&#39;</span><span style="color:#f92672">)</span> <span style="color:#f92672">format</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;woff2&#39;</span><span style="color:#f92672">),</span> <span style="color:#f92672">url</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;myfont.woff&#39;</span><span style="color:#f92672">)</span> <span style="color:#f92672">format</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#39;woff&#39;</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="unicode-range" class="relative group">unicode-range <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#unicode-range" aria-label="Anchor">#</a></span></h3><blockquote>
+<p>Allows the browser to download fonts based on the given Unicode range.</p>
+</blockquote>
+<p>unicode mentioned above means &ldquo;Universal Code&rdquo;. The appearance of Unicode, as the name implies, is to solve the problem that text data formats of various countries are inconsistent and cannot be displayed normally. It basically defines a code for all texts so that different languages and platforms can display text normally through unicode.</p>
+<ul>
+<li>You can verify the actual conversion result in <a href="https://www.ifreesite.com/unicode-ascii-ansi.htm" target="_blank" rel="noreferrer">Unicode Encoding Conversion Tool</a>!</li>
+</ul>
+<p>When using it, we mainly want to achieve the following two effects 👇</p>
+<ol>
+<li>Download only the part needed on the current page to reduce load size and speed up loading.</li>
+<li>Create composite fonts, where a word or a sentence may contain multiple fonts.</li>
+</ol>
+<p>Borrowing the example written by <a href="https://blog.gtwang.org/web-development/css-font-face/#comments" target="_blank" rel="noreferrer">GTW</a> to explain:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#75715e">/* Fallback font - Size: 4.5MB */</span>
+</span></span><span style="display:flex;"><span>@<span style="color:#66d9ef">font-face</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">font-family</span><span style="color:#f92672">:</span> <span style="color:#f92672">DroidSans</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">src</span><span style="color:#f92672">:</span> <span style="color:#f92672">url</span><span style="color:#f92672">(</span><span style="color:#f92672">DroidSansFallback</span>.<span style="color:#a6e22e">woff</span><span style="color:#f92672">);</span> <span style="color:#75715e">/* No unicode range specified, covers all ranges by default */</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* Japanese - Size: 1.2MB */</span>
+</span></span><span style="display:flex;"><span>@<span style="color:#66d9ef">font-face</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">font-family</span><span style="color:#f92672">:</span> <span style="color:#f92672">DroidSans</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">src</span><span style="color:#f92672">:</span> <span style="color:#f92672">url</span><span style="color:#f92672">(</span><span style="color:#f92672">DroidSansJapanese</span>.<span style="color:#a6e22e">woff</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">unicode-range</span><span style="color:#f92672">:</span> <span style="color:#f92672">U</span><span style="color:#f92672">+</span><span style="color:#f92672">3000-9FFF</span><span style="color:#f92672">,</span> <span style="color:#f92672">U</span><span style="color:#f92672">+</span><span style="color:#f92672">ff</span><span style="color:#f92672">??;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* English fonts and some symbols etc. - Size: 190KB */</span>
+</span></span><span style="display:flex;"><span>@<span style="color:#66d9ef">font-face</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">font-family</span><span style="color:#f92672">:</span> <span style="color:#f92672">DroidSans</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">src</span><span style="color:#f92672">:</span> <span style="color:#f92672">url</span><span style="color:#f92672">(</span><span style="color:#f92672">DroidSans</span>.<span style="color:#a6e22e">woff</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">unicode-range</span><span style="color:#f92672">:</span> <span style="color:#f92672">U</span><span style="color:#f92672">+</span><span style="color:#f92672">000-5FF</span><span style="color:#f92672">,</span> <span style="color:#f92672">U</span><span style="color:#f92672">+</span><span style="color:#f92672">1e00-1fff</span><span style="color:#f92672">,</span> <span style="color:#f92672">U</span><span style="color:#f92672">+</span><span style="color:#f92672">2000-2300</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="font-display" class="relative group">font-display <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#font-display" aria-label="Anchor">#</a></span></h3><blockquote>
+<p>Mainly specifying the strategy of how to display and replace fonts when the web page is blocked during font loading. Usually hope to reduce web page blocking time to optimize performance.</p>
+</blockquote>
+<p><strong>The following strategies are available 👇</strong></p>
+<h4 id="auto" class="relative group">auto <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#auto" aria-label="Anchor">#</a></span></h4><p>Follow browser&rsquo;s default value, usually block.</p>
+<h4 id="block" class="relative group">block <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#block" aria-label="Anchor">#</a></span></h4><p>Text is hidden temporarily before the font finishes loading, and replaced immediately after loading finishes.</p>
+<p>But actually during this period, the browser will load an invisible placeholder to occupy the space (visually it will be blank). Wait until the font finishes loading and then immediately replace the placeholder. This effect also has a proper noun <strong>FOIT (flash of Invisible Text)</strong>, referring to invisible text flashing by.</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/0*vLZs0W5YqME4acCw.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p><a href="https://www.w3cplus.com/css/font-display-masses.html" target="_blank" rel="noreferrer">https://www.w3cplus.com/css/font-display-masses.html</a></p>
+<h4 id="swap" class="relative group">swap <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#swap" aria-label="Anchor">#</a></span></h4><p>Before the font finishes loading, the browser will use fallback font to display text (fallback font is defined in font-family). When font loading finishes, it will be replaced immediately.</p>
+<p>This effect&rsquo;s proper noun is <strong>FOUT (flash of Unstyled Text)</strong>. Compared to FOIT, it refers to text without customized style flashing by. Basically swap which ensures normal display is very useful in most cases.</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/0*D0fpzSC_xcgLxcKr.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p><a href="https://www.w3cplus.com/css/font-display-masses.html" target="_blank" rel="noreferrer">https://www.w3cplus.com/css/font-display-masses.html</a></p>
+<h4 id="fallback" class="relative group">fallback <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#fallback" aria-label="Anchor">#</a></span></h4><p>Between auto and swap, checks for a very short period (about 100ms) to hide text. If font is not loaded yet, it will display fallback font first. After font is loaded, it will be replaced.</p>
+<h4 id="optional" class="relative group">optional <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#optional" aria-label="Anchor">#</a></span></h4><p>Handling upon loading is same as fallback, but browser will judge by itself whether to use custom font. If browser judges loading speed is too slow, it will directly discard custom font.</p>
+<hr>
+<p>I won&rsquo;t elaborate on other common and simple font properties here. You can refer to <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/font" target="_blank" rel="noreferrer">MDN — font</a> for very complete examples!</p>
+<p>Actually I wanted to continue introducing Google Font open source fonts and some difficulties of Traditional Chinese fonts in current web usage, but I feel today&rsquo;s length is enough, so I will leave it for the next article!</p>
+<p>If there are any problems, suggestions or discussions about today&rsquo;s content, welcome to leave a message to tell me!</p>
+<hr>
+<p>Finally, if you like it, welcome to clap for me. You can clap up to 50 times. Just clap according to how helpful you think it is. This can also be a basis for me to adjust 🙌</p>
+<h2 id="references" class="relative group">References <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#references" aria-label="Anchor">#</a></span></h2><ul>
+<li><a href="https://blog.justfont.com/2017/07/opentype-wars/" target="_blank" rel="noreferrer">https://blog.justfont.com/2017/07/opentype-wars/</a></li>
+<li><a href="https://www.mindscmyk.com/2021/02/26/%E4%B8%BB%E9%A1%8C%E7%9F%A5%E8%AD%98" target="_blank" rel="noreferrer">https://www.mindscmyk.com/2021/02/26/Topic Knowledge | Three common fonts: ttf-otf-ttc-extension difference?</a></li>
+<li><a href="https://developer.mozilla.org/zh-TW/docs/Web/Guide/WOFF" target="_blank" rel="noreferrer">https://developer.mozilla.org/zh-TW/docs/Web/Guide/WOFF</a></li>
+<li><a href="https://www.twblogs.net/a/5d3f76babd9eee5174229d3f" target="_blank" rel="noreferrer">https://www.twblogs.net/a/5d3f76babd9eee5174229d3f</a></li>
+<li><a href="https://tools.wingzero.tw/article/sn/91" target="_blank" rel="noreferrer">https://tools.wingzero.tw/article/sn/91</a></li>
+<li><a href="https://css-tricks.com/snippets/css/using-font-face/" target="_blank" rel="noreferrer">https://css-tricks.com/snippets/css/using-font-face/</a></li>
+<li><a href="https://www.w3cplus.com/css/font-display-masses.html" target="_blank" rel="noreferrer">https://www.w3cplus.com/css/font-display-masses.html</a></li>
+</ul>
+
+        </div>
+      </section>
+      <footer class="max-w-prose pt-8 print:hidden">
+        
+  <div class="flex">
+    
+    
+    
+    <div class="place-self-center">
+      
+        <div class="text-[0.6rem] uppercase leading-3 text-neutral-500 dark:text-neutral-400">
+          Author
+        </div>
+        <div class="font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
+          Parker
+        </div>
+      
+      
+      <div class="text-2xl sm:text-lg">
+</div>
+    </div>
+  </div>
+
+
+        
+
+        
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="group flex" href="http://localhost:1313/en/software/design-system/">
+              <span
+                class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+                ><span class="ltr:inline rtl:hidden">&larr;</span
+                ><span class="ltr:hidden rtl:inline">&rarr;</span></span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Design System - Things Frontend Engineers Should Know</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2021-09-22 00:00:00 &#43;0000 UTC">22 September 2021</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+            <a class="group flex text-right" href="http://localhost:1313/en/software/google-oauth-login/">
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Implementing Google OAuth Login (Vue / Express)</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2022-10-23 00:00:00 &#43;0000 UTC">23 October 2022</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ms-2 text-neutral-700 transition-transform group-hover:-translate-x-[-2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+                ><span class="ltr:inline rtl:hidden">&rarr;</span
+                ><span class="ltr:hidden rtl:inline">&larr;</span></span
+              >
+            </a>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+        
+          
+            <div class="pt-3">
+              <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+              <div class="pt-3">
+                <div id="cusdis_thread"
+  data-host="https://cusdis.com"
+  data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
+  data-page-id="267aad96ce1044bf59e4d506c39bed1a"
+  data-page-url="http://localhost:1313/en/software/talk-about-web-font/"
+  data-page-title="Talk about Web Fonts — Design, File Formats and Frontend Loading"
+></div>
+<script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+<script>
+  (function () {
+    function getCusdisTheme() {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    function applyTheme() {
+      if (window.CUSDIS) window.CUSDIS.setTheme(getCusdisTheme());
+    }
+    document.addEventListener('DOMContentLoaded', applyTheme);
+    new MutationObserver(applyTheme).observe(
+      document.documentElement,
+      { attributeFilter: ['class'] }
+    );
+  })();
+</script>
+
+              </div>
+            </div>
+          
+        
+      </footer>
+    
+  </article>
+
+      </main>
+      
+        <div
+          class="pointer-events-none absolute bottom-0 end-0 top-[100vh] w-12"
+          id="to-top"
+          hidden="true"
+        >
+          <a
+            href="#the-top"
+            class="pointer-events-auto sticky top-[calc(100vh-5.5rem)] flex h-12 w-12 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 backdrop-blur hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+            aria-label="Scroll to top"
+            title="Scroll to top"
+          >
+            &uarr;
+          </a>
+        </div>
+      <footer class="py-10 print:hidden">
+  
+  
+  <div class="flex items-center justify-between">
+    <div>
+      
+      
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+            &copy;
+            2026
+            Parker
+        </p>
+      
+      
+      
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          
+          
+          Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> &amp; <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://github.com/jpanther/congo" target="_blank" rel="noopener noreferrer">Congo</a>
+        </p>
+      
+    </div>
+    <div class="flex flex-row items-center">
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  
+</footer>
+
+    </div>
+  </body>
+</html>

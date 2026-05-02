@@ -1,0 +1,1157 @@
+
+
+
+
+
+
+<!doctype html>
+<html
+  lang="ja"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="light"
+  data-auto-appearance="true"
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FFFFFF" />
+  
+  <title>私がどのようにWordPressサイトを構築したか &middot; Parker Chang&#39;s Web</title>
+    <meta name="title" content="私がどのようにWordPressサイトを構築したか &middot; Parker Chang&#39;s Web" />
+  
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/appearance.min.8a082f81b27f3cb2ee528df0b0bdc39787034cf2cc34d4669fbc9977c929023c.js"
+    integrity="sha256-iggvgbJ/PLLuUo3wsL3Dl4cDTPLMNNRmn7yZd8kpAjw="
+  ></script>
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.3d626d356703626569364790e95b69715968a53a1054f31d92786caaf3605200.css"
+    integrity="sha256-PWJtNWcDYmVpNkeQ6VtpcVlopToQVPMdknhsqvNgUgA="
+  />
+  
+  
+  
+  
+  
+  
+  
+  <meta
+    name="description"
+    content="
+      AWS EC2 と Easy Engine を使用して WordPress サイトを迅速にデプロイ（ドメインは Cloudflare で購入）。多少のプログラミング知識が必要ですが、安価で高速、自由度と拡張性も高いです！
+    "
+  />
+  
+  
+  
+  
+    <link rel="canonical" href="http://localhost:1313/ja/software/wordpress-hosting/" />
+  
+  
+  
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:url" content="http://localhost:1313/ja/software/wordpress-hosting/">
+  <meta property="og:site_name" content="Parker Chang&#39;s Web">
+  <meta property="og:title" content="私がどのようにWordPressサイトを構築したか">
+  <meta property="og:description" content="AWS EC2 と Easy Engine を使用して WordPress サイトを迅速にデプロイ（ドメインは Cloudflare で購入）。多少のプログラミング知識が必要ですが、安価で高速、自由度と拡張性も高いです！">
+  <meta property="og:locale" content="ja">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="software">
+    <meta property="article:published_time" content="2025-04-13T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-04-13T00:00:00+00:00">
+    <meta property="article:tag" content="Software Development">
+    <meta property="article:tag" content="WordPress">
+    <meta property="article:tag" content="AWS">
+    <meta property="article:tag" content="EC2">
+    <meta property="article:tag" content="EasyEngine">
+    <meta property="article:tag" content="Cloudflare">
+    <meta property="og:image" content="http://localhost:1313/ja/software/wordpress-hosting/cover-en.png">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/ja/software/wordpress-hosting/cover-en.png">
+  <meta name="twitter:title" content="私がどのようにWordPressサイトを構築したか">
+  <meta name="twitter:description" content="AWS EC2 と Easy Engine を使用して WordPress サイトを迅速にデプロイ（ドメインは Cloudflare で購入）。多少のプログラミング知識が必要ですが、安価で高速、自由度と拡張性も高いです！">
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "ソフトウェア",
+    "name": "私がどのようにWordPressサイトを構築したか",
+    "headline": "私がどのようにWordPressサイトを構築したか",
+    "description": "AWS EC2 と Easy Engine を使用して WordPress サイトを迅速にデプロイ（ドメインは Cloudflare で購入）。多少のプログラミング知識が必要ですが、安価で高速、自由度と拡張性も高いです！",
+    "abstract": "\u003cblockquote\u003e\n\u003cp\u003e\u003cstrong\u003e注:\u003c\/strong\u003e この記事は AI によって翻訳されています。もし不自然な表現や誤りがありましたら、メールやその他の手段でお知らせいただけると幸いです。フィードバックをいただけると助かります！\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003cp\u003e昨年、仕事でいくつかの大規模な WordPress サイトを扱いました。そこで学んだ WordPress 構築戦略を記録し、共有します。\u003c\/p\u003e\n\u003cp\u003eこのサイトも後で WordPress に変更する予定です。変更後、なぜ、そしてどのように変更したかをまた共有します。\u003c\/p\u003e\n\u003cp\u003e\n\n\n\n\n\n\n  \n  \n\u003cfigure\u003e\u003cimg src=\u0022https:\/\/s.w.org\/style\/images\/about\/WordPress-logotype-standard.png\u0022 alt=\u0022WordPress Logo\u0022 class=\u0022mx-auto my-0 rounded-md\u0022 \/\u003e\n\u003c\/figure\u003e\n\u003c\/p\u003e\n\u003ch2 id=\u0022wordpresscom-vs-wordpressorg\u0022 class=\u0022relative group\u0022\u003eWordPress.com vs WordPress.org \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#wordpresscom-vs-wordpressorg\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003eまずは公式の 2 種類のプランについて触れます。エンジニアとして、私はずっと \u003ca href=\u0022https:\/\/wordpress.org\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eWordPress.org\u003c\/a\u003e しか知りませんでした。少し前に友人から聞かれて初めて \u003ca href=\u0022https:\/\/wordpress.com\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eWordPress.com\u003c\/a\u003e の存在を知りました。\u003c\/p\u003e\n\u003cp\u003eWordPress.com は Automattic 社が提供する全方位型のホスティングサービスで、Web ページ上でクリックするだけでサイトを作成できます。しかし、その分自由度は極めて低く、テーマのカスタマイズは難しく、多くのプラグインが使えず、無料版は非常に機能が制限されているため、事実上課金が必要です。\u003c\/p\u003e\n\u003cp\u003eWordPress.org はオープンソースの WordPress ソフトウェアをダウンロードできます。自分のニーズに合わせてデプロイでき、ほぼ制限はありません——プラグインのインストール、テーマの修正、または様々な魔法のようなカスタマイズが自由に行えます。ただし、サーバーの管理、更新、バックアップは自分で行う必要があります。\u003c\/p\u003e\n\u003cp\u003eとはいえ、WordPress.org にも市場にはプロセスを簡素化する多くの統合ソリューションがあり、必ずしもエンジニアに依頼する必要はありません。また、WordPress.com を使っている人も、制限が多すぎて安くないため、遅かれ早かれ乗り換えることになるだろうという予感がします。\u003c\/p\u003e\n\u003cp\u003eこの記事でも WordPress.org を使用します。多少の技術知識が必要ですが、できるだけプロセスを明確に説明します。\u003c\/p\u003e\n\u003ch2 id=\u0022wordpressorg-市場のホスティングプラン\u0022 class=\u0022relative group\u0022\u003eWordPress.org 市場のホスティングプラン \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#wordpressorg-%e5%b8%82%e5%a0%b4%e3%81%ae%e3%83%9b%e3%82%b9%e3%83%86%e3%82%a3%e3%83%b3%e3%82%b0%e3%83%97%e3%83%a9%e3%83%b3\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003eここで紹介するものは使用したことはありませんが、価格といくつかの予備的な観察を分析してみます。\u003c\/p\u003e\n\u003ch3 id=\u00221-従来のレンタルサーバー例bluehost\u0022 class=\u0022relative group\u0022\u003e1. 従来のレンタルサーバー（例：\u003ca href=\u0022https:\/\/www.bluehost.com\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eBlueHost\u003c\/a\u003e） \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#1-%e5%be%93%e6%9d%a5%e3%81%ae%e3%83%ac%e3%83%b3%e3%82%bf%e3%83%ab%e3%82%b5%e3%83%bc%e3%83%90%e3%83%bc%e4%be%8bbluehost\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h3\u003e\u003cp\u003e基本料金は月額 2.95 ドル（約 460 円）で、すぐにサイトを立ち上げることができ、その中で直接ドメインを購入することもできます。\u003c\/p\u003e",
+    "inLanguage": "ja",
+    "url" : "http:\/\/localhost:1313\/ja\/software\/wordpress-hosting\/",
+    "author" : {
+      "@type": "Person",
+      "name": "Parker"
+    },
+    "copyrightYear": "2025",
+    "dateCreated": "2025-04-13T00:00:00\u002b00:00",
+    "datePublished": "2025-04-13T00:00:00\u002b00:00",
+    
+    "dateModified": "2025-04-13T00:00:00\u002b00:00",
+    
+    "keywords": ["Software Development","WordPress","AWS","EC2","EasyEngine","Cloudflare"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "440"
+  }
+  </script>
+    
+    <script type="application/ld+json">
+    {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/ja/",
+       "name": "ホーム",
+       "position": 1
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/ja/software/",
+       "name": "ソフトウェア",
+       "position": 2
+     },
+     {
+       "@type": "ListItem",
+       "name": "私がどのように Word Pressサイトを構築したか",
+       "position": 3
+     }
+   ]
+ }
+  </script>
+
+  
+  
+    <meta name="author" content="Parker" />
+  
+  
+  
+  
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script>
+(function () {
+  
+  if (sessionStorage.getItem('lang-redirected')) return;
+  sessionStorage.setItem('lang-redirected', '1');
+
+  var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+  var path = window.location.pathname;
+
+  
+  var onEn = path === '/en' || path.startsWith('/en/');
+  var onJa = path === '/ja' || path.startsWith('/ja/');
+  
+  var onZh = !onEn && !onJa;
+
+  
+  var preferred;
+  if (/^ja/.test(lang)) {
+    preferred = 'ja';
+  } else if (/^zh/.test(lang)) {
+    preferred = 'zh';
+  } else {
+    preferred = 'en';
+  }
+
+  var alreadyCorrect =
+    (preferred === 'zh' && onZh) ||
+    (preferred === 'en' && onEn) ||
+    (preferred === 'ja' && onJa);
+
+  if (alreadyCorrect) return;
+
+  
+  var stripped = path.replace(/^\/(en|ja)/, '') || '/';
+
+  var target;
+  if (preferred === 'zh') {
+    target = stripped;
+  } else {
+    target = '/' + preferred + stripped;
+  }
+
+  window.location.replace(target);
+})();
+</script>
+
+  
+</head>
+<body
+    class="m-auto flex h-screen max-w-7xl flex-col bg-neutral px-6 text-lg leading-7 text-neutral-900 dark:bg-neutral-800 dark:text-neutral sm:px-14 md:px-24 lg:px-32"
+  >
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="-translate-y-8 rounded-b-lg bg-primary-200 px-3 py-1 text-sm focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content"
+        ><span class="pe-2 font-bold text-primary-600 dark:text-primary-400">&darr;</span
+        >メインコンテンツへスキップ</a
+      >
+    </div>
+    
+    
+      <header class="py-6 font-semibold text-neutral-900 dark:text-neutral sm:py-10 print:hidden">
+  <nav class="flex items-center justify-between">
+    <div class="z-40 flex flex-row items-center">
+      
+    </div>
+    
+      <div class="site-header-mobile-actions">
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+              
+              <button
+                id="appearance-switcher-1"
+                type="button"
+                aria-label="appearance switcher"
+                class="site-header-icon-button group"
+              >
+                <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                  </svg>
+                </span>
+                <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                  </svg>
+                </span>
+              </button>
+            
+          
+            
+              
+              
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/software/wordpress-hosting/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >EN</a><a
+          href="/ja/software/wordpress-hosting/"
+          aria-current="true"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-primary-600 dark:text-primary-400"
+        >日</a></div>
+  
+
+
+            
+          
+        
+      </div>
+      
+      <label id="menu-button" for="menu-controller" class="site-header-menu-button block">
+        <input type="checkbox" id="menu-controller" class="hidden" />
+        <div class="site-header-menu-trigger cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+          <span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+</span>
+        </div>
+        <div
+          id="menu-wrapper"
+          class="invisible fixed inset-0 z-30 m-auto h-full w-full cursor-default overflow-auto bg-neutral-100/50 opacity-0 backdrop-blur-sm transition-opacity dark:bg-neutral-900/50"
+        >
+          <ul
+            class="site-header-mobile-menu mx-auto flex w-full max-w-7xl list-none flex-col items-end overflow-visible px-6 py-6 text-end sm:px-14 sm:py-10 md:px-24 lg:px-32"
+          >
+            <li class="site-header-menu-close flex w-full items-end justify-end">
+              <span class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400"
+                ><span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span></span
+              >
+            </li>
+            
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/life/"
+                    title="生活"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >生活</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/software/"
+                    title="ソフトウェア"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >ソフトウェア</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/novel/"
+                    title="小説"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >小説</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/thoughts/"
+                    title="感想"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >感想</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/about/"
+                    title="このサイトについて"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >このサイトについて</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/now/"
+                    title="今"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >今</span
+                    ></a
+                  >
+                </li>
+              
+                
+                  
+                
+                  
+            
+          </ul>
+        </div>
+      </label>
+      
+      <ul class="site-header-desktop-nav hidden list-none flex-row items-center gap-6">
+        
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/life/"
+                  title="生活"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >生活</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/software/"
+                  title="ソフトウェア"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >ソフトウェア</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/novel/"
+                  title="小説"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >小説</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/thoughts/"
+                  title="感想"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >感想</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/about/"
+                  title="このサイトについて"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >このサイトについて</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/now/"
+                  title="今"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >今</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                <button
+                  id="appearance-switcher-2"
+                  type="button"
+                  aria-label="appearance switcher"
+                  class="flex items-center"
+                >
+                  <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                    </svg>
+                  </span>
+                  <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="4" />
+                      <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                    </svg>
+                  </span>
+                </button>
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/software/wordpress-hosting/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >EN</a><a
+          href="/ja/software/wordpress-hosting/"
+          aria-current="true"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-primary-600 dark:text-primary-400"
+        >日</a></div>
+  
+
+
+              
+            </li>
+          
+        
+      </ul>
+    
+  </nav>
+</header>
+
+    
+    <div class="relative flex grow flex-col">
+      <main id="main-content" class="grow">
+        
+  <article>
+    <header class="max-w-prose">
+      
+      <h1 class="mb-8 mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        私がどのようにWordPressサイトを構築したか
+      </h1>
+      
+        <div class="mb-10 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+          
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+    
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2025-04-13 00:00:00 &#43;0000 UTC">2025年4月13日</time><span class="px-2 text-primary-500">&middot;</span><span title="読むのに必要な時間">3 分</span>
+    
+
+    
+    
+  </div>
+
+  
+  
+
+
+        </div>
+      
+      
+        
+          <div class="prose">
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+  
+    <picture
+      class="mb-6 rounded-md"
+      
+    >
+      
+      
+      
+      
+        <source
+          
+            srcset="http://localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_52334b1dc8ea0c56.webp 330w,http://localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_a9dbadd4e4105e23.webp 660w
+            
+              ,http://localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_935918b81cb351f8.webp 1024w
+            
+            
+              
+                ,http://localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_7ace0ee4cf4e4eff.webp 1200w
+              
+            "
+          
+          sizes="100vw"
+          type="image/webp"
+        />
+      
+      <img
+        width="1200"
+        height="630"
+        class="mb-6 rounded-md"
+        
+        
+        
+          src="http://localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_f56bc55c636a00e.png" srcset="http://localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_bb7595b7dade5d5d.png 330w,http://localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_f56bc55c636a00e.png 660w
+          
+            ,http://localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_b4536b36a27a6166.png 1024w
+          
+          
+            ,http://localhost:1313/ja/software/wordpress-hosting/cover-ja.png 1200w
+          "
+          sizes="100vw"
+        
+      />
+    </picture>
+  
+
+
+            
+          </div>
+        
+      
+    </header>
+    
+      <section class="prose mt-0 flex max-w-full flex-col dark:prose-invert lg:flex-row">
+        
+          <div class="order-first px-0 lg:order-last lg:max-w-xs lg:ps-8">
+            <div class="toc pe-5 lg:sticky lg:top-10 print:hidden">
+              <details open class="-ms-5 mt-0 overflow-hidden rounded-lg ps-5">
+  <summary
+    class="block cursor-pointer bg-neutral-100 py-1 ps-5 text-lg font-semibold text-neutral-800 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden"
+  >
+    目次
+  </summary>
+  <div class="border-s border-dotted border-neutral-300 py-2 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#wordpresscom-vs-wordpressorg">WordPress.com vs WordPress.org</a></li>
+    <li><a href="#wordpressorg-市場のホスティングプラン">WordPress.org 市場のホスティングプラン</a>
+      <ul>
+        <li><a href="#1-従来のレンタルサーバー例bluehost">1. 従来のレンタルサーバー（例：BlueHost）</a></li>
+        <li><a href="#2-クラウドプラットフォームホスティング">2. クラウドプラットフォームホスティング</a></li>
+      </ul>
+    </li>
+    <li><a href="#私が選んだ-tech-stack">私が選んだ Tech Stack</a></li>
+    <li><a href="#構築手順">構築手順</a>
+      <ul>
+        <li><a href="#1-ドメイン登録と-dns-設定">1. ドメイン登録と DNS 設定</a></li>
+        <li><a href="#2-aws-ec2-インスタンスの作成">2. AWS EC2 インスタンスの作成</a></li>
+        <li><a href="#3-easy-engine-と-wordpress-のインストール">3. Easy Engine と WordPress のインストール</a></li>
+      </ul>
+    </li>
+    <li><a href="#構築プロセスのクイックレビュー">構築プロセスのクイックレビュー</a></li>
+    <li><a href="#結びに">結びに</a>
+      <ul>
+        <li><a href="#独り言">独り言</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+            </div>
+          </div>
+        
+        <div class="min-h-0 min-w-0 max-w-prose grow">
+          <blockquote>
+<p><strong>注:</strong> この記事は AI によって翻訳されています。もし不自然な表現や誤りがありましたら、メールやその他の手段でお知らせいただけると幸いです。フィードバックをいただけると助かります！</p>
+</blockquote>
+<p>昨年、仕事でいくつかの大規模な WordPress サイトを扱いました。そこで学んだ WordPress 構築戦略を記録し、共有します。</p>
+<p>このサイトも後で WordPress に変更する予定です。変更後、なぜ、そしてどのように変更したかをまた共有します。</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://s.w.org/style/images/about/WordPress-logotype-standard.png" alt="WordPress Logo" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<h2 id="wordpresscom-vs-wordpressorg" class="relative group">WordPress.com vs WordPress.org <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#wordpresscom-vs-wordpressorg" aria-label="アンカー">#</a></span></h2><p>まずは公式の 2 種類のプランについて触れます。エンジニアとして、私はずっと <a href="https://wordpress.org/" target="_blank" rel="noreferrer">WordPress.org</a> しか知りませんでした。少し前に友人から聞かれて初めて <a href="https://wordpress.com/" target="_blank" rel="noreferrer">WordPress.com</a> の存在を知りました。</p>
+<p>WordPress.com は Automattic 社が提供する全方位型のホスティングサービスで、Web ページ上でクリックするだけでサイトを作成できます。しかし、その分自由度は極めて低く、テーマのカスタマイズは難しく、多くのプラグインが使えず、無料版は非常に機能が制限されているため、事実上課金が必要です。</p>
+<p>WordPress.org はオープンソースの WordPress ソフトウェアをダウンロードできます。自分のニーズに合わせてデプロイでき、ほぼ制限はありません——プラグインのインストール、テーマの修正、または様々な魔法のようなカスタマイズが自由に行えます。ただし、サーバーの管理、更新、バックアップは自分で行う必要があります。</p>
+<p>とはいえ、WordPress.org にも市場にはプロセスを簡素化する多くの統合ソリューションがあり、必ずしもエンジニアに依頼する必要はありません。また、WordPress.com を使っている人も、制限が多すぎて安くないため、遅かれ早かれ乗り換えることになるだろうという予感がします。</p>
+<p>この記事でも WordPress.org を使用します。多少の技術知識が必要ですが、できるだけプロセスを明確に説明します。</p>
+<h2 id="wordpressorg-市場のホスティングプラン" class="relative group">WordPress.org 市場のホスティングプラン <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#wordpressorg-%e5%b8%82%e5%a0%b4%e3%81%ae%e3%83%9b%e3%82%b9%e3%83%86%e3%82%a3%e3%83%b3%e3%82%b0%e3%83%97%e3%83%a9%e3%83%b3" aria-label="アンカー">#</a></span></h2><p>ここで紹介するものは使用したことはありませんが、価格といくつかの予備的な観察を分析してみます。</p>
+<h3 id="1-従来のレンタルサーバー例bluehost" class="relative group">1. 従来のレンタルサーバー（例：<a href="https://www.bluehost.com/" target="_blank" rel="noreferrer">BlueHost</a>） <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#1-%e5%be%93%e6%9d%a5%e3%81%ae%e3%83%ac%e3%83%b3%e3%82%bf%e3%83%ab%e3%82%b5%e3%83%bc%e3%83%90%e3%83%bc%e4%be%8bbluehost" aria-label="アンカー">#</a></span></h3><p>基本料金は月額 2.95 ドル（約 460 円）で、すぐにサイトを立ち上げることができ、その中で直接ドメインを購入することもできます。</p>
+<p>しかし、WordPress.com と同様の問題に遭遇します。サーバーに問題がある場合の調整が難しく、問題があればカスタマーサポートに連絡する必要があり、メンテナンスもしやすくありません。</p>
+<h3 id="2-クラウドプラットフォームホスティング" class="relative group">2. クラウドプラットフォームホスティング <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-%e3%82%af%e3%83%a9%e3%82%a6%e3%83%89%e3%83%97%e3%83%a9%e3%83%83%e3%83%88%e3%83%95%e3%82%a9%e3%83%bc%e3%83%a0%e3%83%9b%e3%82%b9%e3%83%86%e3%82%a3%e3%83%b3%e3%82%b0" aria-label="アンカー">#</a></span></h3><h4 id="aws-lightsail" class="relative group">AWS Lightsail <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#aws-lightsail" aria-label="アンカー">#</a></span></h4><p><a href="https://aws.amazon.com/tw/getting-started/hands-on/launch-a-wordpress-website/" target="_blank" rel="noreferrer">公式チュートリアル</a></p>
+<p>AWS 上でクリックするだけで構築できます。基本プランは月額 3.5 ドル（約 550 円）です。</p>
+<p>私も AWS を使用していますが、EC2 を自分で構築しています。これについては後述します。</p>
+<h4 id="google-cloud-platform" class="relative group">Google Cloud Platform <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#google-cloud-platform" aria-label="アンカー">#</a></span></h4><p><a href="https://cloud.google.com/wordpress?hl=zh-TW" target="_blank" rel="noreferrer">Google Cloud で WordPress を使用する</a></p>
+<p>GCP にも WordPress デプロイの統合ソリューションがありますが、超高額で、月額 13.17 ドル（約 2000 円）から始まり、設定も AWS Lightsail ほど簡単ではありません。</p>
+<h2 id="私が選んだ-tech-stack" class="relative group">私が選んだ Tech Stack <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e7%a7%81%e3%81%8c%e9%81%b8%e3%82%93%e3%81%a0-tech-stack" aria-label="アンカー">#</a></span></h2><p>私は最終的に <a href="https://aws.amazon.com/tw/ec2/" target="_blank" rel="noreferrer">AWS EC2</a> でのデプロイ、<a href="https://easyengine.io/" target="_blank" rel="noreferrer">Easy Engine</a> での管理、そして <a href="https://www.cloudflare.com/zh-tw/" target="_blank" rel="noreferrer">Cloudflare</a> でのドメイン登録と DNS 管理を採用しました。</p>
+<p>EasyEngine は直接ダウンロードでき、Cloudflare もまずは無料プランを使用できます。AWS EC2 は基本的に無料プランを使用しますが、ディスク容量のために EC2 に関連付けられた EBS を 16 GiB にアップグレードする必要があるため、月額 1.28 ドル（約 200 円）の費用がかかります。</p>
+<p><a href="https://aws.amazon.com/ebs/pricing/" target="_blank" rel="noreferrer">AWS EBS の計算方法</a>によると、16 GiB の gp3 ボリュームの場合：</p>
+<ul>
+<li>ストレージ料金：0.08/GB-月 × 16 GB = 1.28/月</li>
+<li>IOPS 料金：0（含まれる 3,000 IOPS を使用）</li>
+<li>スループット料金：0（含まれる 125 MB/s を使用）
+月額合計コスト：$1.28（米ドル）</li>
+</ul>
+<p>自分で管理する必要がありますが、費用は直接節約できます。このようなウェブサイト構築のサーバー費用や管理費は家賃や管理費に相当するので、毎月の費用はもちろん低い方が良いです。</p>
+<h2 id="構築手順" class="relative group">構築手順 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e6%a7%8b%e7%af%89%e6%89%8b%e9%a0%86" aria-label="アンカー">#</a></span></h2><h3 id="1-ドメイン登録と-dns-設定" class="relative group">1. ドメイン登録と DNS 設定 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#1-%e3%83%89%e3%83%a1%e3%82%a4%e3%83%b3%e7%99%bb%e9%8c%b2%e3%81%a8-dns-%e8%a8%ad%e5%ae%9a" aria-label="アンカー">#</a></span></h3><p>以前は GoDaddy でドメインを登録（購入）していましたが、現在は <a href="https://www.cloudflare.com/zh-tw/" target="_blank" rel="noreferrer">Cloudflare</a> の方が管理しやすく安価なのでこちらを使用しています（私のドメインは GoDaddy で買うと年間約 1600 台湾ドルですが、Cloudflare に移管すると年間 900 台湾ドルで済みます）。</p>
+<p>まず Cloudflare の管理画面にログインして、登録したいドメインを探します。</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.45.37@2x-1024x772.png" alt="ドメイン登録" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>次にアカウントのホームページに行くと、登録したばかりのドメインが表示されます。</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.49.00@2x-1024x524.png" alt="アカウントホームページ" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>最後に、先ほど EC2 Connect ページにもあった Public IP を貼り付けて A レコードを設定すれば完了です。</p>
+<p>名前には <code>@</code> を使用してドメイン全体を指定します。文字列を書けばサブドメインに誘導できます。</p>
+<p>ドメイン名が your-domain.com だと仮定すると、A レコードは以下のように設定できます：</p>
+<ul>
+<li><code>@</code> ：ec2_ip を your-domain.com に接続</li>
+<li>test：ec2_ip を test.your-domain.com に接続</li>
+</ul>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.50.22@2x-1024x602.png" alt="DNS レコード" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<h3 id="2-aws-ec2-インスタンスの作成" class="relative group">2. AWS EC2 インスタンスの作成 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-aws-ec2-%e3%82%a4%e3%83%b3%e3%82%b9%e3%82%bf%e3%83%b3%e3%82%b9%e3%81%ae%e4%bd%9c%e6%88%90" aria-label="アンカー">#</a></span></h3><p>AWS にログイン後、EC2 ページに入り、EC2 インスタンス（Instance）を作成します。</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.03.53@2x-1024x423.png" alt="AWS EC2 インスタンス作成ページ" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<h4 id="2-1-os-として-ubuntu-を選択" class="relative group">2-1. OS として Ubuntu を選択 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-1-os-%e3%81%a8%e3%81%97%e3%81%a6-ubuntu-%e3%82%92%e9%81%b8%e6%8a%9e" aria-label="アンカー">#</a></span></h4><p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.04.51@2x-1024x660.png" alt="Ubuntu OS を選択" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<h4 id="2-2-key-pair-の場所で-key-pair-を作成または選択" class="relative group">2-2. Key Pair の場所で Key Pair を作成または選択 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-2-key-pair-%e3%81%ae%e5%a0%b4%e6%89%80%e3%81%a7-key-pair-%e3%82%92%e4%bd%9c%e6%88%90%e3%81%be%e3%81%9f%e3%81%af%e9%81%b8%e6%8a%9e" aria-label="アンカー">#</a></span></h4><p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.05.17@2x-1024x179.png" alt="Key Pair 作成" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>作成すると、鍵ファイル <code>$ssh_key.pem</code> が生成され、ダウンロードできます。</p>
+<p>ローカルで ssh 接続する際に必要になります。</p>
+<h4 id="2-3-network-設定" class="relative group">2-3. Network 設定 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-3-network-%e8%a8%ad%e5%ae%9a" aria-label="アンカー">#</a></span></h4><p>EC2 のセキュリティグループで SSH、HTTP（80）、HTTPS（443）のポートを開放します。下の図の 3 つの Allow ボタンです。</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.07.33@2x-1024x600.png" alt="EC2 セキュリティグループ設定、SSH、HTTP、HTTPS ポート開放を表示" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<h4 id="2-4-ディスク容量の調整" class="relative group">2-4. ディスク容量の調整 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-4-%e3%83%87%e3%82%a3%e3%82%b9%e3%82%af%e5%ae%b9%e9%87%8f%e3%81%ae%e8%aa%bf%e6%95%b4" aria-label="アンカー">#</a></span></h4><p>後で EasyEngine をインストールするため、少なくとも 5GB のディスク容量が必要なので、16 GiB にアップグレードする必要があります。</p>
+<p>EC2 作成ページのこのブロックで設定できます：</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.08.57@2x-1024x393.png" alt="EC2 ディスク容量設定ブロック" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>もし私のように最初に 8GiB を選んで <code>EasyEngine update requires minimum 5GB disk space to run</code> に遭遇した場合、EC2 のダッシュボードで現在のインスタンスに対応する Volume を見つけ、modify を押せば変更できます。</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-16.53.53@2x-2048x601.png" alt="EC2 Volume 修正ページ" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>アップグレード後、EC2 の ubuntu に SSH 接続してこのコマンド <code>sudo resize2fs /dev/xvda1</code> を実行します（<code>df -h</code> を実行して容量を確認できます）。</p>
+<h3 id="3-easy-engine-と-wordpress-のインストール" class="relative group">3. Easy Engine と WordPress のインストール <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#3-easy-engine-%e3%81%a8-wordpress-%e3%81%ae%e3%82%a4%e3%83%b3%e3%82%b9%e3%83%88%e3%83%bc%e3%83%ab" aria-label="アンカー">#</a></span></h3><p><a href="https://easyengine.io/" target="_blank" rel="noreferrer">EasyEngine</a> のサブタイトルは Easy WordPress on Nginx です。その名の通り、Docker ベースの WordPress 環境を提供し、Web サーバーとして nginx を使用します。</p>
+<p>まずは EC2 Instance ページで Connect を見つけます：</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.33.54@2x-1024x484.png" alt="EC2 インスタンス接続ページ" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>中に入ったら下の一行を直接コピーしますが、自分の ssh key pem を保存している場所でこのコマンドを実行することを忘れないでください。</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.31.57@2x-1024x362.png" alt="SSH 接続コマンド" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>私のように ssh フォルダの下に pem を保存している場合、ターミナルを開いてコマンドを入力して接続するとこのようになります：</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.39.08@2x-1024x808.png" alt="EC2 ターミナルへの接続成功" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p><strong>上の画像の <code>brew install easyengine</code> は Mac 用です。消し忘れました。EC2 ubuntu は 1 行目だけでインストールできます。</strong></p>
+<p>EasyEngine が <code>ee site create example.com --wp</code> を実行する際、ドメイン（例：example.com）を通じてバーチャルホストを設定するため、使用可能なドメインが必要です。最初の手順で Domain と DNS 設定を済ませておくのがベストです。<code>http://&lt;EC2_IP&gt;/wp-admin</code> を直接打っても Nginx はデフォルトページか 404 を返します。</p>
+<pre tabindex="0"><code># Linux に EasyEngine をインストール
+wget -qO ee rt.cx/ee4 &amp;&amp; sudo bash ee
+
+# WordPress で example.com にサイトを作成
+sudo ee site create example.com --wp
+</code></pre><p>このような画面が表示されれば、WordPress の作成は完了です！</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.40.53@2x-892x1024.png" alt="WordPress 作成ログ" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<h2 id="構築プロセスのクイックレビュー" class="relative group">構築プロセスのクイックレビュー <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e6%a7%8b%e7%af%89%e3%83%97%e3%83%ad%e3%82%bb%e3%82%b9%e3%81%ae%e3%82%af%e3%82%a4%e3%83%83%e3%82%af%e3%83%ac%e3%83%93%e3%83%a5%e3%83%bc" aria-label="アンカー">#</a></span></h2><ol>
+<li>
+<p>Cloudflare でドメインを登録（例：your-domain.com）</p>
+</li>
+<li>
+<p>EC2 インスタンスを作成：</p>
+<ul>
+<li>Ubuntu システムを使用</li>
+<li>16GiB のストレージ容量を確保</li>
+<li>HTTP と HTTPS ポートを開放し、SSH キーペアを設定</li>
+</ul>
+</li>
+<li>
+<p>SSH 経由で EC2 に接続し、Easy Engine をインストール</p>
+</li>
+<li>
+<p><code>ee site create your-domain.com --wp</code> を使用して WordPress サイトを作成</p>
+</li>
+<li>
+<p>Cloudflare DNS でドメインを EC2 の公開 IP に向ける（A レコードを設定）</p>
+</li>
+<li>
+<p>完了！これで your-domain.com と your-domain.com/wp-admin に直接接続できます</p>
+</li>
+</ol>
+<h2 id="結びに" class="relative group">結びに <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e7%b5%90%e3%81%b3%e3%81%ab" aria-label="アンカー">#</a></span></h2><p>個人的にこの WordPress デプロイの組み合わせは非常に使いやすいと感じています。大規模なトラフィックも各方面の調整で対応できます。</p>
+<p>ディスクのアップグレードなどのサーバー管理は EC2 で、WordPress の管理は easy engine CLI で、ドメイン関連の管理は Cloudflare で行えます。</p>
+<p>トラフィックが増えてきたら、Cloudflare のキャッシュをオンにし、次に easy engine 内の nginx キャッシュをオンにすることで、徐々にサービスをアップグレードできます。</p>
+<p>この記事では WordPress の構築についてのみ触れましたが、構築に成功した後も、WordPress テーマの調整や様々なプラグインのインストールなどが必要です。これについてはまた時間があるときに共有します。</p>
+<h3 id="独り言" class="relative group">独り言 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e7%8b%ac%e3%82%8a%e8%a8%80" aria-label="アンカー">#</a></span></h3><p>一年半ぶりに技術記事を書くのは結構疲れましたが、Heptabase にたくさんのメモが眠っているのはもったいないと思うので、整理して少しずつ出していこうと思います。復習にもなりますし。</p>
+<p>今回 WordPress について書くにあたり、一般向けにするかエンジニア向けにするか、どこまで説明するか迷いました。この記事はエンジニアには説明しすぎかもしれませんが、一般の人が読んでも不明瞭かもしれません。でも、メモを公開するという初志貫徹でとりあえずこれで良しとしましょう！その後、徐々にペースを掴んでいきます。</p>
+<p>最近、エンジニアではない友人から構築方法を聞かれましたが、彼がこれを読んでもたぶんこの方法は採用しない気がします XD。</p>
+<p>AI の登場後、技術ブログの意義についても考えていますが、私自身まだ記事を読むので、書いて公開することには意味があるはずです。</p>
+<p>また、メモとして記録するということは、通常、私がその時 AI で直接問題を解決できず、プロセスの中でキーワードを記録したり検索したりする必要があったことを意味します。このプロセス全体において、AI は回答の途中で幻覚を見始めたり、文脈を失ったりしやすいのです（パッケージについて聞くと、AI は存在しないパッケージをよく幻覚で作り出します）。</p>
+<p>多くの知識が記事や本という形で整理されていれば、吸収効率はずっと速くなります。最近 Java を学んでいますが、AI で学習する際は間違って覚えるのが怖いです。しかし、AI が時々私の知らないキーワードを出してくれるので、そのキーワードを通じて他の人が書いた完全な文脈のある記事を調べることができます。そうして良葛格（Liang GeGe）が書いた Java シリーズの記事を見つけました。そのようなよく書かれた記事を読む学習効率は、AI に適当に質問するよりずっと良いです。</p>
+
+        </div>
+      </section>
+      <footer class="max-w-prose pt-8 print:hidden">
+        
+  <div class="flex">
+    
+    
+    
+    <div class="place-self-center">
+      
+        <div class="text-[0.6rem] uppercase leading-3 text-neutral-500 dark:text-neutral-400">
+          著者
+        </div>
+        <div class="font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
+          Parker
+        </div>
+      
+      
+      <div class="text-2xl sm:text-lg">
+</div>
+    </div>
+  </div>
+
+
+        
+
+        
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="group flex" href="http://localhost:1313/ja/software/my-site/">
+              <span
+                class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+                ><span class="ltr:inline rtl:hidden">&larr;</span
+                ><span class="ltr:hidden rtl:inline">&rarr;</span></span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >個人サイト</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2024-03-03 00:00:00 &#43;0000 UTC">2024年3月3日</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+        
+          
+            <div class="pt-3">
+              <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+              <div class="pt-3">
+                <div id="cusdis_thread"
+  data-host="https://cusdis.com"
+  data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
+  data-page-id="3e41322150fdd12421dde2afd6e8900e"
+  data-page-url="http://localhost:1313/ja/software/wordpress-hosting/"
+  data-page-title="私がどのようにWordPressサイトを構築したか"
+></div>
+<script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+<script>
+  (function () {
+    function getCusdisTheme() {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    function applyTheme() {
+      if (window.CUSDIS) window.CUSDIS.setTheme(getCusdisTheme());
+    }
+    document.addEventListener('DOMContentLoaded', applyTheme);
+    new MutationObserver(applyTheme).observe(
+      document.documentElement,
+      { attributeFilter: ['class'] }
+    );
+  })();
+</script>
+
+              </div>
+            </div>
+          
+        
+      </footer>
+    
+  </article>
+
+      </main>
+      
+        <div
+          class="pointer-events-none absolute bottom-0 end-0 top-[100vh] w-12"
+          id="to-top"
+          hidden="true"
+        >
+          <a
+            href="#the-top"
+            class="pointer-events-auto sticky top-[calc(100vh-5.5rem)] flex h-12 w-12 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 backdrop-blur hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+            aria-label="TOPへスクロール"
+            title="TOPへスクロール"
+          >
+            &uarr;
+          </a>
+        </div>
+      <footer class="py-10 print:hidden">
+  
+  
+  <div class="flex items-center justify-between">
+    <div>
+      
+      
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+            &copy;
+            2026
+            Parker
+        </p>
+      
+      
+      
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          
+          
+          Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> &amp; <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://github.com/jpanther/congo" target="_blank" rel="noopener noreferrer">Congo</a>
+        </p>
+      
+    </div>
+    <div class="flex flex-row items-center">
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  
+</footer>
+
+    </div>
+  </body>
+</html>

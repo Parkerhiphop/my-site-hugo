@@ -1,0 +1,37 @@
+{{ with page }}
+  {{ if hugo.IsMultilingual }}
+    {{- $currentLang := .Lang -}}
+
+    {{/* Build lang → permalink map from existing translations */}}
+    {{- $langMap := dict -}}
+    {{- range .AllTranslations -}}
+      {{- $langMap = merge $langMap (dict .Lang .RelPermalink) -}}
+    {{- end -}}
+
+    {{/* Ordered list of all supported languages */}}
+    {{- $langs := slice
+        (dict "code" "zh-TW" "label" "中" "home" "/")
+        (dict "code" "en"    "label" "EN" "home" "/en/")
+        (dict "code" "ja"    "label" "日" "home" "/ja/")
+    -}}
+
+    <div class="flex items-center gap-4">
+      {{- range $langs -}}
+        {{- $code  := .code -}}
+        {{- $label := .label -}}
+        {{- $url   := index $langMap $code | default .home -}}
+        {{- $active := eq $currentLang $code -}}
+        <a
+          href="{{ $url }}"
+          aria-current="{{ if $active }}true{{ else }}false{{ end }}"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+            {{- if $active }}
+              text-primary-600 dark:text-primary-400
+            {{- else }}
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400
+            {{- end }}"
+        >{{ $label }}</a>
+      {{- end -}}
+    </div>
+  {{ end }}
+{{ end }}

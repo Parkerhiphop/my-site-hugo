@@ -1,0 +1,2061 @@
+
+
+
+
+
+
+<!doctype html>
+<html
+  lang="zh-TW"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="light"
+  data-auto-appearance="true"
+><head>
+	<meta name="generator" content="Hugo 0.161.1"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FFFFFF" />
+  
+  <title>Parker Chang&#39;s Web</title>
+    <meta name="title" content="Parker Chang&#39;s Web" />
+  
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/appearance.min.8a082f81b27f3cb2ee528df0b0bdc39787034cf2cc34d4669fbc9977c929023c.js"
+    integrity="sha256-iggvgbJ/PLLuUo3wsL3Dl4cDTPLMNNRmn7yZd8kpAjw="
+  ></script>
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.3d626d356703626569364790e95b69715968a53a1054f31d92786caaf3605200.css"
+    integrity="sha256-PWJtNWcDYmVpNkeQ6VtpcVlopToQVPMdknhsqvNgUgA="
+  />
+  
+  
+  
+  
+  
+  
+  
+  <meta
+    name="description"
+    content="
+      
+        喜歡寫作，在這裡記錄自己的所思所想，若這些想法能給其他人帶來點啟發會很高興。可能會寫軟體開發、生活感想、讀書筆記和對各種作品的感想。
+      
+    "
+  />
+  
+  
+  
+  
+    <link rel="canonical" href="http://localhost:1313/" />
+  
+  <link rel="alternate" type="application/rss+xml" href="http://localhost:1313/index.xml" title="Parker Chang's Web" />
+  <link rel="alternate" type="application/json" href="http://localhost:1313/index.json" title="Parker Chang's Web" />
+  
+  
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:url" content="http://localhost:1313/">
+  <meta property="og:site_name" content="Parker Chang&#39;s Web">
+  <meta property="og:title" content="首頁">
+  <meta property="og:description" content="喜歡寫作，在這裡記錄自己的所思所想，若這些想法能給其他人帶來點啟發會很高興。可能會寫軟體開發、生活感想、讀書筆記和對各種作品的感想。">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:type" content="website">
+
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="首頁">
+  <meta name="twitter:description" content="喜歡寫作，在這裡記錄自己的所思所想，若這些想法能給其他人帶來點啟發會很高興。可能會寫軟體開發、生活感想、讀書筆記和對各種作品的感想。">
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "http:\/\/localhost:1313\/",
+    "name": "Parker Chang\u0027s Web",
+    "description": "喜歡寫作，在這裡記錄自己的所思所想，若這些想法能給其他人帶來點啟發會很高興。可能會寫軟體開發、生活感想、讀書筆記和對各種作品的感想。",
+    "inLanguage": "zh-TW",
+    "url": "http:\/\/localhost:1313\/",
+    
+    "publisher" : {
+      "@type": "Person",
+      "name": "Parker"
+    }
+  }
+  </script>
+
+
+  
+  
+    <meta name="author" content="Parker" />
+  
+  
+  
+  
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script>
+(function () {
+  
+  if (sessionStorage.getItem('lang-redirected')) return;
+  sessionStorage.setItem('lang-redirected', '1');
+
+  var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+  var path = window.location.pathname;
+
+  
+  var onEn = path === '/en' || path.startsWith('/en/');
+  var onJa = path === '/ja' || path.startsWith('/ja/');
+  
+  var onZh = !onEn && !onJa;
+
+  
+  var preferred;
+  if (/^ja/.test(lang)) {
+    preferred = 'ja';
+  } else if (/^zh/.test(lang)) {
+    preferred = 'zh';
+  } else {
+    preferred = 'en';
+  }
+
+  var alreadyCorrect =
+    (preferred === 'zh' && onZh) ||
+    (preferred === 'en' && onEn) ||
+    (preferred === 'ja' && onJa);
+
+  if (alreadyCorrect) return;
+
+  
+  var stripped = path.replace(/^\/(en|ja)/, '') || '/';
+
+  var target;
+  if (preferred === 'zh') {
+    target = stripped;
+  } else {
+    target = '/' + preferred + stripped;
+  }
+
+  window.location.replace(target);
+})();
+</script>
+
+  
+</head>
+<body
+    class="m-auto flex h-screen max-w-7xl flex-col bg-neutral px-6 text-lg leading-7 text-neutral-900 dark:bg-neutral-800 dark:text-neutral sm:px-14 md:px-24 lg:px-32"
+  >
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="-translate-y-8 rounded-b-lg bg-primary-200 px-3 py-1 text-sm focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content"
+        ><span class="pe-2 font-bold text-primary-600 dark:text-primary-400">&darr;</span
+        >快轉到主要內容</a
+      >
+    </div>
+    
+    
+      <header class="py-6 font-semibold text-neutral-900 dark:text-neutral sm:py-10 print:hidden">
+  <nav class="flex items-center justify-between">
+    <div class="z-40 flex flex-row items-center">
+      
+    </div>
+    
+      <div class="site-header-mobile-actions">
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+              
+              <button
+                id="appearance-switcher-1"
+                type="button"
+                aria-label="appearance switcher"
+                class="site-header-icon-button group"
+              >
+                <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                  </svg>
+                </span>
+                <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                  </svg>
+                </span>
+              </button>
+            
+          
+            
+              
+              
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >EN</a><a
+          href="/ja/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >日</a></div>
+  
+
+
+            
+          
+        
+      </div>
+      
+      <label id="menu-button" for="menu-controller" class="site-header-menu-button block">
+        <input type="checkbox" id="menu-controller" class="hidden" />
+        <div class="site-header-menu-trigger cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+          <span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+</span>
+        </div>
+        <div
+          id="menu-wrapper"
+          class="invisible fixed inset-0 z-30 m-auto h-full w-full cursor-default overflow-auto bg-neutral-100/50 opacity-0 backdrop-blur-sm transition-opacity dark:bg-neutral-900/50"
+        >
+          <ul
+            class="site-header-mobile-menu mx-auto flex w-full max-w-7xl list-none flex-col items-end overflow-visible px-6 py-6 text-end sm:px-14 sm:py-10 md:px-24 lg:px-32"
+          >
+            <li class="site-header-menu-close flex w-full items-end justify-end">
+              <span class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400"
+                ><span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span></span
+              >
+            </li>
+            
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/life/"
+                    title="生活"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >生活</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/software/"
+                    title="軟體"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >軟體</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/novel/"
+                    title="小說"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >小說</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/thoughts/"
+                    title="感想"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >感想</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/about/"
+                    title="關於"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >關於</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/now/"
+                    title="現在"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >近況</span
+                    ></a
+                  >
+                </li>
+              
+                
+                  
+                
+                  
+            
+          </ul>
+        </div>
+      </label>
+      
+      <ul class="site-header-desktop-nav hidden list-none flex-row items-center gap-6">
+        
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/life/"
+                  title="生活"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >生活</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/software/"
+                  title="軟體"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >軟體</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/novel/"
+                  title="小說"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >小說</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/thoughts/"
+                  title="感想"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >感想</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/about/"
+                  title="關於"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >關於</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/now/"
+                  title="現在"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >近況</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                <button
+                  id="appearance-switcher-2"
+                  type="button"
+                  aria-label="appearance switcher"
+                  class="flex items-center"
+                >
+                  <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                    </svg>
+                  </span>
+                  <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="4" />
+                      <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                    </svg>
+                  </span>
+                </button>
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >EN</a><a
+          href="/ja/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >日</a></div>
+  
+
+
+              
+            </li>
+          
+        
+      </ul>
+    
+  </nav>
+</header>
+
+    
+    <div class="relative flex grow flex-col">
+      <main id="main-content" class="grow">
+        
+  
+  
+    <section class="border-b border-neutral-200 pb-5 dark:border-neutral-700 md:pb-8">
+  <div class="flex w-full items-start justify-between gap-6">
+    <h1 class="mt-0 text-3xl font-extrabold leading-tight tracking-tight text-neutral-900 dark:text-neutral md:text-4xl">
+      Parker Chang's Web 🕸️
+    </h1>
+    
+      <a href="/about/" class="home-about-link group hidden shrink-0 items-center text-base font-semibold text-neutral-900 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+        <span class="mr-2 inline-block text-xl font-bold text-primary-500 transition-transform group-hover:translate-x-1">&rarr;</span>
+        <span>🙌 關於我</span>
+      </a>
+    
+  </div>
+  <p class="mb-0 mt-3 max-w-3xl text-base leading-7 text-neutral-500 dark:text-neutral-400 md:text-lg">
+    喜歡寫作，在這裡記錄自己的所思所想，若這些想法能給其他人帶來點啟發會很高興。可能會寫軟體開發、生活感想、讀書筆記和對各種作品的感想。
+  </p>
+</section>
+
+
+  <section class="divide-y divide-neutral-200 dark:divide-neutral-700">
+    <div class="py-6 md:py-8">
+        <h2 class="text-2xl font-semibold text-primary-500 md:text-3xl">2026</h2>
+        <ul class="my-5 list-none border-s-4 border-primary-500 ps-4 md:my-8">
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2026-04-28">
+                    2026年4月28日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/save-point-update/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      存檔點更新
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">在日本的生活又往前一步了，沒有一步到位，只有進到下一關的感覺，想說用「更新存檔點」描述更合適。也想分享拿到 offer 前一晚，在 share house 初見就暢聊到半夜的人們。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2026-03-27">
+                    2026年3月27日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/ideal-life/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      理想生活的念想
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">台北、布里斯本、草津，以及那一念之間。如果踏出門的那一刻能淡淡地微笑，那或許就是我的理想生活。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2026-02-23">
+                    2026年2月23日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/2025-2026/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      2025 → 2026
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">我 2025 的年度回顧與 2026 的期待。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2026-01-31">
+                    2026年1月31日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/life-in-kusatsu/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      我在草津的生活
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">紀錄來到草津溫泉滑雪場打工的生活，這一個半月的感受跟慢慢變好的過程。</p>
+                  
+                </div>
+              </article>
+            </li>
+          
+        </ul>
+      </div>
+    <div class="py-6 md:py-8">
+        <h2 class="text-2xl font-semibold text-primary-500 md:text-3xl">2025</h2>
+        <ul class="my-5 list-none border-s-4 border-primary-500 ps-4 md:my-8">
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2025-12-29">
+                    2025年12月29日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/fear-of-living-well/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      我害怕自己過得好
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">我沒有過得多好，但我害怕過得好，聖誕節時收到媽媽傳來的訊息，我終於想通為什麼我這麼害怕了。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2025-11-20">
+                    2025年11月20日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/leaving-australia-for-japan/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      人在澳洲，心在日本：澳打四個月畢業
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">四個月就結束的澳洲打工渡假，繞了一圈還是回到最初的起點，關於我為什麼提前離開、這之間的思考轉變和這一趟的回顧。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2025-09-30">
+                    2025年9月30日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/career-goals-what-i-want-from-work/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      我想在工作中追求什麼
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">在澳洲蔬果工廠工作將滿兩個月，與使用腦力的軟體工程師處於天秤兩端的勞力工作，意外地讓我有很多感悟，這篇文章將會分享我未來希望在工作中追求的面向，能留下來的身份、存得到的錢、好相處的夥伴、心安理得，還有累積影響力等等。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2025-08-31">
+                    2025年8月31日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/after-homelessness/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      寫在無家可歸之後
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">人在異鄉，對「家」的想法特別強烈，但其實台灣我也沒有一個可以回去的「家」，住的地方可能還是可以借住親戚家跟朋友家，但那些不會是我的家。在這篇文章我會用自問自答的方式來分享目前對於家的想像，未來希望如何追尋我的「家」。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2025-08-17">
+                    2025年8月17日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/from-coding-to-pumpkin-in-australia/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      從寫程式到切南瓜：澳打正式啟動
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">在澳洲待滿一個月啦！我也在工廠流水線工作一週了，從可以居家辦公或是坐辦公室敲敲鍵盤的軟體工程師，轉向來工廠流水線切南瓜切到手痛。 這篇文章我會分享在澳洲打工度假找第一份工作的困難、澳洲的寶藏圖書館和切南瓜的流水線工作，也再次質疑我為什麼在這裡。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2025-07-16">
+                    2025年7月16日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/my-first-week-in-au/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      我在澳洲的第一週
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">在澳洲黃金海岸的第一週，記錄與朋友、台灣告別後的心情、對軟體工程師職涯的 burnout 反思，打工的進度以及初到澳洲的雜感。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2025-06-21">
+                    2025年6月21日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/leaving-taiwan-working-holiday/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      暫別台灣兩年：前往澳洲與日本
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">一位軟體工程師按下職涯暫停鍵，決定暫別台灣的緣由。從職涯瓶頸、居住正義到原生家庭的掙扎，這是我出走澳洲、日本，尋找不同生活方式的真實心路歷程。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2025-04-13">
+                    2025年4月13日
+                  </time>
+                  <a href="/software/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/software/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/software/wordpress-hosting/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      我如何架設 WordPress 網站
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">使用 AWS EC2 和 Easy Engine 快速部署 WordPress 網站（網域是跟 Cloudflare 買），需要一點程式背景但很便宜又迅速，自由度跟擴展性也很高！</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2025-03-31">
+                    2025年3月31日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/tokyo-three-days/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      東京三日
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">一趟本不想去的東京三日追星之旅，讓我從日常中抽離，重新發現世界的廣闊和放鬆，順便聊聊燕湯、河津櫻和 Aimer 演唱會。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2025-02-17">
+                    2025年2月17日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/2024-2025/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      2024 → 2025
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">2024 年度回顧，是個發條鬆了的一年，簡短提到我完成跟沒完成的事以及痛苦，從生活、職涯、財務和人際關係去談我對 2025 的期許，也決定在發揮影響力之前，要先顧好自己。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2025-01-02">
+                    2025年1月2日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/i-lost-my-facebook/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      在失去了用十二年的臉書帳號之後
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">我的臉書帳號被無預警停權，失去所有過去的貼文、照片、聊天記錄和群組。我在這裡記錄了事件經過、失去的連結與回憶、對社群媒體的反思，以及未來規劃：確保資料自主性、主動管理資訊源、制定社群媒體使用準則，並專注建立小而緊密的社群。</p>
+                  
+                </div>
+              </article>
+            </li>
+          
+        </ul>
+      </div>
+    <div class="py-6 md:py-8">
+        <h2 class="text-2xl font-semibold text-primary-500 md:text-3xl">2024</h2>
+        <ul class="my-5 list-none border-s-4 border-primary-500 ps-4 md:my-8">
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2024-10-31">
+                    2024年10月31日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/draw-the-map/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      畫出自己的地圖
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">細談在 2023-&gt;2024 年度回顧時提過的「畫出自己的地圖」，地圖對我的幫助、怎麼畫以及我的地圖版本紀錄和現況。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2024-09-26">
+                    2024年9月26日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/my-struggle-of-writing/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      寫作上的一些庸人自擾和思考
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">我在建立個人網站後一年，只寫了六篇文章，我為什麼沒寫更多？這篇文章記錄了這段時間和之前的一些想法，包含了我在寫作上遇到的困難、之後的心態調整，和現在的目標。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2024-06-10">
+                    2024年6月10日
+                  </time>
+                  <a href="/thoughts/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       
+                       
+                       bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800">
+                    <span class="mr-1">🎬</span>感想
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/thoughts/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       
+                       
+                       bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800">
+                    <span class="mr-1">🎬</span>感想
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/thoughts/manga/wind-breaker-shishitouren/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      WIND BREAKER —防風少年— 〈獅子頭連篇〉
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">對於獅子頭連篇的心得，我在這之中看見關於目標和過程。把兔耳山的黑化、十龜的自責和梅宮的豁達都呈現得很好。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2024-03-27">
+                    2024年3月27日
+                  </time>
+                  <a href="/thoughts/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       
+                       
+                       bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800">
+                    <span class="mr-1">🎬</span>感想
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/thoughts/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       
+                       
+                       bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800">
+                    <span class="mr-1">🎬</span>感想
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/thoughts/movie/hokkyoku-departmant-store/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      北極百貨的秋乃小姐 The Concierge
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">關於《北極百貨的秋乃小姐》這部電影的心得，以及被觸動的生活感想</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2024-03-05">
+                    2024年3月5日
+                  </time>
+                  <a href="/thoughts/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       
+                       
+                       bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800">
+                    <span class="mr-1">🎬</span>感想
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/thoughts/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       
+                       
+                       bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800">
+                    <span class="mr-1">🎬</span>感想
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/thoughts/movie/dune/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      《沙丘》：一部關於生態與權力的史詩
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">法蘭克·赫伯特的《沙丘》不只是科幻小說，更是一部深刻的政治與生態寓言。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2024-03-04">
+                    2024年3月4日
+                  </time>
+                  <a href="/novel/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       
+                       bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-900 dark:text-yellow-300 dark:hover:bg-yellow-800
+                       ">
+                    <span class="mr-1">✍️</span>小說
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/novel/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       
+                       bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-900 dark:text-yellow-300 dark:hover:bg-yellow-800
+                       ">
+                    <span class="mr-1">✍️</span>小說
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/novel/prologue/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      序章：霧中的城市
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">故事從一座永遠被霧籠罩的城市開始。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2024-03-03">
+                    2024年3月3日
+                  </time>
+                  <a href="/software/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/software/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/software/my-site/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      個人網站
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">用 Hugo &#43; Congo 主題建立的多語系個人網站，部署於 Cloudflare Pages。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2024-03-02">
+                    2024年3月2日
+                  </time>
+                  <a href="/software/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/software/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/software/my-first-tech-post/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      用 Hugo 建立靜態網站
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">介紹如何使用 Hugo 搭配 Congo 主題建立個人網站。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2024-03-02">
+                    2024年3月2日
+                  </time>
+                  <a href="/thoughts/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       
+                       
+                       bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800">
+                    <span class="mr-1">🎬</span>感想
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/thoughts/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       
+                       
+                       bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800">
+                    <span class="mr-1">🎬</span>感想
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/thoughts/movie/robot-dream/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      再見機器人 Robot Dreams
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">關於《再見機器人》這部電影的心得，以及被觸動的生活感想</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2024-03-01">
+                    2024年3月1日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/hello-world/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      你好，世界
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">第一篇文章，測試封面照片、內文圖片、圖說與替代文字。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2024-02-16">
+                    2024年2月16日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/2023-2024/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      2023 → 2024
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">2023 年度回顧，討論了我對年度回顧的看法，去年的感悟、決定、完成的事，對明年的期待，為什麼該發揮影響力。</p>
+                  
+                </div>
+              </article>
+            </li>
+          
+        </ul>
+      </div>
+    <div class="py-6 md:py-8">
+        <h2 class="text-2xl font-semibold text-primary-500 md:text-3xl">2023</h2>
+        <ul class="my-5 list-none border-s-4 border-primary-500 ps-4 md:my-8">
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2023-09-30">
+                    2023年9月30日
+                  </time>
+                  <a href="/software/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/software/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/software/talk-about-js-eval/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      談談 JavaScript 中的 eval、風險及替代方案
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">介紹 JavaScript 中的 eval，再談談為什麼不要用它，最後以 App script 爬蟲時需要讀取`&lt;script /&gt;` 和 取得 JS 運算結果的面試考題來看它的應用，以及它的替代方案。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2023-08-21">
+                    2023年8月21日
+                  </time>
+                  <a href="/software/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/software/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/software/from-callback-to-async/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      從 Callback 到 Async/Await：以次序淡入動畫為例
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">透過一個次序淡入動畫的需求來看 JS 中非同步操作的處理，如何從 Callback 結構轉換到 Promise ，再用 Async/Await 重構成更簡潔、好讀的程式碼。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2023-07-15">
+                    2023年7月15日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/how-to-build-a-fitness-habit/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      上班族如何建立健身習慣
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">我作為一個上班族如何打造健身習慣的方法論跟心態</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2023-05-30">
+                    2023年5月30日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/the-journey-of-my-site/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      自架網站心路歷程：寫作動機和技術選擇
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">關於「為什麼要架設個人網站？」、「為什麼要寫作？」、「如何選擇技術？」等大哉問</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2023-03-18">
+                    2023年3月18日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/2022-2023/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      2022 → 2023
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">2022 年度回顧</p>
+                  
+                </div>
+              </article>
+            </li>
+          
+        </ul>
+      </div>
+    <div class="py-6 md:py-8">
+        <h2 class="text-2xl font-semibold text-primary-500 md:text-3xl">2022</h2>
+        <ul class="my-5 list-none border-s-4 border-primary-500 ps-4 md:my-8">
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2022-10-23">
+                    2022年10月23日
+                  </time>
+                  <a href="/software/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/software/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/software/google-oauth-login/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      實作 Google 第三方登入（Vue / Express）
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">使用 Vue 和 Express 做 Google 登入串接的小範例</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2022-09-03">
+                    2022年9月3日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/my-first-three-year-in-code/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      回顧我成為軟體工程師的第一個三年
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">一個非本科系文科生轉職軟體工程師三年的歷程和反思，談談我的冒牌者症候群、如何肯定自己</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2022-01-09">
+                    2022年1月9日
+                  </time>
+                  <a href="/life/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/life/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800
+                       
+                       
+                       ">
+                    <span class="mr-1">💭</span>生活
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/life/2021-2022/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      2021 → 2022
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">2021 年度回顧</p>
+                  
+                </div>
+              </article>
+            </li>
+          
+        </ul>
+      </div>
+    <div class="py-6 md:py-8">
+        <h2 class="text-2xl font-semibold text-primary-500 md:text-3xl">2021</h2>
+        <ul class="my-5 list-none border-s-4 border-primary-500 ps-4 md:my-8">
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2021-10-28">
+                    2021年10月28日
+                  </time>
+                  <a href="/software/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/software/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/software/talk-about-web-font/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      談談網頁中的字體 — 設計、檔案格式與前端載入
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">介紹字體設計流程（不專業版）、字體的檔案有哪些、網頁如何使用字體。</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2021-09-22">
+                    2021年9月22日
+                  </time>
+                  <a href="/software/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/software/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/software/design-system/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      Design System — 前端工程師也該知道的那些事
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">軟體工程師的本質其實跟建築師很接近，只是他們是建造房屋，我們是建造系統。一個好的房子，它需要良好的架構設計，會需要規劃藍圖、理解整個建物的結構，在前期規劃設計上會花很多的時間。而這概念對應到 網頁 來說，就是 Design System！</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2021-07-11">
+                    2021年7月11日
+                  </time>
+                  <a href="/software/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/software/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800
+                       
+                       ">
+                    <span class="mr-1">🧑‍💻</span>軟體
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/software/frontend-framework-101/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      前端框架第 0 課：學習框架前該知道的事
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">前端框架的選擇一直是很多新手（包括我）的大哉問，我當初是因為公司在用 React 就也只能先寫 React 了，前陣子因緣際會開始碰了一下 Angular ，進而啟發我對於「前端框架」進行更多思考，像是「框架」到底是指什麼？什麼東西可以被稱為「框架」？為何前端需要去使用它？不用它會怎麼樣？聽說 Vue3 很猛，我該去學嗎？等等的問題。</p>
+                  
+                </div>
+              </article>
+            </li>
+          
+        </ul>
+      </div>
+    <div class="py-6 md:py-8">
+        <h2 class="text-2xl font-semibold text-primary-500 md:text-3xl">2020</h2>
+        <ul class="my-5 list-none border-s-4 border-primary-500 ps-4 md:my-8">
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2020-05-03">
+                    2020年5月3日
+                  </time>
+                  <a href="/thoughts/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       
+                       
+                       bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800">
+                    <span class="mr-1">🎬</span>感想
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/thoughts/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       
+                       
+                       bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800">
+                    <span class="mr-1">🎬</span>感想
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/thoughts/tools/atomic-habits-practice/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      從理解到實踐：打造自己的原子習慣 — 《原子習慣》 書摘 （下）
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">原子習慣系列第二篇，從理解走向實踐，將習慣拆分成四大步驟，並循線去打造我們的原子習慣（但鑑於篇幅問題，本篇先介紹第一步）！</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2020-04-28">
+                    2020年4月28日
+                  </time>
+                  <a href="/thoughts/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       
+                       
+                       bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800">
+                    <span class="mr-1">🎬</span>感想
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/thoughts/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       
+                       
+                       bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800">
+                    <span class="mr-1">🎬</span>感想
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/thoughts/tools/atomic-habits-basic/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      重新理解習慣這檔事—《原子習慣》書摘（上）
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">原子習慣系列第一篇，意志力不足不是你的錯，有原子習慣就沒事，打破目標導向的迷思，系統才是真理！</p>
+                  
+                </div>
+              </article>
+            </li>
+          <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="2020-03-28">
+                    2020年3月28日
+                  </time>
+                  <a href="/thoughts/"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       
+                       
+                       bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800">
+                    <span class="mr-1">🎬</span>感想
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="/thoughts/"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       
+                       
+                       
+                       bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800">
+                    <span class="mr-1">🎬</span>感想
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="/thoughts/tools/atomic-habits-note/" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      《原子習慣》全書筆記
+                    </a>
+                  </h3>
+                  
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">原子習慣讀書筆記</p>
+                  
+                </div>
+              </article>
+            </li>
+          
+        </ul>
+      </div>
+    
+    <div class="py-6 md:py-8">
+      <span class="text-2xl font-semibold text-primary-500 md:text-3xl">👆 這是起點！</span>
+    </div>
+  </section>
+
+
+  
+
+      </main>
+      
+        <div
+          class="pointer-events-none absolute bottom-0 end-0 top-[100vh] w-12"
+          id="to-top"
+          hidden="true"
+        >
+          <a
+            href="#the-top"
+            class="pointer-events-auto sticky top-[calc(100vh-5.5rem)] flex h-12 w-12 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 backdrop-blur hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+            aria-label="捲動到頁頂"
+            title="捲動到頁頂"
+          >
+            &uarr;
+          </a>
+        </div>
+      <footer class="py-10 print:hidden">
+  
+  
+  <div class="flex items-center justify-between">
+    <div>
+      
+      
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+            &copy;
+            2026
+            Parker
+        </p>
+      
+      
+      
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          
+          
+          以 <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> & <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://github.com/jpanther/congo" target="_blank" rel="noopener noreferrer">Congo</a> 製作
+        </p>
+      
+    </div>
+    <div class="flex flex-row items-center">
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  
+</footer>
+
+    </div>
+  </body>
+</html>

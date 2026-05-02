@@ -1,0 +1,1161 @@
+
+
+
+
+
+
+<!doctype html>
+<html
+  lang="en"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="light"
+  data-auto-appearance="true"
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FFFFFF" />
+  
+  <title>How I Set Up a WordPress Site &middot; Parker Chang&#39;s Web</title>
+    <meta name="title" content="How I Set Up a WordPress Site &middot; Parker Chang&#39;s Web" />
+  
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/appearance.min.8a082f81b27f3cb2ee528df0b0bdc39787034cf2cc34d4669fbc9977c929023c.js"
+    integrity="sha256-iggvgbJ/PLLuUo3wsL3Dl4cDTPLMNNRmn7yZd8kpAjw="
+  ></script>
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.3d626d356703626569364790e95b69715968a53a1054f31d92786caaf3605200.css"
+    integrity="sha256-PWJtNWcDYmVpNkeQ6VtpcVlopToQVPMdknhsqvNgUgA="
+  />
+  
+  
+  
+  
+  
+  
+  
+  <meta
+    name="description"
+    content="
+      Deploy a WordPress site quickly using AWS EC2 and Easy Engine (domain bought from Cloudflare). Requires a little programming background but is cheap and fast, with high freedom and scalability!
+    "
+  />
+  
+  
+  
+  
+    <link rel="canonical" href="http://localhost:1313/en/software/wordpress-hosting/" />
+  
+  
+  
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:url" content="http://localhost:1313/en/software/wordpress-hosting/">
+  <meta property="og:site_name" content="Parker Chang&#39;s Web">
+  <meta property="og:title" content="How I Set Up a WordPress Site">
+  <meta property="og:description" content="Deploy a WordPress site quickly using AWS EC2 and Easy Engine (domain bought from Cloudflare). Requires a little programming background but is cheap and fast, with high freedom and scalability!">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="software">
+    <meta property="article:published_time" content="2025-04-13T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-04-13T00:00:00+00:00">
+    <meta property="article:tag" content="Software Development">
+    <meta property="article:tag" content="WordPress">
+    <meta property="article:tag" content="AWS">
+    <meta property="article:tag" content="EC2">
+    <meta property="article:tag" content="EasyEngine">
+    <meta property="article:tag" content="Cloudflare">
+    <meta property="og:image" content="http://localhost:1313/en/software/wordpress-hosting/cover-en.png">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/en/software/wordpress-hosting/cover-en.png">
+  <meta name="twitter:title" content="How I Set Up a WordPress Site">
+  <meta name="twitter:description" content="Deploy a WordPress site quickly using AWS EC2 and Easy Engine (domain bought from Cloudflare). Requires a little programming background but is cheap and fast, with high freedom and scalability!">
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Software",
+    "name": "How I Set Up a WordPress Site",
+    "headline": "How I Set Up a WordPress Site",
+    "description": "Deploy a WordPress site quickly using AWS EC2 and Easy Engine (domain bought from Cloudflare). Requires a little programming background but is cheap and fast, with high freedom and scalability!",
+    "abstract": "\u003cblockquote\u003e\n\u003cp\u003e\u003cstrong\u003eNote:\u003c\/strong\u003e This post is translated by AI. If you find any unnatural phrasing or errors, please feel free to contact me via email or other channels. Your feedback is appreciated!\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003cp\u003eLast year I handled several large WordPress sites at work. I\u0026rsquo;m here to record and share the WordPress hosting strategy I learned.\u003c\/p\u003e\n\u003cp\u003eThis site will also be changed to WordPress later. After changing, I will come back to share why and how I did it.\u003c\/p\u003e",
+    "inLanguage": "en",
+    "url" : "http:\/\/localhost:1313\/en\/software\/wordpress-hosting\/",
+    "author" : {
+      "@type": "Person",
+      "name": "Parker"
+    },
+    "copyrightYear": "2025",
+    "dateCreated": "2025-04-13T00:00:00\u002b00:00",
+    "datePublished": "2025-04-13T00:00:00\u002b00:00",
+    
+    "dateModified": "2025-04-13T00:00:00\u002b00:00",
+    
+    "keywords": ["Software Development","WordPress","AWS","EC2","EasyEngine","Cloudflare"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "1578"
+  }
+  </script>
+    
+    <script type="application/ld+json">
+    {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/en/",
+       "name": "Home",
+       "position": 1
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/en/software/",
+       "name": "Software",
+       "position": 2
+     },
+     {
+       "@type": "ListItem",
+       "name": "How I Set Up a Word Press Site",
+       "position": 3
+     }
+   ]
+ }
+  </script>
+
+  
+  
+    <meta name="author" content="Parker" />
+  
+  
+  
+  
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script>
+(function () {
+  
+  if (sessionStorage.getItem('lang-redirected')) return;
+  sessionStorage.setItem('lang-redirected', '1');
+
+  var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+  var path = window.location.pathname;
+
+  
+  var onEn = path === '/en' || path.startsWith('/en/');
+  var onJa = path === '/ja' || path.startsWith('/ja/');
+  
+  var onZh = !onEn && !onJa;
+
+  
+  var preferred;
+  if (/^ja/.test(lang)) {
+    preferred = 'ja';
+  } else if (/^zh/.test(lang)) {
+    preferred = 'zh';
+  } else {
+    preferred = 'en';
+  }
+
+  var alreadyCorrect =
+    (preferred === 'zh' && onZh) ||
+    (preferred === 'en' && onEn) ||
+    (preferred === 'ja' && onJa);
+
+  if (alreadyCorrect) return;
+
+  
+  var stripped = path.replace(/^\/(en|ja)/, '') || '/';
+
+  var target;
+  if (preferred === 'zh') {
+    target = stripped;
+  } else {
+    target = '/' + preferred + stripped;
+  }
+
+  window.location.replace(target);
+})();
+</script>
+
+  
+</head>
+<body
+    class="m-auto flex h-screen max-w-7xl flex-col bg-neutral px-6 text-lg leading-7 text-neutral-900 dark:bg-neutral-800 dark:text-neutral sm:px-14 md:px-24 lg:px-32"
+  >
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="-translate-y-8 rounded-b-lg bg-primary-200 px-3 py-1 text-sm focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content"
+        ><span class="pe-2 font-bold text-primary-600 dark:text-primary-400">&darr;</span
+        >Skip to main content</a
+      >
+    </div>
+    
+    
+      <header class="py-6 font-semibold text-neutral-900 dark:text-neutral sm:py-10 print:hidden">
+  <nav class="flex items-center justify-between">
+    <div class="z-40 flex flex-row items-center">
+      
+    </div>
+    
+      <div class="site-header-mobile-actions">
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+              
+              <button
+                id="appearance-switcher-1"
+                type="button"
+                aria-label="appearance switcher"
+                class="site-header-icon-button group"
+              >
+                <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                  </svg>
+                </span>
+                <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                  </svg>
+                </span>
+              </button>
+            
+          
+            
+              
+              
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/software/wordpress-hosting/"
+          aria-current="true"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-primary-600 dark:text-primary-400"
+        >EN</a><a
+          href="/ja/software/wordpress-hosting/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >日</a></div>
+  
+
+
+            
+          
+        
+      </div>
+      
+      <label id="menu-button" for="menu-controller" class="site-header-menu-button block">
+        <input type="checkbox" id="menu-controller" class="hidden" />
+        <div class="site-header-menu-trigger cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+          <span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+</span>
+        </div>
+        <div
+          id="menu-wrapper"
+          class="invisible fixed inset-0 z-30 m-auto h-full w-full cursor-default overflow-auto bg-neutral-100/50 opacity-0 backdrop-blur-sm transition-opacity dark:bg-neutral-900/50"
+        >
+          <ul
+            class="site-header-mobile-menu mx-auto flex w-full max-w-7xl list-none flex-col items-end overflow-visible px-6 py-6 text-end sm:px-14 sm:py-10 md:px-24 lg:px-32"
+          >
+            <li class="site-header-menu-close flex w-full items-end justify-end">
+              <span class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400"
+                ><span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span></span
+              >
+            </li>
+            
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/life/"
+                    title="Life"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >Life</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/software/"
+                    title="Software"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >Software</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/novel/"
+                    title="Novel"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >Novel</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/thoughts/"
+                    title="Thoughts"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >Thoughts</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/about/"
+                    title="About"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >About</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/en/now/"
+                    title="Now"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >Now</span
+                    ></a
+                  >
+                </li>
+              
+                
+                  
+                
+                  
+            
+          </ul>
+        </div>
+      </label>
+      
+      <ul class="site-header-desktop-nav hidden list-none flex-row items-center gap-6">
+        
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/life/"
+                  title="Life"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >Life</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/software/"
+                  title="Software"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >Software</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/novel/"
+                  title="Novel"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >Novel</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/thoughts/"
+                  title="Thoughts"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >Thoughts</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/about/"
+                  title="About"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >About</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/en/now/"
+                  title="Now"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >Now</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                <button
+                  id="appearance-switcher-2"
+                  type="button"
+                  aria-label="appearance switcher"
+                  class="flex items-center"
+                >
+                  <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                    </svg>
+                  </span>
+                  <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="4" />
+                      <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                    </svg>
+                  </span>
+                </button>
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/software/wordpress-hosting/"
+          aria-current="true"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-primary-600 dark:text-primary-400"
+        >EN</a><a
+          href="/ja/software/wordpress-hosting/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >日</a></div>
+  
+
+
+              
+            </li>
+          
+        
+      </ul>
+    
+  </nav>
+</header>
+
+    
+    <div class="relative flex grow flex-col">
+      <main id="main-content" class="grow">
+        
+  <article>
+    <header class="max-w-prose">
+      
+      <h1 class="mb-8 mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        How I Set Up a WordPress Site
+      </h1>
+      
+        <div class="mb-10 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+          
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+    
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2025-04-13 00:00:00 &#43;0000 UTC">13 April 2025</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">8 mins</span>
+    
+
+    
+    
+  </div>
+
+  
+  
+
+
+        </div>
+      
+      
+        
+          <div class="prose">
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+  
+    <picture
+      class="mb-6 rounded-md"
+      
+    >
+      
+      
+      
+      
+        <source
+          
+            srcset="http://localhost:1313/en/software/wordpress-hosting/cover-en_hu_31006ecf5a18b76.webp 330w,http://localhost:1313/en/software/wordpress-hosting/cover-en_hu_7716cb53cf76b429.webp 660w
+            
+              ,http://localhost:1313/en/software/wordpress-hosting/cover-en_hu_f4da23d4dc0dcdd8.webp 1024w
+            
+            
+              
+                ,http://localhost:1313/en/software/wordpress-hosting/cover-en_hu_89f22ca848e84a78.webp 1200w
+              
+            "
+          
+          sizes="100vw"
+          type="image/webp"
+        />
+      
+      <img
+        width="1200"
+        height="630"
+        class="mb-6 rounded-md"
+        
+        
+        
+          src="http://localhost:1313/en/software/wordpress-hosting/cover-en_hu_7f219dee918bc72a.png" srcset="http://localhost:1313/en/software/wordpress-hosting/cover-en_hu_53b7759a903d3ff7.png 330w,http://localhost:1313/en/software/wordpress-hosting/cover-en_hu_7f219dee918bc72a.png 660w
+          
+            ,http://localhost:1313/en/software/wordpress-hosting/cover-en_hu_93e868385b5d3dd9.png 1024w
+          
+          
+            ,http://localhost:1313/en/software/wordpress-hosting/cover-en.png 1200w
+          "
+          sizes="100vw"
+        
+      />
+    </picture>
+  
+
+
+            
+          </div>
+        
+      
+    </header>
+    
+      <section class="prose mt-0 flex max-w-full flex-col dark:prose-invert lg:flex-row">
+        
+          <div class="order-first px-0 lg:order-last lg:max-w-xs lg:ps-8">
+            <div class="toc pe-5 lg:sticky lg:top-10 print:hidden">
+              <details open class="-ms-5 mt-0 overflow-hidden rounded-lg ps-5">
+  <summary
+    class="block cursor-pointer bg-neutral-100 py-1 ps-5 text-lg font-semibold text-neutral-800 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden"
+  >
+    Table of Contents
+  </summary>
+  <div class="border-s border-dotted border-neutral-300 py-2 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#wordpresscom-vs-wordpressorg">WordPress.com vs WordPress.org</a></li>
+    <li><a href="#wordpressorg-hosting-plans-on-the-market">WordPress.org Hosting Plans on the Market</a>
+      <ul>
+        <li><a href="#1-traditional-virtual-host-eg-bluehost">1. Traditional Virtual Host (e.g. BlueHost)</a></li>
+        <li><a href="#2-cloud-platform-hosting">2. Cloud Platform Hosting</a></li>
+      </ul>
+    </li>
+    <li><a href="#tech-stack-i-chose">Tech Stack I Chose</a></li>
+    <li><a href="#setup-steps">Setup Steps</a>
+      <ul>
+        <li><a href="#1-register-domain-and-set-dns">1. Register Domain and Set DNS</a></li>
+        <li><a href="#2-create-aws-ec2-instance">2. Create AWS EC2 Instance</a></li>
+        <li><a href="#3-install-easy-engine-and-wordpress">3. Install Easy Engine and WordPress</a></li>
+      </ul>
+    </li>
+    <li><a href="#quick-review-of-setup-process">Quick Review of Setup Process</a></li>
+    <li><a href="#conclusion">Conclusion</a>
+      <ul>
+        <li><a href="#murmur">murmur</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+            </div>
+          </div>
+        
+        <div class="min-h-0 min-w-0 max-w-prose grow">
+          <blockquote>
+<p><strong>Note:</strong> This post is translated by AI. If you find any unnatural phrasing or errors, please feel free to contact me via email or other channels. Your feedback is appreciated!</p>
+</blockquote>
+<p>Last year I handled several large WordPress sites at work. I&rsquo;m here to record and share the WordPress hosting strategy I learned.</p>
+<p>This site will also be changed to WordPress later. After changing, I will come back to share why and how I did it.</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://s.w.org/style/images/about/WordPress-logotype-standard.png" alt="WordPress Logo" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<h2 id="wordpresscom-vs-wordpressorg" class="relative group">WordPress.com vs WordPress.org <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#wordpresscom-vs-wordpressorg" aria-label="Anchor">#</a></span></h2><p>First, let&rsquo;s talk about the two official plans. As an engineer, I always only knew <a href="https://wordpress.org/" target="_blank" rel="noreferrer">WordPress.org</a>. I only found out about <a href="https://wordpress.com/" target="_blank" rel="noreferrer">WordPress.com</a> when a friend asked me a while ago.</p>
+<p>WordPress.com is a fully managed service provided by Automattic. You can create a website just by clicking on the web page. But relatively, the freedom is extremely low, customization of themes is difficult, many plugins cannot be used, and the free version is so basic that you must pay.</p>
+<p>WordPress.org allows you to download open source WordPress software. You can deploy it according to your needs, with almost no restrictions—install plugins, modify themes, or perform various magical customizations freely. But you have to manage the server, updates and backups yourself.</p>
+<p>However, there are many integration solutions for WordPress.org on the market to simplify the process. It&rsquo;s not necessary to find an engineer to do it. And I have a hunch that people using WordPress.com will sooner or later switch because there are too many restrictions and it&rsquo;s not cheap.</p>
+<p>This article also uses WordPress.org. It requires knowing a little technology, but I will try to explain the process clearly.</p>
+<h2 id="wordpressorg-hosting-plans-on-the-market" class="relative group">WordPress.org Hosting Plans on the Market <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#wordpressorg-hosting-plans-on-the-market" aria-label="Anchor">#</a></span></h2><p>I haven&rsquo;t used the ones introduced here, but I can analyze the price and some preliminary observations.</p>
+<h3 id="1-traditional-virtual-host-eg-bluehost" class="relative group">1. Traditional Virtual Host (e.g. <a href="https://www.bluehost.com/" target="_blank" rel="noreferrer">BlueHost</a>) <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#1-traditional-virtual-host-eg-bluehost" aria-label="Anchor">#</a></span></h3><p>The basic fee is 2.95 USD/month (NTD 95/month). You can set up the website very quickly, and you can also buy the website domain directly inside.</p>
+<p>But you will encounter problems similar to WordPress.com. It is difficult to adjust when the server has problems. If there is a problem, you have to contact customer service directly, and it is not very easy to maintain.</p>
+<h3 id="2-cloud-platform-hosting" class="relative group">2. Cloud Platform Hosting <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-cloud-platform-hosting" aria-label="Anchor">#</a></span></h3><h4 id="aws-lightsail" class="relative group">AWS Lightsail <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#aws-lightsail" aria-label="Anchor">#</a></span></h4><p><a href="https://aws.amazon.com/tw/getting-started/hands-on/launch-a-wordpress-website/" target="_blank" rel="noreferrer">Official Tutorial</a></p>
+<p>You can set it up by clicking on AWS. The basic plan is 3.5 USD/month (NTD 113/month).</p>
+<p>I also use AWS, but I build EC2 myself, which will be introduced below.</p>
+<h4 id="google-cloud-platform" class="relative group">Google Cloud Platform <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#google-cloud-platform" aria-label="Anchor">#</a></span></h4><p><a href="https://cloud.google.com/wordpress?hl=zh-TW" target="_blank" rel="noreferrer">Using WordPress on Google Cloud</a></p>
+<p>GCP also provides integration solutions for WordPress deployment, but it is super expensive, starting from 13.17 USD/month (NTD 427/month), and setting up is not as easy as AWS Lightsail.</p>
+<h2 id="tech-stack-i-chose" class="relative group">Tech Stack I Chose <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#tech-stack-i-chose" aria-label="Anchor">#</a></span></h2><p>I later adopted <a href="https://aws.amazon.com/tw/ec2/" target="_blank" rel="noreferrer">AWS EC2</a> for deployment, <a href="https://easyengine.io/" target="_blank" rel="noreferrer">Easy Engine</a> for management, and <a href="https://www.cloudflare.com/zh-tw/" target="_blank" rel="noreferrer">Cloudflare</a> for domain registration and DNS.</p>
+<p>EasyEngine can be downloaded directly, Cloudflare can also use the free plan first, AWS EC2 basically uses the free plan, but the hard disk capacity requires payment to upgrade the EBS associated with EC2 to 16 GiB, so there will be a monthly fee of 1.28 USD (about NTD 41/month).</p>
+<p>According to <a href="https://aws.amazon.com/ebs/pricing/" target="_blank" rel="noreferrer">AWS EBS pricing</a>, for a 16 GiB gp3 volume:</p>
+<ul>
+<li>Storage cost: 0.08/GB-month × 16 GB = 1.28/month</li>
+<li>IOPS cost: 0 (using included 3,000 IOPS)</li>
+<li>Throughput cost: 0 (using included 125 MB/s)
+Total monthly cost: $1.28 (USD)</li>
+</ul>
+<p>Although you have to manage it yourself, the cost can be saved directly. The server fee and management fee for this kind of website setup are equivalent to rent and building management fee, so of course the monthly fee should be as low as possible.</p>
+<h2 id="setup-steps" class="relative group">Setup Steps <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#setup-steps" aria-label="Anchor">#</a></span></h2><h3 id="1-register-domain-and-set-dns" class="relative group">1. Register Domain and Set DNS <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#1-register-domain-and-set-dns" aria-label="Anchor">#</a></span></h3><p>I used to register (buy) domains with GoDaddy, but now I use <a href="https://www.cloudflare.com/zh-tw/" target="_blank" rel="noreferrer">Cloudflare</a> because it is better to manage and cheaper (my domain costs NTD 1600/year at GoDaddy, but transferring to Cloudflare only costs NTD 900/year).</p>
+<p>First log in to Cloudflare backend and you can start searching for the domain you want to register.</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.45.37@2x-1024x772.png" alt="Register Domain" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>Then go to the account home page and the newly registered domain will appear.</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.49.00@2x-1024x524.png" alt="Account Home Page" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>Finally, paste the Public IP from the EC2 Connect page just now to set an A Record.</p>
+<p>Use <code>@</code> for name to represent usage for the entire domain. If you write a string, you can redirect to a subdomain.</p>
+<p>Assuming the domain name is your-domain.com, A record can be set like this:</p>
+<ul>
+<li>
+<p><code>@</code>: Indicates ec2_ip connects to your-domain.com</p>
+</li>
+<li>
+<p>test: Indicates ec2_ip connects to test.your-domain.com</p>
+</li>
+</ul>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.50.22@2x-1024x602.png" alt="DNS Record" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<h3 id="2-create-aws-ec2-instance" class="relative group">2. Create AWS EC2 Instance <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-create-aws-ec2-instance" aria-label="Anchor">#</a></span></h3><p>After logging in to AWS, go to the EC2 page and create an EC2 Instance.</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.03.53@2x-1024x423.png" alt="AWS EC2 Instance Creation Page" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<h4 id="2-1-choose-ubuntu-as-os" class="relative group">2-1. Choose Ubuntu as OS <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-1-choose-ubuntu-as-os" aria-label="Anchor">#</a></span></h4><p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.04.51@2x-1024x660.png" alt="Choose Ubuntu OS" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<h4 id="2-2-create-or-select-key-pair-at-key-pair-place" class="relative group">2-2. Create or Select Key Pair at Key Pair place <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-2-create-or-select-key-pair-at-key-pair-place" aria-label="Anchor">#</a></span></h4><p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.05.17@2x-1024x179.png" alt="Create Key Pair" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>If created, a key file <code>$ssh_key.pem</code> will be generated which can be downloaded.</p>
+<p>You will need it when executing ssh locally.</p>
+<h4 id="2-3-network-settings" class="relative group">2-3. Network Settings <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-3-network-settings" aria-label="Anchor">#</a></span></h4><p>Open SSH, HTTP (80) and HTTPS (443) ports in EC2 security group, the three Allow buttons in the figure below.</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.07.33@2x-1024x600.png" alt="EC2 Security Group Settings showing open SSH, HTTP and HTTPS ports" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<h4 id="2-4-adjust-disk-capacity" class="relative group">2-4. Adjust Disk Capacity <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#2-4-adjust-disk-capacity" aria-label="Anchor">#</a></span></h4><p>Because EasyEngine will be installed later, at least 5GB of disk space is required, so it needs to be upgraded to 16 GiB.</p>
+<p>You can set it in this block on the EC2 creation page:</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.08.57@2x-1024x393.png" alt="EC2 Disk Capacity Setting Block" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>If you chose 8GiB like me first and encountered: <code>EasyEngine update requires minimum 5GB disk space to run</code>, you can find the corresponding Volume of the current instance in EC2 Dashboard, and then click modify.</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-16.53.53@2x-2048x601.png" alt="EC2 Volume Modification Page" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>After upgrading, SSH into EC2&rsquo;s ubuntu and run this command <code>sudo resize2fs /dev/xvda1</code> (you can run <code>df -h</code> again to check capacity).</p>
+<h3 id="3-install-easy-engine-and-wordpress" class="relative group">3. Install Easy Engine and WordPress <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#3-install-easy-engine-and-wordpress" aria-label="Anchor">#</a></span></h3><p>The subtitle of <a href="https://easyengine.io/" target="_blank" rel="noreferrer">EasyEngine</a> is Easy WordPress on Nginx. As the name suggests, it provides a Docker-based WordPress environment and uses nginx as Web Server.</p>
+<p>First find Connect on EC2 Instance page:</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.33.54@2x-1024x484.png" alt="EC2 Instance Connect Page" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>After clicking in, directly copy the line below, but remember to execute this command in the place where you store your ssh key pem.</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.31.57@2x-1024x362.png" alt="SSH Connect Command" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>Like my pem is stored under an ssh folder, after opening terminal and entering the command to connect, it will look like this:</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.39.08@2x-1024x808.png" alt="Successfully Connected to EC2 Terminal" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p><strong><code>brew install easyengine</code> in the picture above is for Mac, I forgot to delete it. EC2 ubuntu only needs the first line to install.</strong></p>
+<p>When EasyEngine executes <code>ee site create example.com --wp</code>, it sets virtual host through domain (e.g. example.com), so there must be a usable domain. It is best to set up Domain and DNS in the first step. You cannot directly type <code>http://&lt;EC2_IP&gt;/wp-admin</code>, Nginx will return default page or 404.</p>
+<pre tabindex="0"><code># Install EasyEngine on Linux
+wget -qO ee rt.cx/ee4 &amp;&amp; sudo bash ee
+
+# Create a site at example.com with WordPress
+sudo ee site create example.com --wp
+</code></pre><p>After seeing such a screen, WordPress is created!</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://wp.parkerchang.life/wp-content/uploads/2025/04/CleanShot-2025-04-13-at-12.40.53@2x-892x1024.png" alt="WordPress Created Log" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<h2 id="quick-review-of-setup-process" class="relative group">Quick Review of Setup Process <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#quick-review-of-setup-process" aria-label="Anchor">#</a></span></h2><ol>
+<li>
+<p>Register a domain in Cloudflare (e.g. your-domain.com)</p>
+</li>
+<li>
+<p>Create EC2 Instance:</p>
+<ul>
+<li>Use Ubuntu system</li>
+<li>Ensure 16GiB storage space</li>
+<li>Open HTTP and HTTPS ports and set SSH key pair</li>
+</ul>
+</li>
+<li>
+<p>Connect to EC2 via SSH, install Easy Engine</p>
+</li>
+<li>
+<p>Use <code>ee site create your-domain.com --wp</code> to create WordPress site</p>
+</li>
+<li>
+<p>Point domain to EC2&rsquo;s Public IP in Cloudflare DNS (Set A Record)</p>
+</li>
+<li>
+<p>Done! Now you can directly connect to your-domain.com and your-domain.com/wp-admin</p>
+</li>
+</ol>
+<h2 id="conclusion" class="relative group">Conclusion <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#conclusion" aria-label="Anchor">#</a></span></h2><p>Personally I feel this WordPress deployment combination is quite easy to use. Large traffic can also be handled through adjustments in various aspects.</p>
+<p>Server management such as upgrading hard disk is in EC2, WordPress management can use easy engine CLI, and domain related management can go through Cloudflare.</p>
+<p>After traffic comes up, you can turn on Cloudflare Cache, then also turn on nginx cache in easy engine, and gradually upgrade the service.</p>
+<p>This article only mentioned the setup of WordPress, but after successfully setting it up, you still have to adjust WordPress themes and install various plugins. I will share it later when I have time.</p>
+<h3 id="murmur" class="relative group">murmur <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#murmur" aria-label="Anchor">#</a></span></h3><p>Writing technical articles after a year and a half is quite tiring, but I feel it&rsquo;s a pity that many notes are lying in Heptabase, so I&rsquo;d better organize them and publish them slowly, and review them by the way.</p>
+<p>Ideally writing WordPress this time, I have been hesitating whether to write for ordinary people or engineers, and how much to explain. This article seems to explain too much for engineers, but may be very vague for ordinary people to read. But the original intention is to publish the notes, so be it! I will slowly grasp the rhythm later.</p>
+<p>Recently, non-engineer friends asked me how to set it up. I feel they might still not adopt this approach after reading it XD.</p>
+<p>After AI, I am also pondering the meaning of technical blogs, but I still read articles, so writing them out should still be meaningful.</p>
+<p>And if I record it as a note, it usually means I couldn&rsquo;t solve the problem directly with AI at that time, and needed to record keywords and queries in the process. This whole process is that AI easily starts hallucinating or losing context halfway through answering (like asking about packages, AI often hallucinates many non-existent packages).</p>
+<p>If a lot of knowledge is compiled in the form of articles and books, the absorption efficiency will still be much faster. Thinking of learning Java recently, I was very afraid of learning wrong when learning with AI, but AI occasionally pops up some keywords I don&rsquo;t know. I can check articles written by others with complete context through these keywords. I also found the Java series articles written by &ldquo;Example&rdquo; (Liang GeGe) following the clues. The learning efficiency of reading such well-written articles is still much better than asking randomly on AI.</p>
+
+        </div>
+      </section>
+      <footer class="max-w-prose pt-8 print:hidden">
+        
+  <div class="flex">
+    
+    
+    
+    <div class="place-self-center">
+      
+        <div class="text-[0.6rem] uppercase leading-3 text-neutral-500 dark:text-neutral-400">
+          Author
+        </div>
+        <div class="font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
+          Parker
+        </div>
+      
+      
+      <div class="text-2xl sm:text-lg">
+</div>
+    </div>
+  </div>
+
+
+        
+
+        
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="group flex" href="http://localhost:1313/en/software/my-site/">
+              <span
+                class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+                ><span class="ltr:inline rtl:hidden">&larr;</span
+                ><span class="ltr:hidden rtl:inline">&rarr;</span></span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Personal Website</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2024-03-03 00:00:00 &#43;0000 UTC">3 March 2024</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+        
+          
+            <div class="pt-3">
+              <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+              <div class="pt-3">
+                <div id="cusdis_thread"
+  data-host="https://cusdis.com"
+  data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
+  data-page-id="3e41322150fdd12421dde2afd6e8900e"
+  data-page-url="http://localhost:1313/en/software/wordpress-hosting/"
+  data-page-title="How I Set Up a WordPress Site"
+></div>
+<script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+<script>
+  (function () {
+    function getCusdisTheme() {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    function applyTheme() {
+      if (window.CUSDIS) window.CUSDIS.setTheme(getCusdisTheme());
+    }
+    document.addEventListener('DOMContentLoaded', applyTheme);
+    new MutationObserver(applyTheme).observe(
+      document.documentElement,
+      { attributeFilter: ['class'] }
+    );
+  })();
+</script>
+
+              </div>
+            </div>
+          
+        
+      </footer>
+    
+  </article>
+
+      </main>
+      
+        <div
+          class="pointer-events-none absolute bottom-0 end-0 top-[100vh] w-12"
+          id="to-top"
+          hidden="true"
+        >
+          <a
+            href="#the-top"
+            class="pointer-events-auto sticky top-[calc(100vh-5.5rem)] flex h-12 w-12 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 backdrop-blur hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+            aria-label="Scroll to top"
+            title="Scroll to top"
+          >
+            &uarr;
+          </a>
+        </div>
+      <footer class="py-10 print:hidden">
+  
+  
+  <div class="flex items-center justify-between">
+    <div>
+      
+      
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+            &copy;
+            2026
+            Parker
+        </p>
+      
+      
+      
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          
+          
+          Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> &amp; <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://github.com/jpanther/congo" target="_blank" rel="noopener noreferrer">Congo</a>
+        </p>
+      
+    </div>
+    <div class="flex flex-row items-center">
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  
+</footer>
+
+    </div>
+  </body>
+</html>

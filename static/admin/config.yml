@@ -1,0 +1,85 @@
+backend:
+  name: github
+  repo: YOUR_GITHUB_USERNAME/YOUR_REPO_NAME
+  branch: main
+  base_url: YOUR_CF_WORKER_URL
+
+publish_mode: editorial_workflow
+
+media_folder: static/images
+public_folder: /images
+
+i18n:
+  structure: multiple_folders
+  locales: [zh-TW, en, ja]
+  default_locale: zh-TW
+
+collections:
+  - name: life
+    label: Life
+    folder: content/zh-TW/life
+    i18n: true
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title,       name: title,       widget: string,   i18n: true }
+      - { label: Date,        name: date,        widget: datetime }
+      - { label: Description, name: description, widget: text,     i18n: true, required: false }
+      - { label: Tags,        name: tags,        widget: list,     required: false }
+      - { label: Draft,       name: draft,       widget: boolean,  default: true }
+      - { label: Body,        name: body,        widget: markdown, i18n: true }
+
+  - name: tech
+    label: Tech
+    folder: content/zh-TW/tech
+    i18n: true
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title,       name: title,       widget: string,   i18n: true }
+      - { label: Date,        name: date,        widget: datetime }
+      - { label: Description, name: description, widget: text,     i18n: true, required: false }
+      - { label: Tags,        name: tags,        widget: list,     required: false }
+      - { label: Draft,       name: draft,       widget: boolean,  default: true }
+      - { label: Body,        name: body,        widget: markdown, i18n: true }
+
+  - name: projects
+    label: Projects
+    folder: content/zh-TW/projects
+    i18n: true
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title,       name: title,       widget: string,   i18n: true }
+      - { label: Date,        name: date,        widget: datetime }
+      - { label: Description, name: description, widget: text,     i18n: true, required: false }
+      - { label: Tags,        name: tags,        widget: list,     required: false }
+      - { label: Draft,       name: draft,       widget: boolean,  default: true }
+      - { label: Body,        name: body,        widget: markdown, i18n: true }
+
+  - name: novel
+    label: Novel
+    folder: content/zh-TW/novel
+    i18n: true
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title,       name: title,       widget: string,   i18n: true }
+      - { label: Date,        name: date,        widget: datetime }
+      - { label: Description, name: description, widget: text,     i18n: true, required: false }
+      - { label: Draft,       name: draft,       widget: boolean,  default: true }
+      - { label: Body,        name: body,        widget: markdown, i18n: true }
+
+  - name: review
+    label: Review
+    folder: content/zh-TW/review
+    i18n: true
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title,       name: title,       widget: string,   i18n: true }
+      - { label: Date,        name: date,        widget: datetime }
+      - { label: Description, name: description, widget: text,     i18n: true, required: false }
+      - { label: Tags,        name: tags,        widget: list,     required: false }
+      - { label: Draft,       name: draft,       widget: boolean,  default: true }
+      - { label: Body,        name: body,        widget: markdown, i18n: true }

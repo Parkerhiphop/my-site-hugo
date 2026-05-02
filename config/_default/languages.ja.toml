@@ -1,0 +1,12 @@
+locale = "ja"
+label = "日本語"
+weight = 3
+title = "Parker Chang's Web"
+contentDir = "content/ja"
+
+[params]
+  dateFormat = "2006年1月2日"
+  description = "私は書くことが好きで、ここに自分の考えや思いを記録しています。もしこれらのアイデアが他の人に少しでもインスピレーションを与えることができれば嬉しいです。ソフトウェア開発、生活の感想、読書ノート、そして様々な作品についての感想などを書くかもしれません。"
+
+[params.author]
+  name = "Parker"

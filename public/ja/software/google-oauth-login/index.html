@@ -1,0 +1,1213 @@
+
+
+
+
+
+
+<!doctype html>
+<html
+  lang="ja"
+  dir="ltr"
+  class="scroll-smooth"
+  data-default-appearance="light"
+  data-auto-appearance="true"
+><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FFFFFF" />
+  
+  <title>Googleサードパーティログインの実装（Vue / Express） &middot; Parker Chang&#39;s Web</title>
+    <meta name="title" content="Googleサードパーティログインの実装（Vue / Express） &middot; Parker Chang&#39;s Web" />
+  
+  
+  
+  
+  
+  <script
+    type="text/javascript"
+    src="/js/appearance.min.8a082f81b27f3cb2ee528df0b0bdc39787034cf2cc34d4669fbc9977c929023c.js"
+    integrity="sha256-iggvgbJ/PLLuUo3wsL3Dl4cDTPLMNNRmn7yZd8kpAjw="
+  ></script>
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <link
+    type="text/css"
+    rel="stylesheet"
+    href="/css/main.bundle.min.3d626d356703626569364790e95b69715968a53a1054f31d92786caaf3605200.css"
+    integrity="sha256-PWJtNWcDYmVpNkeQ6VtpcVlopToQVPMdknhsqvNgUgA="
+  />
+  
+  
+  
+  
+  
+  
+  
+  <meta
+    name="description"
+    content="
+      Vue と Express を使用して Google ログインを連携する小さな例
+    "
+  />
+  
+  
+  
+  
+    <link rel="canonical" href="http://localhost:1313/ja/software/google-oauth-login/" />
+  
+  
+  
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:url" content="http://localhost:1313/ja/software/google-oauth-login/">
+  <meta property="og:site_name" content="Parker Chang&#39;s Web">
+  <meta property="og:title" content="Googleサードパーティログインの実装（Vue / Express）">
+  <meta property="og:description" content="Vue と Express を使用して Google ログインを連携する小さな例">
+  <meta property="og:locale" content="ja">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="software">
+    <meta property="article:published_time" content="2022-10-23T00:00:00+00:00">
+    <meta property="article:modified_time" content="2022-10-23T00:00:00+00:00">
+    <meta property="article:tag" content="Software Development">
+    <meta property="article:tag" content="Web Development">
+    <meta property="article:tag" content="Vue">
+    <meta property="article:tag" content="Express">
+    <meta property="article:tag" content="Google OAuth">
+    <meta property="og:image" content="http://localhost:1313/ja/software/google-oauth-login/cover-en.png">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/ja/software/google-oauth-login/cover-en.png">
+  <meta name="twitter:title" content="Googleサードパーティログインの実装（Vue / Express）">
+  <meta name="twitter:description" content="Vue と Express を使用して Google ログインを連携する小さな例">
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "ソフトウェア",
+    "name": "Googleサードパーティログインの実装（Vue \/ Express）",
+    "headline": "Googleサードパーティログインの実装（Vue \/ Express）",
+    "description": "Vue と Express を使用して Google ログインを連携する小さな例",
+    "abstract": "\u003cblockquote\u003e\n\u003cp\u003e\u003cstrong\u003e注:\u003c\/strong\u003e この記事は AI によって翻訳されています。もし不自然な表現や誤りがありましたら、メールやその他の手段でお知らせいただけると幸いです。フィードバックをいただけると助かります！\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003ch2 id=\u0022はじめに\u0022 class=\u0022relative group\u0022\u003eはじめに \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#%e3%81%af%e3%81%98%e3%82%81%e3%81%ab\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e最近、会社でサードパーティログインを連携する必要がありました。初めてのことだったので、かなりの落とし穴にはまりました。また、Google がまた改訂したようで、ネットで見つけた多くの記事はすでに使えなくなっていたため、連携のプロセスを共有し記録することにしました。\u003c\/p\u003e\n\u003cp\u003e基本的に、\u003ca href=\u0022https:\/\/github.com\/google\/google-api-javascript-client\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eGoogle Sign-in JavaScript library\u003c\/a\u003e を使って連携している場合、Google はすでに非推奨（\u003ca href=\u0022https:\/\/developers.google.com\/identity\/sign-in\/web\/reference\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003edeprecated\u003c\/a\u003e）にしており、2023\/03\/31 には完全に廃止され、ダウンロードや使用ができなくなる予定です。ですので、以前に\u003ca href=\u0022https:\/\/developers.google.com\/identity\/sign-in\/web\/reference\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eこのプロセス\u003c\/a\u003eに従って実装した方は、急いでリファクタリングしてください！\u003c\/p\u003e\n\u003cblockquote\u003e\n\u003cp\u003eこの記事では、Vue3 と Express を使用して简易的な Google サードパーティログインを実装する手順を案内します！\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003cp\u003e（新しい Sign In With Google ボタンを使用するほか、新しい Google One Tap 機能もあります）\u003c\/p\u003e\n\u003cp\u003e私は Google 純正のライブラリのみを使用しており、他人がラップしたものは使用していないため、React の場合でも構文を少し変えれば使用できます！\u003c\/p\u003e\n\u003cp\u003e現在、Google ログインの連携はますます簡単になっています。他人がラップしたライブラリを使用して結合度を高めることはお勧めしません。私の会社でも最近、以前使用していたライブラリがメンテナンスされなくなったため、再実装することになったからです。\u003c\/p\u003e\n\u003ch2 id=\u0022概要\u0022 class=\u0022relative group\u0022\u003e概要 \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#%e6%a6%82%e8%a6%81\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e連携プロセスは 4 つのステップに分かれます：\u003c\/p\u003e\n\u003col\u003e\n\u003cli\u003eGoogle Cloud で OAuth Consent Screen と Credentials を設定する\u003c\/li\u003e\n\u003cli\u003eフロントエンド：初期化 ＆ Google Button の表示\u003c\/li\u003e\n\u003cli\u003eフロントエンド：ユーザーが同意を押した後、Google Credential をバックエンドに POST し、返ってきた Authorization Token を持って正常にログインし、User Data を取得します！\u003c\/li\u003e\n\u003cli\u003eバックエンド：POST の Route で Google Credential を受け取った後、Google Auth Library で検証し、Google User Data を取得します。これらの User Data を DB に保存するか、対応する Authorization Token と User Data をフロントエンドに返します。\u003c\/li\u003e\n\u003c\/ol\u003e\n\u003cp\u003eこのステップを読んだだけではまだ疑問があると思いますので、以下で手取り足取り実装していきます！\u003c\/p\u003e",
+    "inLanguage": "ja",
+    "url" : "http:\/\/localhost:1313\/ja\/software\/google-oauth-login\/",
+    "author" : {
+      "@type": "Person",
+      "name": "Parker"
+    },
+    "copyrightYear": "2022",
+    "dateCreated": "2022-10-23T00:00:00\u002b00:00",
+    "datePublished": "2022-10-23T00:00:00\u002b00:00",
+    
+    "dateModified": "2022-10-23T00:00:00\u002b00:00",
+    
+    "keywords": ["Software Development","Web Development","Vue","Express","Google OAuth"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "638"
+  }
+  </script>
+    
+    <script type="application/ld+json">
+    {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/ja/",
+       "name": "ホーム",
+       "position": 1
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/ja/software/",
+       "name": "ソフトウェア",
+       "position": 2
+     },
+     {
+       "@type": "ListItem",
+       "name": "Googleサードパーティログインの実装（ Vue Express）",
+       "position": 3
+     }
+   ]
+ }
+  </script>
+
+  
+  
+    <meta name="author" content="Parker" />
+  
+  
+  
+  
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+    <script>
+(function () {
+  
+  if (sessionStorage.getItem('lang-redirected')) return;
+  sessionStorage.setItem('lang-redirected', '1');
+
+  var lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+  var path = window.location.pathname;
+
+  
+  var onEn = path === '/en' || path.startsWith('/en/');
+  var onJa = path === '/ja' || path.startsWith('/ja/');
+  
+  var onZh = !onEn && !onJa;
+
+  
+  var preferred;
+  if (/^ja/.test(lang)) {
+    preferred = 'ja';
+  } else if (/^zh/.test(lang)) {
+    preferred = 'zh';
+  } else {
+    preferred = 'en';
+  }
+
+  var alreadyCorrect =
+    (preferred === 'zh' && onZh) ||
+    (preferred === 'en' && onEn) ||
+    (preferred === 'ja' && onJa);
+
+  if (alreadyCorrect) return;
+
+  
+  var stripped = path.replace(/^\/(en|ja)/, '') || '/';
+
+  var target;
+  if (preferred === 'zh') {
+    target = stripped;
+  } else {
+    target = '/' + preferred + stripped;
+  }
+
+  window.location.replace(target);
+})();
+</script>
+
+  
+</head>
+<body
+    class="m-auto flex h-screen max-w-7xl flex-col bg-neutral px-6 text-lg leading-7 text-neutral-900 dark:bg-neutral-800 dark:text-neutral sm:px-14 md:px-24 lg:px-32"
+  >
+    <div id="the-top" class="absolute flex self-center">
+      <a
+        class="-translate-y-8 rounded-b-lg bg-primary-200 px-3 py-1 text-sm focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content"
+        ><span class="pe-2 font-bold text-primary-600 dark:text-primary-400">&darr;</span
+        >メインコンテンツへスキップ</a
+      >
+    </div>
+    
+    
+      <header class="py-6 font-semibold text-neutral-900 dark:text-neutral sm:py-10 print:hidden">
+  <nav class="flex items-center justify-between">
+    <div class="z-40 flex flex-row items-center">
+      
+    </div>
+    
+      <div class="site-header-mobile-actions">
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+              
+              <button
+                id="appearance-switcher-1"
+                type="button"
+                aria-label="appearance switcher"
+                class="site-header-icon-button group"
+              >
+                <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                  </svg>
+                </span>
+                <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                  </svg>
+                </span>
+              </button>
+            
+          
+            
+              
+              
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/software/google-oauth-login/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >EN</a><a
+          href="/ja/software/google-oauth-login/"
+          aria-current="true"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-primary-600 dark:text-primary-400"
+        >日</a></div>
+  
+
+
+            
+          
+        
+      </div>
+      
+      <label id="menu-button" for="menu-controller" class="site-header-menu-button block">
+        <input type="checkbox" id="menu-controller" class="hidden" />
+        <div class="site-header-menu-trigger cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+          <span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+</span>
+        </div>
+        <div
+          id="menu-wrapper"
+          class="invisible fixed inset-0 z-30 m-auto h-full w-full cursor-default overflow-auto bg-neutral-100/50 opacity-0 backdrop-blur-sm transition-opacity dark:bg-neutral-900/50"
+        >
+          <ul
+            class="site-header-mobile-menu mx-auto flex w-full max-w-7xl list-none flex-col items-end overflow-visible px-6 py-6 text-end sm:px-14 sm:py-10 md:px-24 lg:px-32"
+          >
+            <li class="site-header-menu-close flex w-full items-end justify-end">
+              <span class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400"
+                ><span class="icon relative inline-block px-1 align-text-bottom"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+</span></span
+              >
+            </li>
+            
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/life/"
+                    title="生活"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >生活</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/software/"
+                    title="ソフトウェア"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >ソフトウェア</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/novel/"
+                    title="小説"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >小説</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/thoughts/"
+                    title="感想"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >感想</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/about/"
+                    title="このサイトについて"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >このサイトについて</span
+                    ></a
+                  >
+                </li>
+              
+                
+                <li class="site-header-mobile-menu-item group">
+                  <a
+                    href="/ja/now/"
+                    title="今"
+                    onclick="document.getElementById('menu-controller').checked = false"
+                    
+                    
+                  ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                      >今</span
+                    ></a
+                  >
+                </li>
+              
+                
+                  
+                
+                  
+            
+          </ul>
+        </div>
+      </label>
+      
+      <ul class="site-header-desktop-nav hidden list-none flex-row items-center gap-6">
+        
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/life/"
+                  title="生活"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >生活</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/software/"
+                  title="ソフトウェア"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >ソフトウェア</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/novel/"
+                  title="小説"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >小説</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/thoughts/"
+                  title="感想"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >感想</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/about/"
+                  title="このサイトについて"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >このサイトについて</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                <a
+                  href="/ja/now/"
+                  title="今"
+                  
+                  
+                ><span class="decoration-primary-500 group-hover:underline group-hover:decoration-2 group-hover:underline-offset-2 whitespace-nowrap"
+                    >今</span
+                  ></a
+                >
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                <button
+                  id="appearance-switcher-2"
+                  type="button"
+                  aria-label="appearance switcher"
+                  class="flex items-center"
+                >
+                  <span class="theme-switch-icon theme-switch-icon-moon group-dark:hover:text-primary-400 inline transition-colors group-hover:text-primary-600 dark:hidden" title="dark">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M21 14.2A8.5 8.5 0 0 1 9.8 3a7 7 0 1 0 11.2 11.2Z" />
+                    </svg>
+                  </span>
+                  <span class="theme-switch-icon theme-switch-icon-sun group-dark:hover:text-primary-400 hidden transition-colors group-hover:text-primary-600 dark:inline" title="light">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="4" />
+                      <path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+                    </svg>
+                  </span>
+                </button>
+              
+            </li>
+          
+            
+            <li class="group mr-7">
+              
+                
+                
+  <div class="flex items-center gap-4"><a
+          href="/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >中</a><a
+          href="/en/software/google-oauth-login/"
+          aria-current="false"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-neutral-500 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400"
+        >EN</a><a
+          href="/ja/software/google-oauth-login/"
+          aria-current="true"
+          class="rounded px-1.5 py-0.5 text-base font-bold tracking-wide transition-colors
+              text-primary-600 dark:text-primary-400"
+        >日</a></div>
+  
+
+
+              
+            </li>
+          
+        
+      </ul>
+    
+  </nav>
+</header>
+
+    
+    <div class="relative flex grow flex-col">
+      <main id="main-content" class="grow">
+        
+  <article>
+    <header class="max-w-prose">
+      
+      <h1 class="mb-8 mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+        Googleサードパーティログインの実装（Vue / Express）
+      </h1>
+      
+        <div class="mb-10 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+          
+
+
+
+
+
+  
+  
+
+
+
+  
+
+  
+  
+    
+  
+
+  
+
+  
+
+  
+    
+  
+
+  
+
+
+  <div class="flex flex-row flex-wrap items-center">
+    
+    
+      <time datetime="2022-10-23 00:00:00 &#43;0000 UTC">2022年10月23日</time><span class="px-2 text-primary-500">&middot;</span><span title="読むのに必要な時間">3 分</span>
+    
+
+    
+    
+  </div>
+
+  
+  
+
+
+        </div>
+      
+      
+        
+          <div class="prose">
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+  
+    <picture
+      class="mb-6 rounded-md"
+      
+    >
+      
+      
+      
+      
+        <source
+          
+            srcset="http://localhost:1313/ja/software/google-oauth-login/cover-ja_hu_9d9b8ce24a2124aa.webp 330w,http://localhost:1313/ja/software/google-oauth-login/cover-ja_hu_393c4f3ccf4e246e.webp 660w
+            
+              ,http://localhost:1313/ja/software/google-oauth-login/cover-ja_hu_e9984717e523bb0d.webp 1024w
+            
+            
+              
+                ,http://localhost:1313/ja/software/google-oauth-login/cover-ja_hu_cb61b20962dd18c.webp 1200w
+              
+            "
+          
+          sizes="100vw"
+          type="image/webp"
+        />
+      
+      <img
+        width="1200"
+        height="630"
+        class="mb-6 rounded-md"
+        
+        
+        
+          src="http://localhost:1313/ja/software/google-oauth-login/cover-ja_hu_15d9426fe95d776c.png" srcset="http://localhost:1313/ja/software/google-oauth-login/cover-ja_hu_37ccfd4ca84980f4.png 330w,http://localhost:1313/ja/software/google-oauth-login/cover-ja_hu_15d9426fe95d776c.png 660w
+          
+            ,http://localhost:1313/ja/software/google-oauth-login/cover-ja_hu_b44edc97087b685f.png 1024w
+          
+          
+            ,http://localhost:1313/ja/software/google-oauth-login/cover-ja.png 1200w
+          "
+          sizes="100vw"
+        
+      />
+    </picture>
+  
+
+
+            
+          </div>
+        
+      
+    </header>
+    
+      <section class="prose mt-0 flex max-w-full flex-col dark:prose-invert lg:flex-row">
+        
+          <div class="order-first px-0 lg:order-last lg:max-w-xs lg:ps-8">
+            <div class="toc pe-5 lg:sticky lg:top-10 print:hidden">
+              <details open class="-ms-5 mt-0 overflow-hidden rounded-lg ps-5">
+  <summary
+    class="block cursor-pointer bg-neutral-100 py-1 ps-5 text-lg font-semibold text-neutral-800 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden"
+  >
+    目次
+  </summary>
+  <div class="border-s border-dotted border-neutral-300 py-2 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#はじめに">はじめに</a></li>
+    <li><a href="#概要">概要</a>
+      <ul>
+        <li><a href="#一google-cloud-設定">一、Google Cloud 設定</a></li>
+        <li><a href="#二フロントエンド初期化--google-button--on-tap-login-の表示">二、フロントエンド：初期化 ＆ Google Button / On Tap Login の表示</a></li>
+        <li><a href="#三フロントエンドユーザー同意後に-token-を取得してログイン">三、フロントエンド：ユーザー同意後に Token を取得してログイン</a></li>
+        <li><a href="#四バックエンド受信検証user-data-および-authorization-token-の返却">四、バックエンド：受信、検証、User Data (および Authorization Token) の返却</a></li>
+      </ul>
+    </li>
+    <li><a href="#デモ">デモ</a>
+      <ul>
+        <li><a href="#frontend-vue-sign-in-with-google">Frontend: Vue Sign In With Google</a></li>
+        <li><a href="#backend-express-sign-in-with-google">Backend: Express Sign In With Google</a></li>
+        <li><a href="#結びに">結びに</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+            </div>
+          </div>
+        
+        <div class="min-h-0 min-w-0 max-w-prose grow">
+          <blockquote>
+<p><strong>注:</strong> この記事は AI によって翻訳されています。もし不自然な表現や誤りがありましたら、メールやその他の手段でお知らせいただけると幸いです。フィードバックをいただけると助かります！</p>
+</blockquote>
+<h2 id="はじめに" class="relative group">はじめに <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e3%81%af%e3%81%98%e3%82%81%e3%81%ab" aria-label="アンカー">#</a></span></h2><p>最近、会社でサードパーティログインを連携する必要がありました。初めてのことだったので、かなりの落とし穴にはまりました。また、Google がまた改訂したようで、ネットで見つけた多くの記事はすでに使えなくなっていたため、連携のプロセスを共有し記録することにしました。</p>
+<p>基本的に、<a href="https://github.com/google/google-api-javascript-client" target="_blank" rel="noreferrer">Google Sign-in JavaScript library</a> を使って連携している場合、Google はすでに非推奨（<a href="https://developers.google.com/identity/sign-in/web/reference" target="_blank" rel="noreferrer">deprecated</a>）にしており、2023/03/31 には完全に廃止され、ダウンロードや使用ができなくなる予定です。ですので、以前に<a href="https://developers.google.com/identity/sign-in/web/reference" target="_blank" rel="noreferrer">このプロセス</a>に従って実装した方は、急いでリファクタリングしてください！</p>
+<blockquote>
+<p>この記事では、Vue3 と Express を使用して简易的な Google サードパーティログインを実装する手順を案内します！</p>
+</blockquote>
+<p>（新しい Sign In With Google ボタンを使用するほか、新しい Google One Tap 機能もあります）</p>
+<p>私は Google 純正のライブラリのみを使用しており、他人がラップしたものは使用していないため、React の場合でも構文を少し変えれば使用できます！</p>
+<p>現在、Google ログインの連携はますます簡単になっています。他人がラップしたライブラリを使用して結合度を高めることはお勧めしません。私の会社でも最近、以前使用していたライブラリがメンテナンスされなくなったため、再実装することになったからです。</p>
+<h2 id="概要" class="relative group">概要 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e6%a6%82%e8%a6%81" aria-label="アンカー">#</a></span></h2><p>連携プロセスは 4 つのステップに分かれます：</p>
+<ol>
+<li>Google Cloud で OAuth Consent Screen と Credentials を設定する</li>
+<li>フロントエンド：初期化 ＆ Google Button の表示</li>
+<li>フロントエンド：ユーザーが同意を押した後、Google Credential をバックエンドに POST し、返ってきた Authorization Token を持って正常にログインし、User Data を取得します！</li>
+<li>バックエンド：POST の Route で Google Credential を受け取った後、Google Auth Library で検証し、Google User Data を取得します。これらの User Data を DB に保存するか、対応する Authorization Token と User Data をフロントエンドに返します。</li>
+</ol>
+<p>このステップを読んだだけではまだ疑問があると思いますので、以下で手取り足取り実装していきます！</p>
+<h3 id="一google-cloud-設定" class="relative group">一、Google Cloud 設定 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e4%b8%80google-cloud-%e8%a8%ad%e5%ae%9a" aria-label="アンカー">#</a></span></h3><ol>
+<li><a href="https://console.cloud.google.com/apis" target="_blank" rel="noreferrer">Google Cloud</a> で Google Login を使用したいプロジェクトを選択または新規作成します (img)</li>
+</ol>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*U7RXhmA7apJa7uAgr5kRwg.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol start="2">
+<li>次に OAuth 同意画面（ OAuth Consent Screen ）の場所に移動します</li>
+</ol>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*ylYSIsJBIm_c4oE-3YmhYA.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol start="3">
+<li>App を登録し、手順に従ってフィールドに入力するだけです！</li>
+</ol>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*VRMef2aHjtekX6yw9ekMkA.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>Scopes は、App が許可されたユーザーのどのデータにアクセスすることを許可するかです。基本的なものは、画像の <code>auth/userInfo.email</code> や <code>auth/userInfo.profile</code> のようなものです (img)</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*hkZLtL311mJOvGjF2hdQcQ.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>Test User は、テスト時にログインを許可するアカウントです。</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*ehTtRiKqgW25y44nfJoc0w.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol start="4">
+<li>OAuth Consent Screen の APP を作成したら、認証情報（Credential）を設定します。</li>
+</ol>
+<p>左側の 認証情報 または Credential をクリックし、上の CREATE CREDENTIALS をクリックします。</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*ew9PwDoWfFg1LoH277GXBA.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol start="5">
+<li>Authorized JavaScript origins と Authorized redirect URIs を設定します。</li>
+</ol>
+<p>Authorized JavaScript origins：フロントエンドのドメインを指します
+Authorized redirect URIs：ユーザーが同意を押した後、バックエンドのどの URI に POST Request を送信して Google Credential を受け取るかを指します。</p>
+<p>この後のデモでは、フロントエンドは <code>http://localhost:5173</code> になり、バックエンドは <code>http://localhost:3000/verify-token</code> を使用して POST Request を受け取ります。ドメインに関しては、ローカルテスト時には特別に <code>http://localhost</code> を追加する必要があることに注意してください。また、Google は IP をソースとして許可していないため、<code>127.0.0.1</code> などは使用できません。</p>
+<p>（そして正式リリース後は、正式なドメインと URI に変更することを忘れないでくださいね）</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*vO99i3FUkkfSp97qysHojw.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol start="6">
+<li>作成が完了すると、リストに Client ID が表示されます。後でこれを使用します！</li>
+</ol>
+<p>（Client とは、Google にとって私たちが Client であり、Google は私たちが証明書とユーザーデータを取得する Server です）</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*sCw3rHXoSxJ7oq0uvarN8Q.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<blockquote>
+<p>おめでとうございます、Google Cloud の設定が正常に完了しました。</p>
+</blockquote>
+<p>Client ID を取得し、フロントエンド Origin とバックエンド URI を承認したので、次はそれぞれフロントエンドとバックエンドを実装していきましょう！</p>
+<h3 id="二フロントエンド初期化--google-button--on-tap-login-の表示" class="relative group">二、フロントエンド：初期化 ＆ Google Button / On Tap Login の表示 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e4%ba%8c%e3%83%95%e3%83%ad%e3%83%b3%e3%83%88%e3%82%a8%e3%83%b3%e3%83%89%e5%88%9d%e6%9c%9f%e5%8c%96--google-button--on-tap-login-%e3%81%ae%e8%a1%a8%e7%a4%ba" aria-label="アンカー">#</a></span></h3><p>基本的にはこのプロセスに従います：<a href="https://developers.google.com/identity/gsi/web/guides/display-button" target="_blank" rel="noreferrer">Display the Sign in with Google Button</a>。以下でも一通り説明します！</p>
+<p>入口の index.html で google library script を読み込みます</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>// index.html
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">body</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">”https://accounts.google.com/gsi/client&#34;</span> <span style="color:#a6e22e">async</span> <span style="color:#a6e22e">defer</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">body</span>&gt;
+</span></span></code></pre></div><p>この時 window に google オブジェクトが登録され、以降の操作はこのオブジェクトを使用します！</p>
+<p>ブラウザで直接 window.google をログ出力して、何が入っているか見てみましょう</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*e-PjDrm2kjrRNGsgAmY6kw.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<ol>
+<li>
+<p>初期化設定は <code>window.google.accounts.id.initialize</code> を直接呼び出します</p>
+<ul>
+<li>Client ID：Credentials からコピーするだけです</li>
+<li>callback：ユーザーが Google のログイン画面で同意を押した後にトリガーされる Callback Function です</li>
+<li>Cancel On Tap Outside：Tap エリア外をクリックして Tap Login Model を閉じられるかどうか</li>
+<li>Context： <code>signin | signout | login</code></li>
+</ul>
+</li>
+<li>
+<p>Button のレンダリングは <code>window.google.accounts.id.renderButton</code> を使用します</p>
+</li>
+<li>
+<p>On Tap Login の表示は <code>window.google.accounts.id.prompt()</code> を呼び出します</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">onMounted</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>  window.<span style="color:#a6e22e">onload</span> <span style="color:#f92672">=</span> () =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">CLIENT_ID</span>) {
+</span></span><span style="display:flex;"><span>      window.<span style="color:#a6e22e">google</span>.<span style="color:#a6e22e">accounts</span>.<span style="color:#a6e22e">id</span>.<span style="color:#a6e22e">initialize</span>({
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">client_id</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CLIENT_ID</span>, <span style="color:#75715e">// required
+</span></span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">callback</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">onLogin</span>, <span style="color:#75715e">// invoke while user login in the popup
+</span></span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">cancel_on_tap_outside</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>, <span style="color:#75715e">// optional
+</span></span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">context</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;signin&#39;</span>, <span style="color:#75715e">// optional
+</span></span></span><span style="display:flex;"><span>      });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      window.<span style="color:#a6e22e">google</span>.<span style="color:#a6e22e">accounts</span>.<span style="color:#a6e22e">id</span>.<span style="color:#a6e22e">renderButton</span>(
+</span></span><span style="display:flex;"><span>        document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;googleButton&#39;</span>),
+</span></span><span style="display:flex;"><span>        { <span style="color:#a6e22e">theme</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;outline&#39;</span>, <span style="color:#a6e22e">size</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;large&#39;</span> } <span style="color:#75715e">// customization attributes
+</span></span></span><span style="display:flex;"><span>      );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      window.<span style="color:#a6e22e">google</span>.<span style="color:#a6e22e">accounts</span>.<span style="color:#a6e22e">id</span>.<span style="color:#a6e22e">prompt</span>(); <span style="color:#75715e">// show one-tap popup
+</span></span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#34;client_id doesn&#39;t exist!&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><h3 id="三フロントエンドユーザー同意後に-token-を取得してログイン" class="relative group">三、フロントエンド：ユーザー同意後に Token を取得してログイン <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e4%b8%89%e3%83%95%e3%83%ad%e3%83%b3%e3%83%88%e3%82%a8%e3%83%b3%e3%83%89%e3%83%a6%e3%83%bc%e3%82%b6%e3%83%bc%e5%90%8c%e6%84%8f%e5%be%8c%e3%81%ab-token-%e3%82%92%e5%8f%96%e5%be%97%e3%81%97%e3%81%a6%e3%83%ad%e3%82%b0%e3%82%a4%e3%83%b3" aria-label="アンカー">#</a></span></h3><p>このステップは、上記の <code>initialize</code> 時に渡す callback を実装することです。</p>
+<p>そしてこれは、ユーザーが Google のログイン画面でログインした後に実行される関数でもあります。</p>
+<p>したがって、ここで独自のログインロジックを実装します。以下のようになります：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">onLogin</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">res</span>) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">axiosOptions</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">headers</span><span style="color:#f92672">:</span> { <span style="color:#e6db74">&#39;Access-Control-Allow-Origin&#39;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CLIENT_URL</span> },
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">axios</span>
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">API_URL</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/verify-token`</span>, <span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">axiosOptions</span>)
+</span></span><span style="display:flex;"><span>    .<span style="color:#a6e22e">then</span>((<span style="color:#a6e22e">res</span>) =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;res&#39;</span>, <span style="color:#a6e22e">res</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">userData</span>.<span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">data</span>;
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>    .<span style="color:#66d9ef">catch</span>((<span style="color:#a6e22e">error</span>) =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;error&#39;</span>, <span style="color:#a6e22e">error</span>);
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>callback は Google からの response（ onLogin の <code>res</code>）を受け取り、response 内にはこれらのデータが含まれています。その中の <code>credential</code> をバックエンドに送って検証を行います。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;clientId&#34;</span>: <span style="color:#e6db74">&#34;123456789.apps.googleusercontent.com&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;credential&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;select_by&#34;</span>: <span style="color:#e6db74">&#34;btn&#34;</span> <span style="color:#75715e">// or &#39;user&#39;
+</span></span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>フロントエンドの処理はこれで終了です！</p>
+</blockquote>
+<p>簡単に復習すると、<code>gsi client</code> を導入し、window 下に <code>google</code> オブジェクトを作成しました。次に google オブジェクトが提供する <code>initialize</code>、<code>renderButton</code> を使用して Google Button を初期化およびレンダリングしました。独自のログインロジック <code>onLogin</code> 関数は <code>initialize</code> 時に <code>callback</code> に渡し、ユーザーログイン後に呼び出されるようにしました。</p>
+<h3 id="四バックエンド受信検証user-data-および-authorization-token-の返却" class="relative group">四、バックエンド：受信、検証、User Data (および Authorization Token) の返却 <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e5%9b%9b%e3%83%90%e3%83%83%e3%82%af%e3%82%a8%e3%83%b3%e3%83%89%e5%8f%97%e4%bf%a1%e6%a4%9c%e8%a8%bcuser-data-%e3%81%8a%e3%82%88%e3%81%b3-authorization-token-%e3%81%ae%e8%bf%94%e5%8d%b4" aria-label="アンカー">#</a></span></h3><p>上で見たように、onLogin は <code>/verify-token</code> にバックエンドへ POST します。次に、この Route で Google User Data を検証して取得します。</p>
+<p>基本的には <a href="https://developers.google.com/identity/gsi/web/guides/verify-google-id-token" target="_blank" rel="noreferrer">Google の例</a> に従い、CORS を処理することを忘れないでください！</p>
+<p>これで、サードパーティ連携は完了です！</p>
+<blockquote>
+<p>次に、バックエンドはフロントエンドにログインが成功したことを知らせるだけです。</p>
+</blockquote>
+<p>ここでは単純に User Data をフロントエンドに返します。</p>
+<p>会社のプロジェクトでは、一般的な登録やログインと同様に、データを DB に保存するか、Authorization Token と User Data を取得してフロントエンドに渡す方法を採用しています。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">cors</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;cors&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>(<span style="color:#a6e22e">cors</span>());
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">CLIENT_ID</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;YOUR CLIENT ID&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/** Handle the POST request from onLogin callback in frontend */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/verify-token&#39;</span>, (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// use google-auth-library to verify token
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">OAuth2Client</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;google-auth-library&#39;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">client</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">OAuth2Client</span>(<span style="color:#a6e22e">CLIENT_ID</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">verify</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// get credential from google
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">token</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>.<span style="color:#a6e22e">credential</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;token from credential&#39;</span>, <span style="color:#a6e22e">token</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">ticket</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">verifyIdToken</span>({
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">idToken</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">token</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">audience</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">CLIENT_ID</span>,
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">payload</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">ticket</span>.<span style="color:#a6e22e">getPayload</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// You can store user data in DB and return Authorization Token here.
+</span></span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">json</span>({
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">email</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">email</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">email_verified</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">email_verified</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">picture</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">picture</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">payload</span>.<span style="color:#a6e22e">name</span>,
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">verify</span>().<span style="color:#66d9ef">catch</span>(<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>);
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><h2 id="デモ" class="relative group">デモ <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e3%83%87%e3%83%a2" aria-label="アンカー">#</a></span></h2><p>以下に提供する Repo を実行すると、このようになります：</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*ZWMMJvk3tpZrNFnvYojxuQ.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>初期ログイン画面</p>
+<p>
+
+
+
+
+
+
+  
+  
+<figure><img src="https://cdn-images-1.medium.com/max/800/1*jOQkAVvJ1VldfqVoYKBlSQ.png" alt="" class="mx-auto my-0 rounded-md" />
+</figure>
+</p>
+<p>ユーザーログイン後</p>
+<h3 id="frontend-vue-sign-in-with-google" class="relative group">Frontend: <a href="https://github.com/Parkerhiphop/Vue-Sign-In-With-Google" target="_blank" rel="noreferrer">Vue Sign In With Google</a> <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#frontend-vue-sign-in-with-google" aria-label="アンカー">#</a></span></h3><ul>
+<li>clone した後 <code>npm install</code> + <code>npm run dev</code> で port:5173 で実行されます。これはまさに Google Cloud — Credentials で設定した Authorized JavaScript origins です</li>
+<li>自分で開発する際は、自分の Port に変更することを忘れずに。リリース後も正式なドメインに変更してくださいね！</li>
+</ul>
+<h3 id="backend-express-sign-in-with-google" class="relative group">Backend: <a href="https://github.com/Parkerhiphop/Express-Sign-In-With-Google" target="_blank" rel="noreferrer">Express Sign In With Google</a> <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#backend-express-sign-in-with-google" aria-label="アンカー">#</a></span></h3><ul>
+<li>clone した後 <code>npm install</code> + <code>npm run start</code> で port:3000 で実行されます。これはまさに Google Cloud — Credentials で設定した Authorized redirect URIs です</li>
+</ul>
+<h3 id="結びに" class="relative group">結びに <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#%e7%b5%90%e3%81%b3%e3%81%ab" aria-label="アンカー">#</a></span></h3><p>サードパーティ連携のために大量のドキュメントを読み、手探りで作業しました。書き終わって数日しか経っていないのに、記事を書こうとしたら細かい部分を少し忘れていましたが、記事にまとめるとずっと明確になりました！</p>
+<p>この記事が Google ログイン連携が必要なすべての人に役立つことを願っています！</p>
+<p>次は Facebook ログインの連携を続けるつもりです。Facebook や Twitter と比較して、Google の実装は本当に、本当に、とても親切だと言わざるを得ません。</p>
+
+        </div>
+      </section>
+      <footer class="max-w-prose pt-8 print:hidden">
+        
+  <div class="flex">
+    
+    
+    
+    <div class="place-self-center">
+      
+        <div class="text-[0.6rem] uppercase leading-3 text-neutral-500 dark:text-neutral-400">
+          著者
+        </div>
+        <div class="font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
+          Parker
+        </div>
+      
+      
+      <div class="text-2xl sm:text-lg">
+</div>
+    </div>
+  </div>
+
+
+        
+
+        
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="group flex" href="http://localhost:1313/ja/software/talk-about-web-font/">
+              <span
+                class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+                ><span class="ltr:inline rtl:hidden">&larr;</span
+                ><span class="ltr:hidden rtl:inline">&rarr;</span></span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >Webフォントについて語る — デザイン、ファイル形式、そしてフロントエンドの読み込み</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2021-10-28 00:00:00 &#43;0000 UTC">2021年10月28日</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+            <a class="group flex text-right" href="http://localhost:1313/ja/software/from-callback-to-async/">
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >CallbackからAsync/Awaitへ：順次フェードインアニメーションを例に</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2023-08-21 00:00:00 &#43;0000 UTC">2023年8月21日</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ms-2 text-neutral-700 transition-transform group-hover:-translate-x-[-2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+                ><span class="ltr:inline rtl:hidden">&rarr;</span
+                ><span class="ltr:hidden rtl:inline">&larr;</span></span
+              >
+            </a>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+        
+          
+            <div class="pt-3">
+              <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+              <div class="pt-3">
+                <div id="cusdis_thread"
+  data-host="https://cusdis.com"
+  data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
+  data-page-id="b2d80a80c35b97c58e6648f571034365"
+  data-page-url="http://localhost:1313/ja/software/google-oauth-login/"
+  data-page-title="Googleサードパーティログインの実装（Vue / Express）"
+></div>
+<script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+<script>
+  (function () {
+    function getCusdisTheme() {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    function applyTheme() {
+      if (window.CUSDIS) window.CUSDIS.setTheme(getCusdisTheme());
+    }
+    document.addEventListener('DOMContentLoaded', applyTheme);
+    new MutationObserver(applyTheme).observe(
+      document.documentElement,
+      { attributeFilter: ['class'] }
+    );
+  })();
+</script>
+
+              </div>
+            </div>
+          
+        
+      </footer>
+    
+  </article>
+
+      </main>
+      
+        <div
+          class="pointer-events-none absolute bottom-0 end-0 top-[100vh] w-12"
+          id="to-top"
+          hidden="true"
+        >
+          <a
+            href="#the-top"
+            class="pointer-events-auto sticky top-[calc(100vh-5.5rem)] flex h-12 w-12 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 backdrop-blur hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+            aria-label="TOPへスクロール"
+            title="TOPへスクロール"
+          >
+            &uarr;
+          </a>
+        </div>
+      <footer class="py-10 print:hidden">
+  
+  
+  <div class="flex items-center justify-between">
+    <div>
+      
+      
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+            &copy;
+            2026
+            Parker
+        </p>
+      
+      
+      
+        <p class="text-xs text-neutral-500 dark:text-neutral-400">
+          
+          
+          Powered by <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500"
+            href="https://gohugo.io/" target="_blank" rel="noopener noreferrer">Hugo</a> &amp; <a class="hover:underline hover:decoration-primary-400 hover:text-primary-500" href="https://github.com/jpanther/congo" target="_blank" rel="noopener noreferrer">Congo</a>
+        </p>
+      
+    </div>
+    <div class="flex flex-row items-center">
+      
+      
+      
+      
+    </div>
+  </div>
+  
+  
+</footer>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+colorScheme = "sky"
+
+[header]
+  layout = "custom"
+
+[homepage]
+  layout = "timeline"
+
+[article]
+  showTableOfContents = true
+  showComments = true

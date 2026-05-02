@@ -1,0 +1,90 @@
+{{- $descriptions := dict
+  "zh-tw" "喜歡寫作，在這裡記錄自己的所思所想，若這些想法能給其他人帶來點啟發會很高興。可能會寫軟體開發、生活感想、讀書筆記和對各種作品的感想。"
+  "en" "I like writing and record my thoughts and ideas here. I'd be happy if I can inspire others during the journey. The topics cover software, life, reading notes, and reflections on various works."
+  "ja" "私は書くことが好きで、ここに自分の考えや思いを記録しています。もしこれらのアイデアが他の人に少しでもインスピレーションを与えることができれば嬉しいです。ソフトウェア開発、生活の感想、読書ノート、そして様々な作品についての感想などを書くかもしれません。"
+-}}
+{{- $start := dict
+  "zh-tw" "這是起點！"
+  "en" "It's Jumping-off Point!"
+  "ja" "これがスタート地点です！"
+-}}
+{{- $about := dict "zh-tw" "關於我" "en" "About me" "ja" "私について" -}}
+{{- $icons := dict "life" "💭" "software" "🧑‍💻" "novel" "✍️" "thoughts" "🎬" -}}
+{{- $lang := site.Language.Lang -}}
+{{- $pages := where (where site.RegularPages.ByDate.Reverse "Params.wip" "!=" true) "Section" "!=" "" -}}
+
+<section class="border-b border-neutral-200 pb-5 dark:border-neutral-700 md:pb-8">
+  <div class="flex w-full items-start justify-between gap-6">
+    <h1 class="mt-0 text-3xl font-extrabold leading-tight tracking-tight text-neutral-900 dark:text-neutral md:text-4xl">
+      Parker Chang's Web 🕸️
+    </h1>
+    {{ with site.GetPage "about" }}
+      <a href="{{ .RelPermalink }}" class="home-about-link group hidden shrink-0 items-center text-base font-semibold text-neutral-900 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+        <span class="mr-2 inline-block text-xl font-bold text-primary-500 transition-transform group-hover:translate-x-1">&rarr;</span>
+        <span>🙌 {{ index $about $lang | default "About me" }}</span>
+      </a>
+    {{ end }}
+  </div>
+  <p class="mb-0 mt-3 max-w-3xl text-base leading-7 text-neutral-500 dark:text-neutral-400 md:text-lg">
+    {{ index $descriptions $lang | default site.Params.description }}
+  </p>
+</section>
+
+{{ if $pages }}
+  <section class="divide-y divide-neutral-200 dark:divide-neutral-700">
+    {{ range $pages.GroupByDate "2006" }}
+      {{- $year := .Key -}}
+      <div class="py-6 md:py-8">
+        <h2 class="text-2xl font-semibold text-primary-500 md:text-3xl">{{ $year }}</h2>
+        <ul class="my-5 list-none border-s-4 border-primary-500 ps-4 md:my-8">
+          {{ range .Pages }}
+            {{- $sectionPage := site.GetPage .Section -}}
+            {{- $sectionTitle := .Section -}}
+            {{- with $sectionPage }}{{- $sectionTitle = .Title -}}{{- end -}}
+            {{- $icon := index $icons .Section | default "✦" -}}
+            <li class="py-4">
+              <article class="home-entry flex flex-col gap-2">
+                <div class="home-entry-meta flex flex-wrap items-center gap-3">
+                  <time class="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-400" datetime="{{ .Date.Format "2006-01-02" }}">
+                    {{ .Date | time.Format (site.Language.Params.dateFormat | default "2006-01-02") }}
+                  </time>
+                  <a href="{{ with $sectionPage }}{{ .RelPermalink }}{{ else }}{{ printf "/%s/" .Section | relURL }}{{ end }}"
+                     class="home-section-badge-mobile inline-flex items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       {{ if eq .Section "life" }}bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800{{ end }}
+                       {{ if eq .Section "software" }}bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800{{ end }}
+                       {{ if eq .Section "novel" }}bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-900 dark:text-yellow-300 dark:hover:bg-yellow-800{{ end }}
+                       {{ if eq .Section "thoughts" }}bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800{{ end }}">
+                    <span class="mr-1">{{ $icon }}</span>{{ $sectionTitle }}
+                  </a>
+                </div>
+                <div class="min-w-0">
+                  <a href="{{ with $sectionPage }}{{ .RelPermalink }}{{ else }}{{ printf "/%s/" .Section | relURL }}{{ end }}"
+                     class="home-section-badge-desktop mb-3 hidden w-fit items-center rounded px-2 py-0.5 text-sm font-medium transition-colors
+                       {{ if eq .Section "life" }}bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800{{ end }}
+                       {{ if eq .Section "software" }}bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800{{ end }}
+                       {{ if eq .Section "novel" }}bg-yellow-100 text-yellow-800 hover:bg-yellow-200 dark:bg-yellow-900 dark:text-yellow-300 dark:hover:bg-yellow-800{{ end }}
+                       {{ if eq .Section "thoughts" }}bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800{{ end }}">
+                    <span class="mr-1">{{ $icon }}</span>{{ $sectionTitle }}
+                  </a>
+                  <h3 class="my-0 text-lg font-bold leading-8 tracking-tight md:text-2xl">
+                    <a href="{{ .RelPermalink }}" class="text-neutral-900 decoration-primary-500 transition-colors hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400">
+                      {{ .Title | emojify }}
+                    </a>
+                  </h3>
+                  {{ with .Description }}
+                    <p class="home-summary mt-2 hidden max-w-3xl text-base text-neutral-500 dark:text-neutral-400">{{ . }}</p>
+                  {{ end }}
+                </div>
+              </article>
+            </li>
+          {{ end }}
+        </ul>
+      </div>
+    {{ end }}
+    <div class="py-6 md:py-8">
+      <span class="text-2xl font-semibold text-primary-500 md:text-3xl">👆 {{ index $start $lang | default "Start" }}</span>
+    </div>
+  </section>
+{{ else }}
+  <p class="py-8 text-neutral-400 dark:text-neutral-500">{{ i18n "list.no_articles" | emojify }}</p>
+{{ end }}
