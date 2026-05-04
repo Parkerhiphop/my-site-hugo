@@ -19,12 +19,12 @@
   weight = 40
 
 [[main]]
-  name = "このサイトについて"
+  name = "プロフィール"
   pageRef = "about"
   weight = 50
 
 [[main]]
-  name = "今"
+  name = "近況"
   pageRef = "now"
   weight = 60
 

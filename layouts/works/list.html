@@ -35,7 +35,7 @@
 
   {{ if $works }}
     <div class="works-database" data-works-database>
-      <div class="works-controls">
+      <div class="flex flex-col items-start justify-between md:flex-row md:items-center gap-4">
         <nav class="thoughts-category-menu works-category-menu" aria-label="{{ .Title }}">
           <a class="thoughts-category-pill {{ if eq $currentCategory "all" }}is-active{{ end }}" href="{{ $root.RelPermalink }}">
             {{ index $allLabel $lang | default "All" }}
@@ -54,8 +54,7 @@
           {{ end }}
         </nav>
         <label class="works-search">
-          <span>{{ index $searchLabel $lang | default "Search title" }}</span>
-          <input type="search" data-works-search placeholder="{{ index $searchLabel $lang | default "Search title" }}" autocomplete="off">
+          <input id="works-search" type="search" data-works-search placeholder="{{ index $searchLabel $lang | default "Search title" }}" autocomplete="off">
         </label>
       </div>
 
