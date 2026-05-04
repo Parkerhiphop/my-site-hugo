@@ -4,572 +4,572 @@
   
     
       <url>
-            <loc>http://localhost:1313/life/</loc>
+            <loc>//localhost:1313/life/</loc>
             <lastmod>2026-04-28T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/"
+              href="//localhost:1313/en/life/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/"
+              href="//localhost:1313/ja/life/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/"
+              href="//localhost:1313/life/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/save-point-update/</loc>
+            <loc>//localhost:1313/life/save-point-update/</loc>
             <lastmod>2026-04-28T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/save-point-update/"
+              href="//localhost:1313/en/life/save-point-update/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/save-point-update/"
+              href="//localhost:1313/ja/life/save-point-update/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/save-point-update/"
+              href="//localhost:1313/life/save-point-update/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/</loc>
+            <loc>//localhost:1313/</loc>
             <lastmod>2026-04-28T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/"
+              href="//localhost:1313/en/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/"
+              href="//localhost:1313/ja/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/"
+              href="//localhost:1313/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/ideal-life/</loc>
+            <loc>//localhost:1313/life/ideal-life/</loc>
             <lastmod>2026-03-27T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/ideal-life/"
+              href="//localhost:1313/en/life/ideal-life/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/ideal-life/"
+              href="//localhost:1313/ja/life/ideal-life/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/ideal-life/"
+              href="//localhost:1313/life/ideal-life/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/2025-2026/</loc>
+            <loc>//localhost:1313/life/2025-2026/</loc>
             <lastmod>2026-02-23T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/2025-2026/"
+              href="//localhost:1313/en/life/2025-2026/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/2025-2026/"
+              href="//localhost:1313/ja/life/2025-2026/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/2025-2026/"
+              href="//localhost:1313/life/2025-2026/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/life-in-kusatsu/</loc>
+            <loc>//localhost:1313/life/life-in-kusatsu/</loc>
             <lastmod>2026-01-31T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/life-in-kusatsu/"
+              href="//localhost:1313/en/life/life-in-kusatsu/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/life-in-kusatsu/"
+              href="//localhost:1313/ja/life/life-in-kusatsu/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/life-in-kusatsu/"
+              href="//localhost:1313/life/life-in-kusatsu/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/fear-of-living-well/</loc>
+            <loc>//localhost:1313/life/fear-of-living-well/</loc>
             <lastmod>2025-12-29T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/fear-of-living-well/"
+              href="//localhost:1313/en/life/fear-of-living-well/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/fear-of-living-well/"
+              href="//localhost:1313/ja/life/fear-of-living-well/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/fear-of-living-well/"
+              href="//localhost:1313/life/fear-of-living-well/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/leaving-australia-for-japan/</loc>
+            <loc>//localhost:1313/life/leaving-australia-for-japan/</loc>
             <lastmod>2025-11-20T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/leaving-australia-for-japan/"
+              href="//localhost:1313/en/life/leaving-australia-for-japan/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/leaving-australia-for-japan/"
+              href="//localhost:1313/ja/life/leaving-australia-for-japan/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/leaving-australia-for-japan/"
+              href="//localhost:1313/life/leaving-australia-for-japan/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/career-goals-what-i-want-from-work/</loc>
+            <loc>//localhost:1313/life/career-goals-what-i-want-from-work/</loc>
             <lastmod>2025-09-30T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/career-goals-what-i-want-from-work/"
+              href="//localhost:1313/en/life/career-goals-what-i-want-from-work/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/career-goals-what-i-want-from-work/"
+              href="//localhost:1313/ja/life/career-goals-what-i-want-from-work/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/career-goals-what-i-want-from-work/"
+              href="//localhost:1313/life/career-goals-what-i-want-from-work/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/after-homelessness/</loc>
+            <loc>//localhost:1313/life/after-homelessness/</loc>
             <lastmod>2025-08-31T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/after-homelessness/"
+              href="//localhost:1313/en/life/after-homelessness/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/after-homelessness/"
+              href="//localhost:1313/ja/life/after-homelessness/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/after-homelessness/"
+              href="//localhost:1313/life/after-homelessness/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/from-coding-to-pumpkin-in-australia/</loc>
+            <loc>//localhost:1313/life/from-coding-to-pumpkin-in-australia/</loc>
             <lastmod>2025-08-17T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/from-coding-to-pumpkin-in-australia/"
+              href="//localhost:1313/en/life/from-coding-to-pumpkin-in-australia/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/from-coding-to-pumpkin-in-australia/"
+              href="//localhost:1313/ja/life/from-coding-to-pumpkin-in-australia/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/from-coding-to-pumpkin-in-australia/"
+              href="//localhost:1313/life/from-coding-to-pumpkin-in-australia/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/my-first-week-in-au/</loc>
+            <loc>//localhost:1313/life/my-first-week-in-au/</loc>
             <lastmod>2025-07-16T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/my-first-week-in-au/"
+              href="//localhost:1313/en/life/my-first-week-in-au/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/my-first-week-in-au/"
+              href="//localhost:1313/ja/life/my-first-week-in-au/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/my-first-week-in-au/"
+              href="//localhost:1313/life/my-first-week-in-au/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/leaving-taiwan-working-holiday/</loc>
+            <loc>//localhost:1313/life/leaving-taiwan-working-holiday/</loc>
             <lastmod>2025-06-21T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/leaving-taiwan-working-holiday/"
+              href="//localhost:1313/en/life/leaving-taiwan-working-holiday/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/leaving-taiwan-working-holiday/"
+              href="//localhost:1313/ja/life/leaving-taiwan-working-holiday/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/leaving-taiwan-working-holiday/"
+              href="//localhost:1313/life/leaving-taiwan-working-holiday/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/software/wordpress-hosting/</loc>
+            <loc>//localhost:1313/software/wordpress-hosting/</loc>
             <lastmod>2025-04-13T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/software/wordpress-hosting/"
+              href="//localhost:1313/en/software/wordpress-hosting/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/software/wordpress-hosting/"
+              href="//localhost:1313/ja/software/wordpress-hosting/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/software/wordpress-hosting/"
+              href="//localhost:1313/software/wordpress-hosting/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/software/</loc>
+            <loc>//localhost:1313/software/</loc>
             <lastmod>2025-04-13T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/software/"
+              href="//localhost:1313/en/software/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/software/"
+              href="//localhost:1313/ja/software/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/software/"
+              href="//localhost:1313/software/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/tokyo-three-days/</loc>
+            <loc>//localhost:1313/life/tokyo-three-days/</loc>
             <lastmod>2025-03-31T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/tokyo-three-days/"
+              href="//localhost:1313/en/life/tokyo-three-days/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/tokyo-three-days/"
+              href="//localhost:1313/ja/life/tokyo-three-days/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/tokyo-three-days/"
+              href="//localhost:1313/life/tokyo-three-days/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/2024-2025/</loc>
+            <loc>//localhost:1313/life/2024-2025/</loc>
             <lastmod>2025-02-17T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/2024-2025/"
+              href="//localhost:1313/en/life/2024-2025/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/2024-2025/"
+              href="//localhost:1313/ja/life/2024-2025/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/2024-2025/"
+              href="//localhost:1313/life/2024-2025/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/i-lost-my-facebook/</loc>
+            <loc>//localhost:1313/life/i-lost-my-facebook/</loc>
             <lastmod>2025-01-02T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/i-lost-my-facebook/"
+              href="//localhost:1313/en/life/i-lost-my-facebook/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/i-lost-my-facebook/"
+              href="//localhost:1313/ja/life/i-lost-my-facebook/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/i-lost-my-facebook/"
+              href="//localhost:1313/life/i-lost-my-facebook/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/draw-the-map/</loc>
+            <loc>//localhost:1313/life/draw-the-map/</loc>
             <lastmod>2024-10-31T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/draw-the-map/"
+              href="//localhost:1313/en/life/draw-the-map/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/draw-the-map/"
+              href="//localhost:1313/ja/life/draw-the-map/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/draw-the-map/"
+              href="//localhost:1313/life/draw-the-map/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/my-struggle-of-writing/</loc>
+            <loc>//localhost:1313/life/my-struggle-of-writing/</loc>
             <lastmod>2024-09-26T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/my-struggle-of-writing/"
+              href="//localhost:1313/en/life/my-struggle-of-writing/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/my-struggle-of-writing/"
+              href="//localhost:1313/ja/life/my-struggle-of-writing/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/my-struggle-of-writing/"
+              href="//localhost:1313/life/my-struggle-of-writing/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/thoughts/manga/wind-breaker-shishitouren/</loc>
+            <loc>//localhost:1313/thoughts/manga/wind-breaker-shishitouren/</loc>
             <lastmod>2024-06-10T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/thoughts/manga/wind-breaker-shishitouren/"
+              href="//localhost:1313/en/thoughts/manga/wind-breaker-shishitouren/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/thoughts/manga/wind-breaker-shishitouren/"
+              href="//localhost:1313/ja/thoughts/manga/wind-breaker-shishitouren/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/thoughts/manga/wind-breaker-shishitouren/"
+              href="//localhost:1313/thoughts/manga/wind-breaker-shishitouren/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/thoughts/</loc>
+            <loc>//localhost:1313/thoughts/</loc>
             <lastmod>2024-06-10T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/thoughts/"
+              href="//localhost:1313/en/thoughts/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/thoughts/"
+              href="//localhost:1313/ja/thoughts/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/thoughts/"
+              href="//localhost:1313/thoughts/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/thoughts/manga/</loc>
+            <loc>//localhost:1313/thoughts/manga/</loc>
             <lastmod>2024-06-10T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/thoughts/manga/"
+              href="//localhost:1313/en/thoughts/manga/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/thoughts/manga/"
+              href="//localhost:1313/ja/thoughts/manga/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/thoughts/manga/"
+              href="//localhost:1313/thoughts/manga/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/thoughts/movie/hokkyoku-departmant-store/</loc>
+            <loc>//localhost:1313/thoughts/movie/hokkyoku-departmant-store/</loc>
             <lastmod>2024-03-27T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/thoughts/movie/hokkyoku-departmant-store/"
+              href="//localhost:1313/en/thoughts/movie/hokkyoku-departmant-store/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/thoughts/movie/hokkyoku-departmant-store/"
+              href="//localhost:1313/ja/thoughts/movie/hokkyoku-departmant-store/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/thoughts/movie/hokkyoku-departmant-store/"
+              href="//localhost:1313/thoughts/movie/hokkyoku-departmant-store/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/thoughts/movie/</loc>
+            <loc>//localhost:1313/thoughts/movie/</loc>
             <lastmod>2024-03-27T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/thoughts/movie/"
+              href="//localhost:1313/en/thoughts/movie/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/thoughts/movie/"
+              href="//localhost:1313/ja/thoughts/movie/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/thoughts/movie/"
+              href="//localhost:1313/thoughts/movie/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/thoughts/movie/dune/</loc>
+            <loc>//localhost:1313/thoughts/movie/dune/</loc>
             <lastmod>2024-03-05T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/thoughts/movie/dune/"
+              href="//localhost:1313/en/thoughts/movie/dune/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/thoughts/movie/dune/"
+              href="//localhost:1313/ja/thoughts/movie/dune/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/thoughts/movie/dune/"
+              href="//localhost:1313/thoughts/movie/dune/"
               />
           </url>
     
@@ -584,44 +584,44 @@
   
     
       <url>
-            <loc>http://localhost:1313/novel/</loc>
+            <loc>//localhost:1313/novel/</loc>
             <lastmod>2024-03-04T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/novel/"
+              href="//localhost:1313/en/novel/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/novel/"
+              href="//localhost:1313/ja/novel/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/novel/"
+              href="//localhost:1313/novel/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/novel/prologue/</loc>
+            <loc>//localhost:1313/novel/prologue/</loc>
             <lastmod>2024-03-04T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/novel/prologue/"
+              href="//localhost:1313/en/novel/prologue/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/novel/prologue/"
+              href="//localhost:1313/ja/novel/prologue/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/novel/prologue/"
+              href="//localhost:1313/novel/prologue/"
               />
           </url>
     
@@ -634,22 +634,22 @@
   
     
       <url>
-            <loc>http://localhost:1313/software/my-site/</loc>
+            <loc>//localhost:1313/software/my-site/</loc>
             <lastmod>2024-03-03T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/software/my-site/"
+              href="//localhost:1313/en/software/my-site/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/software/my-site/"
+              href="//localhost:1313/ja/software/my-site/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/software/my-site/"
+              href="//localhost:1313/software/my-site/"
               />
           </url>
     
@@ -658,44 +658,44 @@
   
     
       <url>
-            <loc>http://localhost:1313/software/my-first-tech-post/</loc>
+            <loc>//localhost:1313/software/my-first-tech-post/</loc>
             <lastmod>2024-03-02T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/software/my-first-tech-post/"
+              href="//localhost:1313/en/software/my-first-tech-post/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/software/my-first-tech-post/"
+              href="//localhost:1313/ja/software/my-first-tech-post/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/software/my-first-tech-post/"
+              href="//localhost:1313/software/my-first-tech-post/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/thoughts/movie/robot-dream/</loc>
+            <loc>//localhost:1313/thoughts/movie/robot-dream/</loc>
             <lastmod>2024-03-02T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/thoughts/movie/robot-dream/"
+              href="//localhost:1313/en/thoughts/movie/robot-dream/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/thoughts/movie/robot-dream/"
+              href="//localhost:1313/ja/thoughts/movie/robot-dream/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/thoughts/movie/robot-dream/"
+              href="//localhost:1313/thoughts/movie/robot-dream/"
               />
           </url>
     
@@ -704,22 +704,22 @@
   
     
       <url>
-            <loc>http://localhost:1313/life/hello-world/</loc>
+            <loc>//localhost:1313/life/hello-world/</loc>
             <lastmod>2024-03-01T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/hello-world/"
+              href="//localhost:1313/en/life/hello-world/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/hello-world/"
+              href="//localhost:1313/ja/life/hello-world/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/hello-world/"
+              href="//localhost:1313/life/hello-world/"
               />
           </url>
     
@@ -730,396 +730,396 @@
   
     
       <url>
-            <loc>http://localhost:1313/life/2023-2024/</loc>
+            <loc>//localhost:1313/life/2023-2024/</loc>
             <lastmod>2024-02-16T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/2023-2024/"
+              href="//localhost:1313/en/life/2023-2024/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/2023-2024/"
+              href="//localhost:1313/ja/life/2023-2024/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/2023-2024/"
+              href="//localhost:1313/life/2023-2024/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/now/</loc>
+            <loc>//localhost:1313/now/</loc>
             <lastmod>2024-01-01T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/now/"
+              href="//localhost:1313/en/now/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/now/"
+              href="//localhost:1313/ja/now/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/now/"
+              href="//localhost:1313/now/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/about/</loc>
+            <loc>//localhost:1313/about/</loc>
             <lastmod>2024-01-01T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/about/"
+              href="//localhost:1313/en/about/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/about/"
+              href="//localhost:1313/ja/about/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/about/"
+              href="//localhost:1313/about/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/software/talk-about-js-eval/</loc>
+            <loc>//localhost:1313/software/talk-about-js-eval/</loc>
             <lastmod>2023-09-30T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/software/talk-about-js-eval/"
+              href="//localhost:1313/en/software/talk-about-js-eval/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/software/talk-about-js-eval/"
+              href="//localhost:1313/ja/software/talk-about-js-eval/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/software/talk-about-js-eval/"
+              href="//localhost:1313/software/talk-about-js-eval/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/software/from-callback-to-async/</loc>
+            <loc>//localhost:1313/software/from-callback-to-async/</loc>
             <lastmod>2023-08-21T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/software/from-callback-to-async/"
+              href="//localhost:1313/en/software/from-callback-to-async/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/software/from-callback-to-async/"
+              href="//localhost:1313/ja/software/from-callback-to-async/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/software/from-callback-to-async/"
+              href="//localhost:1313/software/from-callback-to-async/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/how-to-build-a-fitness-habit/</loc>
+            <loc>//localhost:1313/life/how-to-build-a-fitness-habit/</loc>
             <lastmod>2023-07-15T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/how-to-build-a-fitness-habit/"
+              href="//localhost:1313/en/life/how-to-build-a-fitness-habit/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/how-to-build-a-fitness-habit/"
+              href="//localhost:1313/ja/life/how-to-build-a-fitness-habit/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/how-to-build-a-fitness-habit/"
+              href="//localhost:1313/life/how-to-build-a-fitness-habit/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/the-journey-of-my-site/</loc>
+            <loc>//localhost:1313/life/the-journey-of-my-site/</loc>
             <lastmod>2023-05-30T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/the-journey-of-my-site/"
+              href="//localhost:1313/en/life/the-journey-of-my-site/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/the-journey-of-my-site/"
+              href="//localhost:1313/ja/life/the-journey-of-my-site/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/the-journey-of-my-site/"
+              href="//localhost:1313/life/the-journey-of-my-site/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/2022-2023/</loc>
+            <loc>//localhost:1313/life/2022-2023/</loc>
             <lastmod>2023-03-18T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/2022-2023/"
+              href="//localhost:1313/en/life/2022-2023/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/2022-2023/"
+              href="//localhost:1313/ja/life/2022-2023/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/2022-2023/"
+              href="//localhost:1313/life/2022-2023/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/software/google-oauth-login/</loc>
+            <loc>//localhost:1313/software/google-oauth-login/</loc>
             <lastmod>2022-10-23T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/software/google-oauth-login/"
+              href="//localhost:1313/en/software/google-oauth-login/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/software/google-oauth-login/"
+              href="//localhost:1313/ja/software/google-oauth-login/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/software/google-oauth-login/"
+              href="//localhost:1313/software/google-oauth-login/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/my-first-three-year-in-code/</loc>
+            <loc>//localhost:1313/life/my-first-three-year-in-code/</loc>
             <lastmod>2022-09-03T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/my-first-three-year-in-code/"
+              href="//localhost:1313/en/life/my-first-three-year-in-code/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/my-first-three-year-in-code/"
+              href="//localhost:1313/ja/life/my-first-three-year-in-code/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/my-first-three-year-in-code/"
+              href="//localhost:1313/life/my-first-three-year-in-code/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/life/2021-2022/</loc>
+            <loc>//localhost:1313/life/2021-2022/</loc>
             <lastmod>2022-01-09T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/life/2021-2022/"
+              href="//localhost:1313/en/life/2021-2022/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/life/2021-2022/"
+              href="//localhost:1313/ja/life/2021-2022/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/life/2021-2022/"
+              href="//localhost:1313/life/2021-2022/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/software/talk-about-web-font/</loc>
+            <loc>//localhost:1313/software/talk-about-web-font/</loc>
             <lastmod>2021-10-28T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/software/talk-about-web-font/"
+              href="//localhost:1313/en/software/talk-about-web-font/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/software/talk-about-web-font/"
+              href="//localhost:1313/ja/software/talk-about-web-font/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/software/talk-about-web-font/"
+              href="//localhost:1313/software/talk-about-web-font/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/software/design-system/</loc>
+            <loc>//localhost:1313/software/design-system/</loc>
             <lastmod>2021-09-22T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/software/design-system/"
+              href="//localhost:1313/en/software/design-system/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/software/design-system/"
+              href="//localhost:1313/ja/software/design-system/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/software/design-system/"
+              href="//localhost:1313/software/design-system/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/software/frontend-framework-101/</loc>
+            <loc>//localhost:1313/software/frontend-framework-101/</loc>
             <lastmod>2021-07-11T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/software/frontend-framework-101/"
+              href="//localhost:1313/en/software/frontend-framework-101/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/software/frontend-framework-101/"
+              href="//localhost:1313/ja/software/frontend-framework-101/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/software/frontend-framework-101/"
+              href="//localhost:1313/software/frontend-framework-101/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/thoughts/tools/</loc>
+            <loc>//localhost:1313/thoughts/tools/</loc>
             <lastmod>2020-05-03T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/thoughts/tools/"
+              href="//localhost:1313/en/thoughts/tools/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/thoughts/tools/"
+              href="//localhost:1313/ja/thoughts/tools/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/thoughts/tools/"
+              href="//localhost:1313/thoughts/tools/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/thoughts/tools/atomic-habits-practice/</loc>
+            <loc>//localhost:1313/thoughts/tools/atomic-habits-practice/</loc>
             <lastmod>2020-05-03T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/thoughts/tools/atomic-habits-practice/"
+              href="//localhost:1313/en/thoughts/tools/atomic-habits-practice/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/thoughts/tools/atomic-habits-practice/"
+              href="//localhost:1313/ja/thoughts/tools/atomic-habits-practice/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/thoughts/tools/atomic-habits-practice/"
+              href="//localhost:1313/thoughts/tools/atomic-habits-practice/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/thoughts/tools/atomic-habits-basic/</loc>
+            <loc>//localhost:1313/thoughts/tools/atomic-habits-basic/</loc>
             <lastmod>2020-04-28T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/thoughts/tools/atomic-habits-basic/"
+              href="//localhost:1313/en/thoughts/tools/atomic-habits-basic/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/thoughts/tools/atomic-habits-basic/"
+              href="//localhost:1313/ja/thoughts/tools/atomic-habits-basic/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/thoughts/tools/atomic-habits-basic/"
+              href="//localhost:1313/thoughts/tools/atomic-habits-basic/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/thoughts/tools/atomic-habits-note/</loc>
+            <loc>//localhost:1313/thoughts/tools/atomic-habits-note/</loc>
             <lastmod>2020-03-28T00:00:00+00:00</lastmod>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/thoughts/tools/atomic-habits-note/"
+              href="//localhost:1313/en/thoughts/tools/atomic-habits-note/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/thoughts/tools/atomic-habits-note/"
+              href="//localhost:1313/ja/thoughts/tools/atomic-habits-note/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/thoughts/tools/atomic-habits-note/"
+              href="//localhost:1313/thoughts/tools/atomic-habits-note/"
               />
           </url>
     
@@ -1128,210 +1128,210 @@
   
     
       <url>
-            <loc>http://localhost:1313/thoughts/novel/</loc>
+            <loc>//localhost:1313/thoughts/novel/</loc>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/thoughts/novel/"
+              href="//localhost:1313/en/thoughts/novel/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/thoughts/novel/"
+              href="//localhost:1313/ja/thoughts/novel/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/thoughts/novel/"
+              href="//localhost:1313/thoughts/novel/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/works/novel/</loc>
+            <loc>//localhost:1313/works/novel/</loc>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/works/novel/"
+              href="//localhost:1313/en/works/novel/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/works/novel/"
+              href="//localhost:1313/ja/works/novel/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/works/novel/"
+              href="//localhost:1313/works/novel/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/works/tools/</loc>
+            <loc>//localhost:1313/works/tools/</loc>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/works/tools/"
+              href="//localhost:1313/en/works/tools/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/works/tools/"
+              href="//localhost:1313/ja/works/tools/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/works/tools/"
+              href="//localhost:1313/works/tools/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/works/</loc>
+            <loc>//localhost:1313/works/</loc>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/works/"
+              href="//localhost:1313/en/works/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/works/"
+              href="//localhost:1313/ja/works/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/works/"
+              href="//localhost:1313/works/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/thoughts/anime/</loc>
+            <loc>//localhost:1313/thoughts/anime/</loc>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/thoughts/anime/"
+              href="//localhost:1313/en/thoughts/anime/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/thoughts/anime/"
+              href="//localhost:1313/ja/thoughts/anime/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/thoughts/anime/"
+              href="//localhost:1313/thoughts/anime/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/works/anime/</loc>
+            <loc>//localhost:1313/works/anime/</loc>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/works/anime/"
+              href="//localhost:1313/en/works/anime/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/works/anime/"
+              href="//localhost:1313/ja/works/anime/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/works/anime/"
+              href="//localhost:1313/works/anime/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/works/movie/</loc>
+            <loc>//localhost:1313/works/movie/</loc>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/works/movie/"
+              href="//localhost:1313/en/works/movie/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/works/movie/"
+              href="//localhost:1313/ja/works/movie/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/works/movie/"
+              href="//localhost:1313/works/movie/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/works/manga/</loc>
+            <loc>//localhost:1313/works/manga/</loc>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/works/manga/"
+              href="//localhost:1313/en/works/manga/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/works/manga/"
+              href="//localhost:1313/ja/works/manga/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/works/manga/"
+              href="//localhost:1313/works/manga/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/thoughts/series/</loc>
+            <loc>//localhost:1313/thoughts/series/</loc>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/thoughts/series/"
+              href="//localhost:1313/en/thoughts/series/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/thoughts/series/"
+              href="//localhost:1313/ja/thoughts/series/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/thoughts/series/"
+              href="//localhost:1313/thoughts/series/"
               />
           </url>
     
   
     
       <url>
-            <loc>http://localhost:1313/works/series/</loc>
+            <loc>//localhost:1313/works/series/</loc>
             <xhtml:link
               rel="alternate"
               hreflang="en"
-              href="http://localhost:1313/en/works/series/"
+              href="//localhost:1313/en/works/series/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="ja"
-              href="http://localhost:1313/ja/works/series/"
+              href="//localhost:1313/ja/works/series/"
               />
             <xhtml:link
               rel="alternate"
               hreflang="zh-tw"
-              href="http://localhost:1313/works/series/"
+              href="//localhost:1313/works/series/"
               />
           </url>
     

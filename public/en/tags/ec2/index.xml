@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>EC2 on Parker Chang&#39;s Web</title>
-    <link>http://localhost:1313/en/tags/ec2/</link>
+    <link>//localhost:1313/en/tags/ec2/</link>
     <description>Recent content in EC2 on Parker Chang&#39;s Web</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Sun, 13 Apr 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/en/tags/ec2/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//localhost:1313/en/tags/ec2/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How I Set Up a WordPress Site</title>
-      <link>http://localhost:1313/en/software/wordpress-hosting/</link>
+      <link>//localhost:1313/en/software/wordpress-hosting/</link>
       <pubDate>Sun, 13 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/software/wordpress-hosting/</guid>
+      <guid>//localhost:1313/en/software/wordpress-hosting/</guid>
       <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; This post is translated by AI. If you find any unnatural phrasing or errors, please feel free to contact me via email or other channels. Your feedback is appreciated!&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;Last year I handled several large WordPress sites at work. I&amp;rsquo;m here to record and share the WordPress hosting strategy I learned.&lt;/p&gt;&#xA;&lt;p&gt;This site will also be changed to WordPress later. After changing, I will come back to share why and how I did it.&lt;/p&gt;</description>
     </item>
   </channel>

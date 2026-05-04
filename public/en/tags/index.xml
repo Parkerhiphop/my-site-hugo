@@ -2,150 +2,150 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Parker Chang&#39;s Web</title>
-    <link>http://localhost:1313/en/tags/</link>
+    <link>//localhost:1313/en/tags/</link>
     <description>Recent content in Tags on Parker Chang&#39;s Web</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Sun, 13 Apr 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//localhost:1313/en/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AWS</title>
-      <link>http://localhost:1313/en/tags/aws/</link>
+      <link>//localhost:1313/en/tags/aws/</link>
       <pubDate>Sun, 13 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/aws/</guid>
+      <guid>//localhost:1313/en/tags/aws/</guid>
       <description></description>
     </item>
     <item>
       <title>Cloudflare</title>
-      <link>http://localhost:1313/en/tags/cloudflare/</link>
+      <link>//localhost:1313/en/tags/cloudflare/</link>
       <pubDate>Sun, 13 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/cloudflare/</guid>
+      <guid>//localhost:1313/en/tags/cloudflare/</guid>
       <description></description>
     </item>
     <item>
       <title>EasyEngine</title>
-      <link>http://localhost:1313/en/tags/easyengine/</link>
+      <link>//localhost:1313/en/tags/easyengine/</link>
       <pubDate>Sun, 13 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/easyengine/</guid>
+      <guid>//localhost:1313/en/tags/easyengine/</guid>
       <description></description>
     </item>
     <item>
       <title>EC2</title>
-      <link>http://localhost:1313/en/tags/ec2/</link>
+      <link>//localhost:1313/en/tags/ec2/</link>
       <pubDate>Sun, 13 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/ec2/</guid>
+      <guid>//localhost:1313/en/tags/ec2/</guid>
       <description></description>
     </item>
     <item>
       <title>Software Development</title>
-      <link>http://localhost:1313/en/tags/software-development/</link>
+      <link>//localhost:1313/en/tags/software-development/</link>
       <pubDate>Sun, 13 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/software-development/</guid>
+      <guid>//localhost:1313/en/tags/software-development/</guid>
       <description></description>
     </item>
     <item>
       <title>WordPress</title>
-      <link>http://localhost:1313/en/tags/wordpress/</link>
+      <link>//localhost:1313/en/tags/wordpress/</link>
       <pubDate>Sun, 13 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/wordpress/</guid>
+      <guid>//localhost:1313/en/tags/wordpress/</guid>
       <description></description>
     </item>
     <item>
       <title>Eval</title>
-      <link>http://localhost:1313/en/tags/eval/</link>
+      <link>//localhost:1313/en/tags/eval/</link>
       <pubDate>Sat, 30 Sep 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/eval/</guid>
+      <guid>//localhost:1313/en/tags/eval/</guid>
       <description></description>
     </item>
     <item>
       <title>JavaScript</title>
-      <link>http://localhost:1313/en/tags/javascript/</link>
+      <link>//localhost:1313/en/tags/javascript/</link>
       <pubDate>Sat, 30 Sep 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/javascript/</guid>
+      <guid>//localhost:1313/en/tags/javascript/</guid>
       <description></description>
     </item>
     <item>
       <title>Security</title>
-      <link>http://localhost:1313/en/tags/security/</link>
+      <link>//localhost:1313/en/tags/security/</link>
       <pubDate>Sat, 30 Sep 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/security/</guid>
+      <guid>//localhost:1313/en/tags/security/</guid>
       <description></description>
     </item>
     <item>
       <title>Web Development</title>
-      <link>http://localhost:1313/en/tags/web-development/</link>
+      <link>//localhost:1313/en/tags/web-development/</link>
       <pubDate>Sat, 30 Sep 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/web-development/</guid>
+      <guid>//localhost:1313/en/tags/web-development/</guid>
       <description></description>
     </item>
     <item>
       <title>Express</title>
-      <link>http://localhost:1313/en/tags/express/</link>
+      <link>//localhost:1313/en/tags/express/</link>
       <pubDate>Sun, 23 Oct 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/express/</guid>
+      <guid>//localhost:1313/en/tags/express/</guid>
       <description></description>
     </item>
     <item>
       <title>Google OAuth</title>
-      <link>http://localhost:1313/en/tags/google-oauth/</link>
+      <link>//localhost:1313/en/tags/google-oauth/</link>
       <pubDate>Sun, 23 Oct 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/google-oauth/</guid>
+      <guid>//localhost:1313/en/tags/google-oauth/</guid>
       <description></description>
     </item>
     <item>
       <title>Vue</title>
-      <link>http://localhost:1313/en/tags/vue/</link>
+      <link>//localhost:1313/en/tags/vue/</link>
       <pubDate>Sun, 23 Oct 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/vue/</guid>
+      <guid>//localhost:1313/en/tags/vue/</guid>
       <description></description>
     </item>
     <item>
       <title>CSS</title>
-      <link>http://localhost:1313/en/tags/css/</link>
+      <link>//localhost:1313/en/tags/css/</link>
       <pubDate>Thu, 28 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/css/</guid>
+      <guid>//localhost:1313/en/tags/css/</guid>
       <description></description>
     </item>
     <item>
       <title>Design</title>
-      <link>http://localhost:1313/en/tags/design/</link>
+      <link>//localhost:1313/en/tags/design/</link>
       <pubDate>Thu, 28 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/design/</guid>
+      <guid>//localhost:1313/en/tags/design/</guid>
       <description></description>
     </item>
     <item>
       <title>Font</title>
-      <link>http://localhost:1313/en/tags/font/</link>
+      <link>//localhost:1313/en/tags/font/</link>
       <pubDate>Thu, 28 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/font/</guid>
+      <guid>//localhost:1313/en/tags/font/</guid>
       <description></description>
     </item>
     <item>
       <title>Design System</title>
-      <link>http://localhost:1313/en/tags/design-system/</link>
+      <link>//localhost:1313/en/tags/design-system/</link>
       <pubDate>Wed, 22 Sep 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/design-system/</guid>
+      <guid>//localhost:1313/en/tags/design-system/</guid>
       <description></description>
     </item>
     <item>
       <title>UI/UX</title>
-      <link>http://localhost:1313/en/tags/ui/ux/</link>
+      <link>//localhost:1313/en/tags/ui/ux/</link>
       <pubDate>Wed, 22 Sep 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/ui/ux/</guid>
+      <guid>//localhost:1313/en/tags/ui/ux/</guid>
       <description></description>
     </item>
     <item>
       <title>Framework</title>
-      <link>http://localhost:1313/en/tags/framework/</link>
+      <link>//localhost:1313/en/tags/framework/</link>
       <pubDate>Sun, 11 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/framework/</guid>
+      <guid>//localhost:1313/en/tags/framework/</guid>
       <description></description>
     </item>
     <item>
       <title>Frontend</title>
-      <link>http://localhost:1313/en/tags/frontend/</link>
+      <link>//localhost:1313/en/tags/frontend/</link>
       <pubDate>Sun, 11 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/tags/frontend/</guid>
+      <guid>//localhost:1313/en/tags/frontend/</guid>
       <description></description>
     </item>
   </channel>

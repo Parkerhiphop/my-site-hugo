@@ -1,5 +1,5 @@
-baseURL = 'https://example.org/'
-title = 'My Site'
+baseURL = '/'
+title = "Parker Change's Web"
 theme = 'congo'
 
 defaultContentLanguage = 'zh-TW'

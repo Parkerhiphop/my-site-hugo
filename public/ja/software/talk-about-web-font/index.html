@@ -61,7 +61,7 @@
   
   
   
-    <link rel="canonical" href="http://localhost:1313/ja/software/talk-about-web-font/" />
+    <link rel="canonical" href="//localhost:1313/ja/software/talk-about-web-font/" />
   
   
   
@@ -79,7 +79,7 @@
   
   
   
-  <meta property="og:url" content="http://localhost:1313/ja/software/talk-about-web-font/">
+  <meta property="og:url" content="//localhost:1313/ja/software/talk-about-web-font/">
   <meta property="og:site_name" content="Parker Chang&#39;s Web">
   <meta property="og:title" content="Webフォントについて語る — デザイン、ファイル形式、そしてフロントエンドの読み込み">
   <meta property="og:description" content="フォントデザインのプロセス（非専門家版）、フォントファイルの種類、Webページでのフォント使用方法について紹介します。">
@@ -93,11 +93,11 @@
     <meta property="article:tag" content="CSS">
     <meta property="article:tag" content="Font">
     <meta property="article:tag" content="Design">
-    <meta property="og:image" content="http://localhost:1313/ja/software/talk-about-web-font/cover-en.png">
+    <meta property="og:image" content="//localhost:1313/ja/software/talk-about-web-font/cover-en.png">
 
   
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://localhost:1313/ja/software/talk-about-web-font/cover-en.png">
+  <meta name="twitter:image" content="//localhost:1313/ja/software/talk-about-web-font/cover-en.png">
   <meta name="twitter:title" content="Webフォントについて語る — デザイン、ファイル形式、そしてフロントエンドの読み込み">
   <meta name="twitter:description" content="フォントデザインのプロセス（非専門家版）、フォントファイルの種類、Webページでのフォント使用方法について紹介します。">
 
@@ -112,7 +112,7 @@
     "description": "フォントデザインのプロセス（非専門家版）、フォントファイルの種類、Webページでのフォント使用方法について紹介します。",
     "abstract": "\u003cblockquote\u003e\n\u003cp\u003e\u003cstrong\u003e注:\u003c\/strong\u003e この記事は AI によって翻訳されています。もし不自然な表現や誤りがありましたら、メールやその他の手段でお知らせいただけると幸いです。フィードバックをいただけると助かります！\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003cp\u003e以前、\u003ca href=\u0022https:\/\/www.instagram.com\/designnotdeep\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003e設事未深\u003c\/a\u003e のフォント大補帖（フォント集）が配布され、フォント受け取りブームが起きました。スライド、ポスター、SNS 投稿以外に、Web ページでどのようにフォントが使われているか考えたことはありますか？\u003c\/p\u003e\n\u003cp\u003e\n\n\n\n\n\n\n  \n  \n\u003cfigure\u003e\u003cimg src=\u0022https:\/\/cdn-images-1.medium.com\/max\/800\/0*OEf5PYLRWXCaS_Op\u0022 alt=\u0022typewritter\u0022 class=\u0022mx-auto my-0 rounded-md\u0022 \/\u003e\n\u003c\/figure\u003e\n\u003c\/p\u003e\n\u003cp\u003ephoto by \u003ca href=\u0022https:\/\/unsplash.com\/@diklein\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eDavid Klein\u003c\/a\u003e on \u003ca href=\u0022https:\/\/unsplash.com\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eUnsplash\u003c\/a\u003e\u003c\/p\u003e\n\u003cp\u003e以前、\u003ca href=\u0022https:\/\/www.instagram.com\/designnotdeep\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003e設事未深\u003c\/a\u003e のフォント大補帖がブームを巻き起こしました。スライド、ポスター、SNS 投稿以外に、Web ページでどのようにフォントが使われているか考えたことはありますか？\u003c\/p\u003e\n\u003cp\u003eそこで今日は、Web ページでのフォント使用に関する知識と技術的な詳細を共有します。前半は一般的な知識で、後半は Web ページでのフォント使用に関する技術的な話が多くなります。フロントエンドエンジニアでない方は、適宜読み飛ばしてください！\u003c\/p\u003e\n\u003cp\u003e\u003cstrong\u003eこの記事を通じて、以下のことをお伝えします 👇\u003c\/strong\u003e\u003c\/p\u003e\n\u003col\u003e\n\u003cli\u003eフォントの誕生（非専門家版）\u003c\/li\u003e\n\u003cli\u003eフォントファイルの種類\u003c\/li\u003e\n\u003cli\u003eWeb ページでのフォント使用方法\u003c\/li\u003e\n\u003c\/ol\u003e\n\u003ch2 id=\u0022フォントデザインのプロセス\u0022 class=\u0022relative group\u0022\u003eフォントデザインのプロセス \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#%e3%83%95%e3%82%a9%e3%83%b3%e3%83%88%e3%83%87%e3%82%b6%e3%82%a4%e3%83%b3%e3%81%ae%e3%83%97%e3%83%ad%e3%82%bb%e3%82%b9\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e紹介に入る前に、フォントがどのようにデザインされるのか非常に気になったので、デザイナーの友人にフォントデザインについていくつか質問しました。ここでプロセスの概要を簡単に紹介します。\u003c\/p\u003e\n\u003cp\u003e繁体字中国語の場合、まずいくつかの決まった文字を作ります。これらの文字を作れば、漢字の画数の法則を大体カバーできます。例えば「永」はすべての異なる画数を含んでおり、「鷹」は横棒が多い場合のテストになるなどです。\u003c\/p\u003e\n\u003cp\u003e\n\n\n\n\n\n\n  \n  \n\u003cfigure\u003e\u003cimg src=\u0022https:\/\/cdn-images-1.medium.com\/max\/800\/0*Yn16A9M8O252zZw9.jpg\u0022 alt=\u0022\u0022 class=\u0022mx-auto my-0 rounded-md\u0022 \/\u003e\n\u003c\/figure\u003e\n\u003c\/p\u003e\n\u003cp\u003e\u003ca href=\u0022https:\/\/www.easyatm.com.tw\/wiki\/%E6%B0%B8%E5%AD%97%E5%85%AB%E6%B3%95\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003ehttps:\/\/www.easyatm.com.tw\/wiki\/%E6%B0%B8%E5%AD%97%E5%85%AB%E6%B3%95\u003c\/a\u003e\u003c\/p\u003e\n\u003cp\u003e次に、\u003ca href=\u0022https:\/\/glyphsapp.com\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003e\u003cstrong\u003eGlyphs\u003c\/strong\u003e\u003c\/a\u003e や \u003ca href=\u0022https:\/\/fontforge.org\/en-US\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003e\u003cstrong\u003eFontForge\u003c\/strong\u003e\u003c\/a\u003e などのソフトウェアを使用して詳細を調整します。ほとんどの漢字を作り終えたら、並べて一貫性を確認し、最後は一気に残りの漢字を作り上げます。\u003c\/p\u003e\n\u003ch3 id=\u0022web-ページの繁体字中国語は何文字デザインする必要があるのか\u0022 class=\u0022relative group\u0022\u003eWeb ページの繁体字中国語は何文字デザインする必要があるのか？ \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#web-%e3%83%9a%e3%83%bc%e3%82%b8%e3%81%ae%e7%b9%81%e4%bd%93%e5%ad%97%e4%b8%ad%e5%9b%bd%e8%aa%9e%e3%81%af%e4%bd%95%e6%96%87%e5%ad%97%e3%83%87%e3%82%b6%e3%82%a4%e3%83%b3%e3%81%99%e3%82%8b%e5%bf%85%e8%a6%81%e3%81%8c%e3%81%82%e3%82%8b%e3%81%ae%e3%81%8b\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h3\u003e\u003cp\u003e漢字の総量については、教育部の\u003ca href=\u0022https:\/\/dict.variants.moe.edu.tw\/variants\/rbt\/home.do\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003e異体字字典\u003c\/a\u003eに 10 万字以上収録されていますが、Google Font が提供する\u003ca href=\u0022https:\/\/richer.tw\/google_font_info\/noto-serif-tc-cut\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eNoto Sans TC\u003c\/a\u003eファイルを見ると、Web ページで読み込む必要がある文字数は約 1 万 5 千字程度です。\u003c\/p\u003e",
     "inLanguage": "ja",
-    "url" : "http:\/\/localhost:1313\/ja\/software\/talk-about-web-font\/",
+    "url" : "\/\/localhost:1313\/ja\/software\/talk-about-web-font\/",
     "author" : {
       "@type": "Person",
       "name": "Parker"
@@ -137,13 +137,13 @@
    "itemListElement": [
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/ja/",
+       "item": "//localhost:1313/ja/",
        "name": "ホーム",
        "position": 1
      },
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/ja/software/",
+       "item": "//localhost:1313/ja/software/",
        "name": "ソフトウェア",
        "position": 2
      },
@@ -654,13 +654,13 @@
       
         <source
           
-            srcset="http://localhost:1313/ja/software/talk-about-web-font/cover-ja_hu_ab7fd2bfa8bbc64a.webp 330w,http://localhost:1313/ja/software/talk-about-web-font/cover-ja_hu_ae57a0840f180eb3.webp 660w
+            srcset="//localhost:1313/ja/software/talk-about-web-font/cover-ja_hu_ab7fd2bfa8bbc64a.webp 330w,//localhost:1313/ja/software/talk-about-web-font/cover-ja_hu_ae57a0840f180eb3.webp 660w
             
-              ,http://localhost:1313/ja/software/talk-about-web-font/cover-ja_hu_f94a3093f2b5fcf7.webp 1024w
+              ,//localhost:1313/ja/software/talk-about-web-font/cover-ja_hu_f94a3093f2b5fcf7.webp 1024w
             
             
               
-                ,http://localhost:1313/ja/software/talk-about-web-font/cover-ja_hu_108a4e8edac63484.webp 1200w
+                ,//localhost:1313/ja/software/talk-about-web-font/cover-ja_hu_108a4e8edac63484.webp 1200w
               
             "
           
@@ -675,12 +675,12 @@
         
         
         
-          src="http://localhost:1313/ja/software/talk-about-web-font/cover-ja_hu_f5f59c3351b31580.png" srcset="http://localhost:1313/ja/software/talk-about-web-font/cover-ja_hu_bd36d8a72414fe02.png 330w,http://localhost:1313/ja/software/talk-about-web-font/cover-ja_hu_f5f59c3351b31580.png 660w
+          src="//localhost:1313/ja/software/talk-about-web-font/cover-ja_hu_f5f59c3351b31580.png" srcset="//localhost:1313/ja/software/talk-about-web-font/cover-ja_hu_bd36d8a72414fe02.png 330w,//localhost:1313/ja/software/talk-about-web-font/cover-ja_hu_f5f59c3351b31580.png 660w
           
-            ,http://localhost:1313/ja/software/talk-about-web-font/cover-ja_hu_1934a0ab1c10e2a0.png 1024w
+            ,//localhost:1313/ja/software/talk-about-web-font/cover-ja_hu_1934a0ab1c10e2a0.png 1024w
           
           
-            ,http://localhost:1313/ja/software/talk-about-web-font/cover-ja.png 1200w
+            ,//localhost:1313/ja/software/talk-about-web-font/cover-ja.png 1200w
           "
           sizes="100vw"
         
@@ -978,7 +978,7 @@
       <div class="flex justify-between pt-3">
         <span>
           
-            <a class="group flex" href="http://localhost:1313/ja/software/design-system/">
+            <a class="group flex" href="//localhost:1313/ja/software/design-system/">
               <span
                 class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
                 ><span class="ltr:inline rtl:hidden">&larr;</span
@@ -1000,7 +1000,7 @@
         </span>
         <span>
           
-            <a class="group flex text-right" href="http://localhost:1313/ja/software/google-oauth-login/">
+            <a class="group flex text-right" href="//localhost:1313/ja/software/google-oauth-login/">
               <span class="flex flex-col">
                 <span
                   class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
@@ -1034,7 +1034,7 @@
   data-host="https://cusdis.com"
   data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
   data-page-id="267aad96ce1044bf59e4d506c39bed1a"
-  data-page-url="http://localhost:1313/ja/software/talk-about-web-font/"
+  data-page-url="//localhost:1313/ja/software/talk-about-web-font/"
   data-page-title="Webフォントについて語る — デザイン、ファイル形式、そしてフロントエンドの読み込み"
 ></div>
 <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>

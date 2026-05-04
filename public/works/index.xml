@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>作品資料庫 on Parker Chang&#39;s Web</title>
-    <link>http://localhost:1313/works/</link>
+    <link>//localhost:1313/works/</link>
     <description>Recent content in 作品資料庫 on Parker Chang&#39;s Web</description>
     <generator>Hugo</generator>
     <language>zh-TW</language>
-    <atom:link href="http://localhost:1313/works/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//localhost:1313/works/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

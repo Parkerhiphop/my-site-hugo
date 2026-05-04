@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>小説 on Parker Chang&#39;s Web</title>
-    <link>http://localhost:1313/ja/novel/</link>
+    <link>//localhost:1313/ja/novel/</link>
     <description>Recent content in 小説 on Parker Chang&#39;s Web</description>
     <generator>Hugo</generator>
     <language>ja</language>
     <lastBuildDate>Mon, 04 Mar 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/ja/novel/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//localhost:1313/ja/novel/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>序章：霧の中の都市</title>
-      <link>http://localhost:1313/ja/novel/prologue/</link>
+      <link>//localhost:1313/ja/novel/prologue/</link>
       <pubDate>Mon, 04 Mar 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/ja/novel/prologue/</guid>
+      <guid>//localhost:1313/ja/novel/prologue/</guid>
       <description></description>
     </item>
   </channel>

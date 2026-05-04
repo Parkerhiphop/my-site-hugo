@@ -61,7 +61,7 @@
   
   
   
-    <link rel="canonical" href="http://localhost:1313/ja/software/wordpress-hosting/" />
+    <link rel="canonical" href="//localhost:1313/ja/software/wordpress-hosting/" />
   
   
   
@@ -79,7 +79,7 @@
   
   
   
-  <meta property="og:url" content="http://localhost:1313/ja/software/wordpress-hosting/">
+  <meta property="og:url" content="//localhost:1313/ja/software/wordpress-hosting/">
   <meta property="og:site_name" content="Parker Chang&#39;s Web">
   <meta property="og:title" content="私がどのようにWordPressサイトを構築したか">
   <meta property="og:description" content="AWS EC2 と Easy Engine を使用して WordPress サイトを迅速にデプロイ（ドメインは Cloudflare で購入）。多少のプログラミング知識が必要ですが、安価で高速、自由度と拡張性も高いです！">
@@ -94,11 +94,11 @@
     <meta property="article:tag" content="EC2">
     <meta property="article:tag" content="EasyEngine">
     <meta property="article:tag" content="Cloudflare">
-    <meta property="og:image" content="http://localhost:1313/ja/software/wordpress-hosting/cover-en.png">
+    <meta property="og:image" content="//localhost:1313/ja/software/wordpress-hosting/cover-en.png">
 
   
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://localhost:1313/ja/software/wordpress-hosting/cover-en.png">
+  <meta name="twitter:image" content="//localhost:1313/ja/software/wordpress-hosting/cover-en.png">
   <meta name="twitter:title" content="私がどのようにWordPressサイトを構築したか">
   <meta name="twitter:description" content="AWS EC2 と Easy Engine を使用して WordPress サイトを迅速にデプロイ（ドメインは Cloudflare で購入）。多少のプログラミング知識が必要ですが、安価で高速、自由度と拡張性も高いです！">
 
@@ -113,7 +113,7 @@
     "description": "AWS EC2 と Easy Engine を使用して WordPress サイトを迅速にデプロイ（ドメインは Cloudflare で購入）。多少のプログラミング知識が必要ですが、安価で高速、自由度と拡張性も高いです！",
     "abstract": "\u003cblockquote\u003e\n\u003cp\u003e\u003cstrong\u003e注:\u003c\/strong\u003e この記事は AI によって翻訳されています。もし不自然な表現や誤りがありましたら、メールやその他の手段でお知らせいただけると幸いです。フィードバックをいただけると助かります！\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003cp\u003e昨年、仕事でいくつかの大規模な WordPress サイトを扱いました。そこで学んだ WordPress 構築戦略を記録し、共有します。\u003c\/p\u003e\n\u003cp\u003eこのサイトも後で WordPress に変更する予定です。変更後、なぜ、そしてどのように変更したかをまた共有します。\u003c\/p\u003e\n\u003cp\u003e\n\n\n\n\n\n\n  \n  \n\u003cfigure\u003e\u003cimg src=\u0022https:\/\/s.w.org\/style\/images\/about\/WordPress-logotype-standard.png\u0022 alt=\u0022WordPress Logo\u0022 class=\u0022mx-auto my-0 rounded-md\u0022 \/\u003e\n\u003c\/figure\u003e\n\u003c\/p\u003e\n\u003ch2 id=\u0022wordpresscom-vs-wordpressorg\u0022 class=\u0022relative group\u0022\u003eWordPress.com vs WordPress.org \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#wordpresscom-vs-wordpressorg\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003eまずは公式の 2 種類のプランについて触れます。エンジニアとして、私はずっと \u003ca href=\u0022https:\/\/wordpress.org\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eWordPress.org\u003c\/a\u003e しか知りませんでした。少し前に友人から聞かれて初めて \u003ca href=\u0022https:\/\/wordpress.com\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eWordPress.com\u003c\/a\u003e の存在を知りました。\u003c\/p\u003e\n\u003cp\u003eWordPress.com は Automattic 社が提供する全方位型のホスティングサービスで、Web ページ上でクリックするだけでサイトを作成できます。しかし、その分自由度は極めて低く、テーマのカスタマイズは難しく、多くのプラグインが使えず、無料版は非常に機能が制限されているため、事実上課金が必要です。\u003c\/p\u003e\n\u003cp\u003eWordPress.org はオープンソースの WordPress ソフトウェアをダウンロードできます。自分のニーズに合わせてデプロイでき、ほぼ制限はありません——プラグインのインストール、テーマの修正、または様々な魔法のようなカスタマイズが自由に行えます。ただし、サーバーの管理、更新、バックアップは自分で行う必要があります。\u003c\/p\u003e\n\u003cp\u003eとはいえ、WordPress.org にも市場にはプロセスを簡素化する多くの統合ソリューションがあり、必ずしもエンジニアに依頼する必要はありません。また、WordPress.com を使っている人も、制限が多すぎて安くないため、遅かれ早かれ乗り換えることになるだろうという予感がします。\u003c\/p\u003e\n\u003cp\u003eこの記事でも WordPress.org を使用します。多少の技術知識が必要ですが、できるだけプロセスを明確に説明します。\u003c\/p\u003e\n\u003ch2 id=\u0022wordpressorg-市場のホスティングプラン\u0022 class=\u0022relative group\u0022\u003eWordPress.org 市場のホスティングプラン \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#wordpressorg-%e5%b8%82%e5%a0%b4%e3%81%ae%e3%83%9b%e3%82%b9%e3%83%86%e3%82%a3%e3%83%b3%e3%82%b0%e3%83%97%e3%83%a9%e3%83%b3\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003eここで紹介するものは使用したことはありませんが、価格といくつかの予備的な観察を分析してみます。\u003c\/p\u003e\n\u003ch3 id=\u00221-従来のレンタルサーバー例bluehost\u0022 class=\u0022relative group\u0022\u003e1. 従来のレンタルサーバー（例：\u003ca href=\u0022https:\/\/www.bluehost.com\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eBlueHost\u003c\/a\u003e） \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#1-%e5%be%93%e6%9d%a5%e3%81%ae%e3%83%ac%e3%83%b3%e3%82%bf%e3%83%ab%e3%82%b5%e3%83%bc%e3%83%90%e3%83%bc%e4%be%8bbluehost\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h3\u003e\u003cp\u003e基本料金は月額 2.95 ドル（約 460 円）で、すぐにサイトを立ち上げることができ、その中で直接ドメインを購入することもできます。\u003c\/p\u003e",
     "inLanguage": "ja",
-    "url" : "http:\/\/localhost:1313\/ja\/software\/wordpress-hosting\/",
+    "url" : "\/\/localhost:1313\/ja\/software\/wordpress-hosting\/",
     "author" : {
       "@type": "Person",
       "name": "Parker"
@@ -138,13 +138,13 @@
    "itemListElement": [
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/ja/",
+       "item": "//localhost:1313/ja/",
        "name": "ホーム",
        "position": 1
      },
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/ja/software/",
+       "item": "//localhost:1313/ja/software/",
        "name": "ソフトウェア",
        "position": 2
      },
@@ -655,13 +655,13 @@
       
         <source
           
-            srcset="http://localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_52334b1dc8ea0c56.webp 330w,http://localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_a9dbadd4e4105e23.webp 660w
+            srcset="//localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_52334b1dc8ea0c56.webp 330w,//localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_a9dbadd4e4105e23.webp 660w
             
-              ,http://localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_935918b81cb351f8.webp 1024w
+              ,//localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_935918b81cb351f8.webp 1024w
             
             
               
-                ,http://localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_7ace0ee4cf4e4eff.webp 1200w
+                ,//localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_7ace0ee4cf4e4eff.webp 1200w
               
             "
           
@@ -676,12 +676,12 @@
         
         
         
-          src="http://localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_f56bc55c636a00e.png" srcset="http://localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_bb7595b7dade5d5d.png 330w,http://localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_f56bc55c636a00e.png 660w
+          src="//localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_f56bc55c636a00e.png" srcset="//localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_bb7595b7dade5d5d.png 330w,//localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_f56bc55c636a00e.png 660w
           
-            ,http://localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_b4536b36a27a6166.png 1024w
+            ,//localhost:1313/ja/software/wordpress-hosting/cover-ja_hu_b4536b36a27a6166.png 1024w
           
           
-            ,http://localhost:1313/ja/software/wordpress-hosting/cover-ja.png 1200w
+            ,//localhost:1313/ja/software/wordpress-hosting/cover-ja.png 1200w
           "
           sizes="100vw"
         
@@ -1037,7 +1037,7 @@ sudo ee site create example.com --wp
       <div class="flex justify-between pt-3">
         <span>
           
-            <a class="group flex" href="http://localhost:1313/ja/software/my-site/">
+            <a class="group flex" href="//localhost:1313/ja/software/my-site/">
               <span
                 class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
                 ><span class="ltr:inline rtl:hidden">&larr;</span
@@ -1074,7 +1074,7 @@ sudo ee site create example.com --wp
   data-host="https://cusdis.com"
   data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
   data-page-id="3e41322150fdd12421dde2afd6e8900e"
-  data-page-url="http://localhost:1313/ja/software/wordpress-hosting/"
+  data-page-url="//localhost:1313/ja/software/wordpress-hosting/"
   data-page-title="私がどのようにWordPressサイトを構築したか"
 ></div>
 <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>

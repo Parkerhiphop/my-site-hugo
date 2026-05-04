@@ -61,7 +61,7 @@
   
   
   
-    <link rel="canonical" href="http://localhost:1313/ja/software/from-callback-to-async/" />
+    <link rel="canonical" href="//localhost:1313/ja/software/from-callback-to-async/" />
   
   
   
@@ -79,7 +79,7 @@
   
   
   
-  <meta property="og:url" content="http://localhost:1313/ja/software/from-callback-to-async/">
+  <meta property="og:url" content="//localhost:1313/ja/software/from-callback-to-async/">
   <meta property="og:site_name" content="Parker Chang&#39;s Web">
   <meta property="og:title" content="CallbackからAsync/Awaitへ：順次フェードインアニメーションを例に">
   <meta property="og:description" content="順序的なフェードインアニメーションの実装を通して、JSにおける非同期処理を学びます。CallbackからPromiseへの移行、そしてAsync/Awaitを使ったより簡潔で読みやすいコードへのリファクタリングを解説します。">
@@ -88,11 +88,11 @@
     <meta property="article:section" content="software">
     <meta property="article:published_time" content="2023-08-21T00:00:00+00:00">
     <meta property="article:modified_time" content="2023-08-21T00:00:00+00:00">
-    <meta property="og:image" content="http://localhost:1313/ja/software/from-callback-to-async/cover-en.png">
+    <meta property="og:image" content="//localhost:1313/ja/software/from-callback-to-async/cover-en.png">
 
   
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://localhost:1313/ja/software/from-callback-to-async/cover-en.png">
+  <meta name="twitter:image" content="//localhost:1313/ja/software/from-callback-to-async/cover-en.png">
   <meta name="twitter:title" content="CallbackからAsync/Awaitへ：順次フェードインアニメーションを例に">
   <meta name="twitter:description" content="順序的なフェードインアニメーションの実装を通して、JSにおける非同期処理を学びます。CallbackからPromiseへの移行、そしてAsync/Awaitを使ったより簡潔で読みやすいコードへのリファクタリングを解説します。">
 
@@ -107,7 +107,7 @@
     "description": "順序的なフェードインアニメーションの実装を通して、JSにおける非同期処理を学びます。CallbackからPromiseへの移行、そしてAsync\/Awaitを使ったより簡潔で読みやすいコードへのリファクタリングを解説します。",
     "abstract": "\u003cblockquote\u003e\n\u003cp\u003e\u003cstrong\u003e注:\u003c\/strong\u003e この記事は AI によって翻訳されています。もし不自然な表現や誤りがありましたら、メールやその他の手段でお知らせいただけると幸いです。フィードバックをいただけると助かります！\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003ch2 id=\u0022まえがき\u0022 class=\u0022relative group\u0022\u003eまえがき \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#%e3%81%be%e3%81%88%e3%81%8c%e3%81%8d\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003eこの記事は、Callback Hell、Promise、Async\/Await という言葉は聞いたことがあるけれど、実務で触れたことがない、あるいはその進化の過程がよくわからないという方向けに書かれています。「クリック後に要素を一つずつフェードインさせる」機能を実装しながら、これら 3 つの方法でどのように実装するかをステップバイステップで見ていきます。\u003c\/p\u003e\n\u003cp\u003e機能の MVP（実用最小限の製品）は以下のようになります：\u003c\/p\u003e\n\u003cp\u003e\n\n\n\n\n\n\n  \n  \n\u003cfigure\u003e\u003cimg src=\u0022\/software-development\/from-callback-to-async\/fading-example.gif\u0022 alt=\u0022Fading Example\u0022 class=\u0022mx-auto my-0 rounded-md\u0022 \/\u003e\n\u003c\/figure\u003e\n\u003c\/p\u003e\n\u003cp\u003e直感的な考え方：\u003c\/p\u003e\n\u003col\u003e\n\u003cli\u003eフェードインは要素に transition を設定し、クリック時に opacity を変更すればいい。\u003c\/li\u003e\n\u003cli\u003e一つずつフェードイン？ということは、後ろの要素のフェードインは前の要素のフェードイン完了を「待つ」必要がある？\u003c\/li\u003e\n\u003cli\u003eJS で「待つ」といえば setTimeout が第一候補。一つずつ待つなら、一つの setTimeout が終わったら、別の setTimeout を呼べばいい。\u003c\/li\u003e\n\u003c\/ol\u003e\n\u003cp\u003eそこで、以下のようなコードを書きました：\u003c\/p\u003e\n\u003cdiv class=\u0022highlight\u0022\u003e\u003cpre tabindex=\u00220\u0022 style=\u0022color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;\u0022\u003e\u003ccode class=\u0022language-javascript\u0022 data-lang=\u0022javascript\u0022\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003estartBtn\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;startBtn\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003econtainer\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;container\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003efirst\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;first\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003esecond\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;second\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003ethird\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;third\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003eforth\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;forth\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003efifth\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;fifth\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003eresetBtn\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;reset\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#a6e22e\u0022\u003estartBtn\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eaddEventListener\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;click\u0026#39;\u003c\/span\u003e, \u003cspan style=\u0022color:#66d9ef\u0022\u003efunction\u003c\/span\u003e () {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e  \u003cspan style=\u0022color:#66d9ef\u0022\u003ethis\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003estyle\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003edisplay\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e \u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;none\u0026#39;\u003c\/span\u003e;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e  \u003cspan style=\u0022color:#a6e22e\u0022\u003econtainer\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e  \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    \u003cspan style=\u0022color:#a6e22e\u0022\u003efirst\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e      \u003cspan style=\u0022color:#a6e22e\u0022\u003esecond\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e      \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e        \u003cspan style=\u0022color:#a6e22e\u0022\u003ethird\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e        \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e          \u003cspan style=\u0022color:#a6e22e\u0022\u003eforth\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e          \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e            \u003cspan style=\u0022color:#a6e22e\u0022\u003efifth\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e            \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e              \u003cspan style=\u0022color:#a6e22e\u0022\u003eresetBtn\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e            }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e          }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e        }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e      }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e  }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e});\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/code\u003e\u003c\/pre\u003e\u003c\/div\u003e\u003cp\u003e書き終わりました。各要素は 0.5 秒ごとに順次フェードインします。これで完了\u0026hellip;ですか？\u003c\/p\u003e",
     "inLanguage": "ja",
-    "url" : "http:\/\/localhost:1313\/ja\/software\/from-callback-to-async\/",
+    "url" : "\/\/localhost:1313\/ja\/software\/from-callback-to-async\/",
     "author" : {
       "@type": "Person",
       "name": "Parker"
@@ -132,13 +132,13 @@
    "itemListElement": [
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/ja/",
+       "item": "//localhost:1313/ja/",
        "name": "ホーム",
        "position": 1
      },
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/ja/software/",
+       "item": "//localhost:1313/ja/software/",
        "name": "ソフトウェア",
        "position": 2
      },
@@ -649,13 +649,13 @@
       
         <source
           
-            srcset="http://localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_64419efc0464fb16.webp 330w,http://localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_cc99d88aef444a42.webp 660w
+            srcset="//localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_64419efc0464fb16.webp 330w,//localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_cc99d88aef444a42.webp 660w
             
-              ,http://localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_959167241e545bcc.webp 1024w
+              ,//localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_959167241e545bcc.webp 1024w
             
             
               
-                ,http://localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_f68906814c3d968e.webp 1200w
+                ,//localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_f68906814c3d968e.webp 1200w
               
             "
           
@@ -670,12 +670,12 @@
         
         
         
-          src="http://localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_624f23668165406c.png" srcset="http://localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_4eba8a6db79189f4.png 330w,http://localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_624f23668165406c.png 660w
+          src="//localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_624f23668165406c.png" srcset="//localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_4eba8a6db79189f4.png 330w,//localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_624f23668165406c.png 660w
           
-            ,http://localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_9a27d786ee489d43.png 1024w
+            ,//localhost:1313/ja/software/from-callback-to-async/cover-ja_hu_9a27d786ee489d43.png 1024w
           
           
-            ,http://localhost:1313/ja/software/from-callback-to-async/cover-ja.png 1200w
+            ,//localhost:1313/ja/software/from-callback-to-async/cover-ja.png 1200w
           "
           sizes="100vw"
         
@@ -1195,7 +1195,7 @@
       <div class="flex justify-between pt-3">
         <span>
           
-            <a class="group flex" href="http://localhost:1313/ja/software/google-oauth-login/">
+            <a class="group flex" href="//localhost:1313/ja/software/google-oauth-login/">
               <span
                 class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
                 ><span class="ltr:inline rtl:hidden">&larr;</span
@@ -1217,7 +1217,7 @@
         </span>
         <span>
           
-            <a class="group flex text-right" href="http://localhost:1313/ja/software/talk-about-js-eval/">
+            <a class="group flex text-right" href="//localhost:1313/ja/software/talk-about-js-eval/">
               <span class="flex flex-col">
                 <span
                   class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
@@ -1251,7 +1251,7 @@
   data-host="https://cusdis.com"
   data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
   data-page-id="b3a35c5778e26bf3e8df834f6650c380"
-  data-page-url="http://localhost:1313/ja/software/from-callback-to-async/"
+  data-page-url="//localhost:1313/ja/software/from-callback-to-async/"
   data-page-title="CallbackからAsync/Awaitへ：順次フェードインアニメーションを例に"
 ></div>
 <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>

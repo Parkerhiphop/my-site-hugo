@@ -2,73 +2,73 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Software on Parker Chang&#39;s Web</title>
-    <link>http://localhost:1313/en/software/</link>
+    <link>//localhost:1313/en/software/</link>
     <description>Recent content in Software on Parker Chang&#39;s Web</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Sun, 13 Apr 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/en/software/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//localhost:1313/en/software/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How I Set Up a WordPress Site</title>
-      <link>http://localhost:1313/en/software/wordpress-hosting/</link>
+      <link>//localhost:1313/en/software/wordpress-hosting/</link>
       <pubDate>Sun, 13 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/software/wordpress-hosting/</guid>
+      <guid>//localhost:1313/en/software/wordpress-hosting/</guid>
       <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; This post is translated by AI. If you find any unnatural phrasing or errors, please feel free to contact me via email or other channels. Your feedback is appreciated!&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;Last year I handled several large WordPress sites at work. I&amp;rsquo;m here to record and share the WordPress hosting strategy I learned.&lt;/p&gt;&#xA;&lt;p&gt;This site will also be changed to WordPress later. After changing, I will come back to share why and how I did it.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Personal Website</title>
-      <link>http://localhost:1313/en/software/my-site/</link>
+      <link>//localhost:1313/en/software/my-site/</link>
       <pubDate>Sun, 03 Mar 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/software/my-site/</guid>
+      <guid>//localhost:1313/en/software/my-site/</guid>
       <description></description>
     </item>
     <item>
       <title>Building a Static Site with Hugo</title>
-      <link>http://localhost:1313/en/software/my-first-tech-post/</link>
+      <link>//localhost:1313/en/software/my-first-tech-post/</link>
       <pubDate>Sat, 02 Mar 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/software/my-first-tech-post/</guid>
+      <guid>//localhost:1313/en/software/my-first-tech-post/</guid>
       <description></description>
     </item>
     <item>
       <title>Talk about eval in JavaScript, Risks and Alternatives</title>
-      <link>http://localhost:1313/en/software/talk-about-js-eval/</link>
+      <link>//localhost:1313/en/software/talk-about-js-eval/</link>
       <pubDate>Sat, 30 Sep 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/software/talk-about-js-eval/</guid>
+      <guid>//localhost:1313/en/software/talk-about-js-eval/</guid>
       <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; This post is translated by AI. If you find any unnatural phrasing or errors, please feel free to contact me via email or other channels. Your feedback is appreciated!&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;h2 id=&#34;preface&#34; class=&#34;relative group&#34;&gt;Preface &lt;span class=&#34;absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100&#34;&gt;&lt;a class=&#34;group-hover:text-primary-300 dark:group-hover:text-neutral-700&#34; style=&#34;text-decoration-line: none !important;&#34; href=&#34;#preface&#34; aria-label=&#34;Anchor&#34;&gt;#&lt;/a&gt;&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;Recently, I used App Script provided by Google Sheets to write a small crawler for a friend to automate moving and organizing information on web pages. I found that the information in &lt;code&gt;&amp;lt;script /&amp;gt;&lt;/code&gt; in HTML Source could not be read directly. when asking ChatGPT, it suddenly gave me an implementation using &lt;code&gt;eval&lt;/code&gt;. Before, I only knew not to use it. This time I decided to seriously understand &lt;strong&gt;when it might be used&lt;/strong&gt;, &lt;strong&gt;why not to use it&lt;/strong&gt;, and &lt;strong&gt;what are the alternatives&lt;/strong&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>From Callback to Async/Await: Sequential Fade-In Animation</title>
-      <link>http://localhost:1313/en/software/from-callback-to-async/</link>
+      <link>//localhost:1313/en/software/from-callback-to-async/</link>
       <pubDate>Mon, 21 Aug 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/software/from-callback-to-async/</guid>
+      <guid>//localhost:1313/en/software/from-callback-to-async/</guid>
       <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; This post is translated by AI. If you find any unnatural phrasing or errors, please feel free to contact me via email or other channels. Your feedback is appreciated!&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;h2 id=&#34;foreword&#34; class=&#34;relative group&#34;&gt;Foreword &lt;span class=&#34;absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100&#34;&gt;&lt;a class=&#34;group-hover:text-primary-300 dark:group-hover:text-neutral-700&#34; style=&#34;text-decoration-line: none !important;&#34; href=&#34;#foreword&#34; aria-label=&#34;Anchor&#34;&gt;#&lt;/a&gt;&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;The article is aimed at those know the concept of Callback Hell, Promise and Async/Await, but haven&amp;rsquo;t dealt with it or not completely understand the difference.&lt;/p&gt;&#xA;&lt;p&gt;I will guide you the three ways to implement &amp;ldquo;Sequential Fade In elements after clicking a button&amp;rdquo;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Implementing Google OAuth Login (Vue / Express)</title>
-      <link>http://localhost:1313/en/software/google-oauth-login/</link>
+      <link>//localhost:1313/en/software/google-oauth-login/</link>
       <pubDate>Sun, 23 Oct 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/software/google-oauth-login/</guid>
+      <guid>//localhost:1313/en/software/google-oauth-login/</guid>
       <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; This post is translated by AI. If you find any unnatural phrasing or errors, please feel free to contact me via email or other channels. Your feedback is appreciated!&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;h2 id=&#34;preface&#34; class=&#34;relative group&#34;&gt;Preface &lt;span class=&#34;absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100&#34;&gt;&lt;a class=&#34;group-hover:text-primary-300 dark:group-hover:text-neutral-700&#34; style=&#34;text-decoration-line: none !important;&#34; href=&#34;#preface&#34; aria-label=&#34;Anchor&#34;&gt;#&lt;/a&gt;&lt;/span&gt;&lt;/h2&gt;&lt;p&gt;Recently, the company needed to integrate third-party login. As it was my first time doing it, I stepped into quite a few pitfalls. I also found that Google has updated again, and many articles I found were no longer usable, so I decided to share and record the integration process.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Talk about Web Fonts — Design, File Formats and Frontend Loading</title>
-      <link>http://localhost:1313/en/software/talk-about-web-font/</link>
+      <link>//localhost:1313/en/software/talk-about-web-font/</link>
       <pubDate>Thu, 28 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/software/talk-about-web-font/</guid>
+      <guid>//localhost:1313/en/software/talk-about-web-font/</guid>
       <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; This post is translated by AI. If you find any unnatural phrasing or errors, please feel free to contact me via email or other channels. Your feedback is appreciated!&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;A while ago, the font bundle from &lt;a href=&#34;https://www.instagram.com/designnotdeep/&#34; target=&#34;_blank&#34; rel=&#34;noreferrer&#34;&gt;Design Not Deep&lt;/a&gt; caused a wave of font claiming craze. Besides slides, posters, and social media posts, have you ever thought about how fonts are used on web pages?&lt;/p&gt;&#xA;&lt;p&gt;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;  &#xA;  &#xA;&lt;figure&gt;&lt;img src=&#34;https://cdn-images-1.medium.com/max/800/0*OEf5PYLRWXCaS_Op&#34; alt=&#34;typewritter&#34; class=&#34;mx-auto my-0 rounded-md&#34; /&gt;&#xA;&lt;/figure&gt;&#xA;&lt;/p&gt;&#xA;&lt;p&gt;photo by &lt;a href=&#34;https://unsplash.com/@diklein&#34; target=&#34;_blank&#34; rel=&#34;noreferrer&#34;&gt;David Klein&lt;/a&gt; on &lt;a href=&#34;https://unsplash.com/&#34; target=&#34;_blank&#34; rel=&#34;noreferrer&#34;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>Design System - Things Frontend Engineers Should Know</title>
-      <link>http://localhost:1313/en/software/design-system/</link>
+      <link>//localhost:1313/en/software/design-system/</link>
       <pubDate>Wed, 22 Sep 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/software/design-system/</guid>
+      <guid>//localhost:1313/en/software/design-system/</guid>
       <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; This post is translated by AI. If you find any unnatural phrasing or errors, please feel free to contact me via email or other channels. Your feedback is appreciated!&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;Before talking about Design System, I want to mention a concept: &amp;ldquo;Planning &amp;gt; Implementation&amp;rdquo;.&lt;/p&gt;&#xA;&lt;p&gt;The nature of a software engineer is actually very close to that of an architect, except they build houses and we build systems.&lt;/p&gt;&#xA;&lt;p&gt;A good house requires good architectural design, blueprints, understanding of the structure, and a lot of time spent on planning and design in the early stages.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Frontend Framework 101: Things You Should Know Before Learning a Framework</title>
-      <link>http://localhost:1313/en/software/frontend-framework-101/</link>
+      <link>//localhost:1313/en/software/frontend-framework-101/</link>
       <pubDate>Sun, 11 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/software/frontend-framework-101/</guid>
+      <guid>//localhost:1313/en/software/frontend-framework-101/</guid>
       <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; This post is translated by AI. If you find any unnatural phrasing or errors, please feel free to contact me via email or other channels. Your feedback is appreciated!&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;Choosing a frontend framework has always been a big question for many beginners (including me). I started writing React because my company was using it. Recently, due to some circumstances, I started touching Angular, which inspired me to think more about &amp;ldquo;Frontend Frameworks&amp;rdquo;. Issues like what &amp;ldquo;framework&amp;rdquo; actually refers to? What can be called a &amp;ldquo;framework&amp;rdquo;? Why does frontend need to use it? What happens if you don&amp;rsquo;t use it? I heard Vue3 is powerful, should I learn it? And so on.&lt;/p&gt;</description>
     </item>
   </channel>

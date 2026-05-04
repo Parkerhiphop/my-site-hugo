@@ -61,7 +61,7 @@
   
   
   
-    <link rel="canonical" href="http://localhost:1313/ja/software/talk-about-js-eval/" />
+    <link rel="canonical" href="//localhost:1313/ja/software/talk-about-js-eval/" />
   
   
   
@@ -79,7 +79,7 @@
   
   
   
-  <meta property="og:url" content="http://localhost:1313/ja/software/talk-about-js-eval/">
+  <meta property="og:url" content="//localhost:1313/ja/software/talk-about-js-eval/">
   <meta property="og:site_name" content="Parker Chang&#39;s Web">
   <meta property="og:title" content="JavaScriptにおけるeval、リスク、そして代替案について">
   <meta property="og:description" content="JavaScriptにおけるevalを紹介し、なぜそれを使うべきではないかについて語り、最後にApp Scriptクローラーで`">
@@ -93,11 +93,11 @@
     <meta property="article:tag" content="JavaScript">
     <meta property="article:tag" content="Security">
     <meta property="article:tag" content="Eval">
-    <meta property="og:image" content="http://localhost:1313/ja/software/talk-about-js-eval/cover-en.png">
+    <meta property="og:image" content="//localhost:1313/ja/software/talk-about-js-eval/cover-en.png">
 
   
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://localhost:1313/ja/software/talk-about-js-eval/cover-en.png">
+  <meta name="twitter:image" content="//localhost:1313/ja/software/talk-about-js-eval/cover-en.png">
   <meta name="twitter:title" content="JavaScriptにおけるeval、リスク、そして代替案について">
   <meta name="twitter:description" content="JavaScriptにおけるevalを紹介し、なぜそれを使うべきではないかについて語り、最後にApp Scriptクローラーで`">
 
@@ -112,7 +112,7 @@
     "description": "JavaScriptにおけるevalを紹介し、なぜそれを使うべきではないかについて語り、最後にApp Scriptクローラーで\u0060\u003cscript \/\u003e\u0060を読み取る際やJSの計算結果を取得する面接問題を例に、その応用と代替案を見ていきます。",
     "abstract": "\u003cblockquote\u003e\n\u003cp\u003e\u003cstrong\u003e注:\u003c\/strong\u003e この記事は AI によって翻訳されています。もし不自然な表現や誤りがありましたら、メールやその他の手段でお知らせいただけると幸いです。フィードバックをいただけると助かります！\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003ch2 id=\u0022はじめに\u0022 class=\u0022relative group\u0022\u003eはじめに \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#%e3%81%af%e3%81%98%e3%82%81%e3%81%ab\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e最近、Google Sheets が提供する App Script を使って友人のために小さなクローラーを書き、ウェブ上の情報を自動的に移動・整理しようとしました。その際、HTML ソース内の\u003ccode\u003e\u0026lt;script \/\u0026gt;\u003c\/code\u003eの情報が直接読み取れないことに気づきました。ChatGPT に聞いたところ、突然\u003ccode\u003eeval\u003c\/code\u003eを使用した実装を提示されました。以前は使ってはいけないということしか知らなかったので、今回は\u003cstrong\u003eどのような時に使われる可能性があるのか\u003c\/strong\u003e、\u003cstrong\u003eなぜ使ってはいけないのか\u003c\/strong\u003e、そして\u003cstrong\u003eどのような代替案があるのか\u003c\/strong\u003eについて真剣に理解することにしました。\u003c\/p\u003e\n\u003cp\u003eこの記事では、\u003ccode\u003eeval\u003c\/code\u003eを簡単に紹介した後、一つの使用事例と一つの面接問題を取り上げます。\u003c\/p\u003e\n\u003ch2 id=\u0022eval-基本紹介\u0022 class=\u0022relative group\u0022\u003e\u003ccode\u003eeval\u003c\/code\u003e 基本紹介 \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#eval-%e5%9f%ba%e6%9c%ac%e7%b4%b9%e4%bb%8b\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e\u003ccode\u003eeval(script);\u003c\/code\u003e は JavaScript の組み込み関数です。\u003c\/p\u003e\n\u003cp\u003e渡された script 文字列（String）を JavaScript の式（Expression）または文（Statement）として実行することができます。\u003c\/p\u003e\n\u003cblockquote\u003e\n\u003cp\u003e\u003cstrong\u003e使用シーン：「実行したい script を信頼しており、かつ String を JS コードとして実行したい場合」\u003c\/strong\u003e\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003ch3 id=\u0022戻り値-return-value\u0022 class=\u0022relative group\u0022\u003e戻り値 (Return value) \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#%e6%88%bb%e3%82%8a%e5%80%a4-return-value\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h3\u003e\u003cp\u003eパラメータが String の場合、JS の実際の実行結果を返します。その String が実行可能な JS コードでない場合は、\u003ccode\u003eError: {script} is not defined\u003c\/code\u003eを返します。\u003c\/p\u003e",
     "inLanguage": "ja",
-    "url" : "http:\/\/localhost:1313\/ja\/software\/talk-about-js-eval\/",
+    "url" : "\/\/localhost:1313\/ja\/software\/talk-about-js-eval\/",
     "author" : {
       "@type": "Person",
       "name": "Parker"
@@ -137,13 +137,13 @@
    "itemListElement": [
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/ja/",
+       "item": "//localhost:1313/ja/",
        "name": "ホーム",
        "position": 1
      },
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/ja/software/",
+       "item": "//localhost:1313/ja/software/",
        "name": "ソフトウェア",
        "position": 2
      },
@@ -654,13 +654,13 @@
       
         <source
           
-            srcset="http://localhost:1313/ja/software/talk-about-js-eval/cover-ja_hu_9157e21ad141bb32.webp 330w,http://localhost:1313/ja/software/talk-about-js-eval/cover-ja_hu_e8e572e0e841f219.webp 660w
+            srcset="//localhost:1313/ja/software/talk-about-js-eval/cover-ja_hu_9157e21ad141bb32.webp 330w,//localhost:1313/ja/software/talk-about-js-eval/cover-ja_hu_e8e572e0e841f219.webp 660w
             
-              ,http://localhost:1313/ja/software/talk-about-js-eval/cover-ja_hu_ff7f1e5242188c7f.webp 1024w
+              ,//localhost:1313/ja/software/talk-about-js-eval/cover-ja_hu_ff7f1e5242188c7f.webp 1024w
             
             
               
-                ,http://localhost:1313/ja/software/talk-about-js-eval/cover-ja_hu_d6a982165c3e889e.webp 1200w
+                ,//localhost:1313/ja/software/talk-about-js-eval/cover-ja_hu_d6a982165c3e889e.webp 1200w
               
             "
           
@@ -675,12 +675,12 @@
         
         
         
-          src="http://localhost:1313/ja/software/talk-about-js-eval/cover-ja_hu_e9591bb4f30a0b40.png" srcset="http://localhost:1313/ja/software/talk-about-js-eval/cover-ja_hu_d4db8af75ceac481.png 330w,http://localhost:1313/ja/software/talk-about-js-eval/cover-ja_hu_e9591bb4f30a0b40.png 660w
+          src="//localhost:1313/ja/software/talk-about-js-eval/cover-ja_hu_e9591bb4f30a0b40.png" srcset="//localhost:1313/ja/software/talk-about-js-eval/cover-ja_hu_d4db8af75ceac481.png 330w,//localhost:1313/ja/software/talk-about-js-eval/cover-ja_hu_e9591bb4f30a0b40.png 660w
           
-            ,http://localhost:1313/ja/software/talk-about-js-eval/cover-ja_hu_8a89853e98d7a6c9.png 1024w
+            ,//localhost:1313/ja/software/talk-about-js-eval/cover-ja_hu_8a89853e98d7a6c9.png 1024w
           
           
-            ,http://localhost:1313/ja/software/talk-about-js-eval/cover-ja.png 1200w
+            ,//localhost:1313/ja/software/talk-about-js-eval/cover-ja.png 1200w
           "
           sizes="100vw"
         
@@ -1030,7 +1030,7 @@
       <div class="flex justify-between pt-3">
         <span>
           
-            <a class="group flex" href="http://localhost:1313/ja/software/from-callback-to-async/">
+            <a class="group flex" href="//localhost:1313/ja/software/from-callback-to-async/">
               <span
                 class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
                 ><span class="ltr:inline rtl:hidden">&larr;</span
@@ -1052,7 +1052,7 @@
         </span>
         <span>
           
-            <a class="group flex text-right" href="http://localhost:1313/ja/software/my-first-tech-post/">
+            <a class="group flex text-right" href="//localhost:1313/ja/software/my-first-tech-post/">
               <span class="flex flex-col">
                 <span
                   class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
@@ -1086,7 +1086,7 @@
   data-host="https://cusdis.com"
   data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
   data-page-id="96a7c4e42c3b28f61f7566a3605d42ed"
-  data-page-url="http://localhost:1313/ja/software/talk-about-js-eval/"
+  data-page-url="//localhost:1313/ja/software/talk-about-js-eval/"
   data-page-title="JavaScriptにおけるeval、リスク、そして代替案について"
 ></div>
 <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>

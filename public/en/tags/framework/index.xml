@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Framework on Parker Chang&#39;s Web</title>
-    <link>http://localhost:1313/en/tags/framework/</link>
+    <link>//localhost:1313/en/tags/framework/</link>
     <description>Recent content in Framework on Parker Chang&#39;s Web</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Sun, 11 Jul 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/en/tags/framework/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="//localhost:1313/en/tags/framework/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Frontend Framework 101: Things You Should Know Before Learning a Framework</title>
-      <link>http://localhost:1313/en/software/frontend-framework-101/</link>
+      <link>//localhost:1313/en/software/frontend-framework-101/</link>
       <pubDate>Sun, 11 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/en/software/frontend-framework-101/</guid>
+      <guid>//localhost:1313/en/software/frontend-framework-101/</guid>
       <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; This post is translated by AI. If you find any unnatural phrasing or errors, please feel free to contact me via email or other channels. Your feedback is appreciated!&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;Choosing a frontend framework has always been a big question for many beginners (including me). I started writing React because my company was using it. Recently, due to some circumstances, I started touching Angular, which inspired me to think more about &amp;ldquo;Frontend Frameworks&amp;rdquo;. Issues like what &amp;ldquo;framework&amp;rdquo; actually refers to? What can be called a &amp;ldquo;framework&amp;rdquo;? Why does frontend need to use it? What happens if you don&amp;rsquo;t use it? I heard Vue3 is powerful, should I learn it? And so on.&lt;/p&gt;</description>
     </item>
   </channel>

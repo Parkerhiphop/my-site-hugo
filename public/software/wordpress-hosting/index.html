@@ -61,7 +61,7 @@
   
   
   
-    <link rel="canonical" href="http://localhost:1313/software/wordpress-hosting/" />
+    <link rel="canonical" href="//localhost:1313/software/wordpress-hosting/" />
   
   
   
@@ -79,7 +79,7 @@
   
   
   
-  <meta property="og:url" content="http://localhost:1313/software/wordpress-hosting/">
+  <meta property="og:url" content="//localhost:1313/software/wordpress-hosting/">
   <meta property="og:site_name" content="Parker Chang&#39;s Web">
   <meta property="og:title" content="我如何架設 WordPress 網站">
   <meta property="og:description" content="使用 AWS EC2 和 Easy Engine 快速部署 WordPress 網站（網域是跟 Cloudflare 買），需要一點程式背景但很便宜又迅速，自由度跟擴展性也很高！">
@@ -88,11 +88,11 @@
     <meta property="article:section" content="software">
     <meta property="article:published_time" content="2025-04-13T00:00:00+00:00">
     <meta property="article:modified_time" content="2025-04-13T00:00:00+00:00">
-    <meta property="og:image" content="http://localhost:1313/software/wordpress-hosting/cover-en.png">
+    <meta property="og:image" content="//localhost:1313/software/wordpress-hosting/cover-en.png">
 
   
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://localhost:1313/software/wordpress-hosting/cover-en.png">
+  <meta name="twitter:image" content="//localhost:1313/software/wordpress-hosting/cover-en.png">
   <meta name="twitter:title" content="我如何架設 WordPress 網站">
   <meta name="twitter:description" content="使用 AWS EC2 和 Easy Engine 快速部署 WordPress 網站（網域是跟 Cloudflare 買），需要一點程式背景但很便宜又迅速，自由度跟擴展性也很高！">
 
@@ -107,7 +107,7 @@
     "description": "使用 AWS EC2 和 Easy Engine 快速部署 WordPress 網站（網域是跟 Cloudflare 買），需要一點程式背景但很便宜又迅速，自由度跟擴展性也很高！",
     "abstract": "\u003cp\u003e去年在工作上有處理幾個大型的 WordPress 的網站，來記錄跟分享一下學到的 WordPress 架站策略。\u003c\/p\u003e\n\u003cp\u003e這裡之後也會改成 WordPress，改完會再跟上來分享為什麼跟怎麼做的。\u003c\/p\u003e\n\u003cp\u003e\n\n\n\n\n\n\n  \n  \n\u003cfigure\u003e\u003cimg src=\u0022https:\/\/s.w.org\/style\/images\/about\/WordPress-logotype-standard.png\u0022 alt=\u0022WordPress Logo\u0022 class=\u0022mx-auto my-0 rounded-md\u0022 \/\u003e\n\u003c\/figure\u003e\n\u003c\/p\u003e\n\u003ch2 id=\u0022wordpresscom-vs-wordpressorg\u0022 class=\u0022relative group\u0022\u003eWordPress.com vs WordPress.org \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#wordpresscom-vs-wordpressorg\u0022 aria-label=\u0022定位點\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e首先來帶一下官方的兩種方案。我身為工程師其實一直都只知道 \u003ca href=\u0022https:\/\/wordpress.org\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eWordPress.org\u003c\/a\u003e，前陣子有朋友來問我才知道原來還有 \u003ca href=\u0022https:\/\/wordpress.com\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eWordPress.com\u003c\/a\u003e。\u003c\/p\u003e\n\u003cp\u003eWordPress.com 是由 Automattic 公司提供的全方位託管服務，在網頁上點一點就能建立網站。但相對地自由度極低，主題客製化困難，很多外掛不能用，免費版陽春到一定得付費。\u003c\/p\u003e\n\u003cp\u003eWordPress.org 是可以下載開源的 WordPress 軟體。可以依照自己的需求部署，幾乎沒有任何限制——安裝外掛、修改主題，或進行各種神奇的客製化都很自由。但就是要自己管理伺服器、更新跟備份。\u003c\/p\u003e\n\u003cp\u003e不過 WordPress.org 在市場上也有許多整合方案能簡化流程，也不是一定得要找工程師才能弄，而且我有預感用 WordPress.com 的人遲早也是得跳槽，因為限制真的太多又不便宜。\u003c\/p\u003e\n\u003cp\u003e本篇也是使用 WordPress.org，是需要懂一點技術，但我會盡量把流程講清楚一點。\u003c\/p\u003e\n\u003ch2 id=\u0022wordpressorg-市面上的託管方案\u0022 class=\u0022relative group\u0022\u003eWordPress.org 市面上的託管方案 \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#wordpressorg-%e5%b8%82%e9%9d%a2%e4%b8%8a%e7%9a%84%e8%a8%97%e7%ae%a1%e6%96%b9%e6%a1%88\u0022 aria-label=\u0022定位點\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e這邊介紹的我都沒有用過，但可以分析一下價格和一些初步的觀察。\u003c\/p\u003e\n\u003ch3 id=\u00221-傳統虛擬主機如-bluehost\u0022 class=\u0022relative group\u0022\u003e1. 傳統虛擬主機（如 \u003ca href=\u0022https:\/\/www.bluehost.com\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eBlueHost\u003c\/a\u003e） \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#1-%e5%82%b3%e7%b5%b1%e8%99%9b%e6%93%ac%e4%b8%bb%e6%a9%9f%e5%a6%82-bluehost\u0022 aria-label=\u0022定位點\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h3\u003e\u003cp\u003e基本費用是每月 2.95 美金（新台幣 95\/月），可以很快地把網站架起來，也可以直接在裡面額外去購買網站的域名。\u003c\/p\u003e",
     "inLanguage": "zh-TW",
-    "url" : "http:\/\/localhost:1313\/software\/wordpress-hosting\/",
+    "url" : "\/\/localhost:1313\/software\/wordpress-hosting\/",
     "author" : {
       "@type": "Person",
       "name": "Parker"
@@ -132,13 +132,13 @@
    "itemListElement": [
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/",
+       "item": "//localhost:1313/",
        "name": "首頁",
        "position": 1
      },
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/software/",
+       "item": "//localhost:1313/software/",
        "name": "軟體",
        "position": 2
      },
@@ -649,13 +649,13 @@
       
         <source
           
-            srcset="http://localhost:1313/software/wordpress-hosting/cover-zh-TW_hu_7ffe755728b101fd.webp 330w,http://localhost:1313/software/wordpress-hosting/cover-zh-TW_hu_35378aeb93b8c287.webp 660w
+            srcset="//localhost:1313/software/wordpress-hosting/cover-zh-TW_hu_7ffe755728b101fd.webp 330w,//localhost:1313/software/wordpress-hosting/cover-zh-TW_hu_35378aeb93b8c287.webp 660w
             
-              ,http://localhost:1313/software/wordpress-hosting/cover-zh-TW_hu_f14fc4dcfd6fc11c.webp 1024w
+              ,//localhost:1313/software/wordpress-hosting/cover-zh-TW_hu_f14fc4dcfd6fc11c.webp 1024w
             
             
               
-                ,http://localhost:1313/software/wordpress-hosting/cover-zh-TW_hu_7cd7170baba09f20.webp 1200w
+                ,//localhost:1313/software/wordpress-hosting/cover-zh-TW_hu_7cd7170baba09f20.webp 1200w
               
             "
           
@@ -670,12 +670,12 @@
         
         
         
-          src="http://localhost:1313/software/wordpress-hosting/cover-zh-TW_hu_67b1b22a9f3cc48c.png" srcset="http://localhost:1313/software/wordpress-hosting/cover-zh-TW_hu_7bfeb66002e8ebca.png 330w,http://localhost:1313/software/wordpress-hosting/cover-zh-TW_hu_67b1b22a9f3cc48c.png 660w
+          src="//localhost:1313/software/wordpress-hosting/cover-zh-TW_hu_67b1b22a9f3cc48c.png" srcset="//localhost:1313/software/wordpress-hosting/cover-zh-TW_hu_7bfeb66002e8ebca.png 330w,//localhost:1313/software/wordpress-hosting/cover-zh-TW_hu_67b1b22a9f3cc48c.png 660w
           
-            ,http://localhost:1313/software/wordpress-hosting/cover-zh-TW_hu_9763e7f65bd8959e.png 1024w
+            ,//localhost:1313/software/wordpress-hosting/cover-zh-TW_hu_9763e7f65bd8959e.png 1024w
           
           
-            ,http://localhost:1313/software/wordpress-hosting/cover-zh-TW.png 1200w
+            ,//localhost:1313/software/wordpress-hosting/cover-zh-TW.png 1200w
           "
           sizes="100vw"
         
@@ -1032,7 +1032,7 @@ sudo ee site create example.com --wp
       <div class="flex justify-between pt-3">
         <span>
           
-            <a class="group flex" href="http://localhost:1313/software/my-site/">
+            <a class="group flex" href="//localhost:1313/software/my-site/">
               <span
                 class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
                 ><span class="ltr:inline rtl:hidden">&larr;</span
@@ -1069,7 +1069,7 @@ sudo ee site create example.com --wp
   data-host="https://cusdis.com"
   data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
   data-page-id="3e41322150fdd12421dde2afd6e8900e"
-  data-page-url="http://localhost:1313/software/wordpress-hosting/"
+  data-page-url="//localhost:1313/software/wordpress-hosting/"
   data-page-title="我如何架設 WordPress 網站"
 ></div>
 <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>

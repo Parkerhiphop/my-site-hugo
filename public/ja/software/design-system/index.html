@@ -61,7 +61,7 @@
   
   
   
-    <link rel="canonical" href="http://localhost:1313/ja/software/design-system/" />
+    <link rel="canonical" href="//localhost:1313/ja/software/design-system/" />
   
   
   
@@ -79,7 +79,7 @@
   
   
   
-  <meta property="og:url" content="http://localhost:1313/ja/software/design-system/">
+  <meta property="og:url" content="//localhost:1313/ja/software/design-system/">
   <meta property="og:site_name" content="Parker Chang&#39;s Web">
   <meta property="og:title" content="Design System — フロントエンドエンジニアも知っておくべきこと">
   <meta property="og:description" content="ソフトウェアエンジニアの本質は実は建築家に非常に近く、彼らが家を建てるのに対し、私たちはシステムを構築します。良い家には優れた建築設計が必要であり、設計図の計画、建物全体の構造の理解、事前の計画設計に多くの時間を費やします。この概念はウェブページにおける Design System に相当します！">
@@ -93,11 +93,11 @@
     <meta property="article:tag" content="Design System">
     <meta property="article:tag" content="CSS">
     <meta property="article:tag" content="UI/UX">
-    <meta property="og:image" content="http://localhost:1313/ja/software/design-system/cover-en.png">
+    <meta property="og:image" content="//localhost:1313/ja/software/design-system/cover-en.png">
 
   
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://localhost:1313/ja/software/design-system/cover-en.png">
+  <meta name="twitter:image" content="//localhost:1313/ja/software/design-system/cover-en.png">
   <meta name="twitter:title" content="Design System — フロントエンドエンジニアも知っておくべきこと">
   <meta name="twitter:description" content="ソフトウェアエンジニアの本質は実は建築家に非常に近く、彼らが家を建てるのに対し、私たちはシステムを構築します。良い家には優れた建築設計が必要であり、設計図の計画、建物全体の構造の理解、事前の計画設計に多くの時間を費やします。この概念はウェブページにおける Design System に相当します！">
 
@@ -112,7 +112,7 @@
     "description": "ソフトウェアエンジニアの本質は実は建築家に非常に近く、彼らが家を建てるのに対し、私たちはシステムを構築します。良い家には優れた建築設計が必要であり、設計図の計画、建物全体の構造の理解、事前の計画設計に多くの時間を費やします。この概念はウェブページにおける Design System に相当します！",
     "abstract": "\u003cblockquote\u003e\n\u003cp\u003e\u003cstrong\u003e注:\u003c\/strong\u003e この記事は AI によって翻訳されています。もし不自然な表現や誤りがありましたら、メールやその他の手段でお知らせいただけると幸いです。フィードバックをいただけると助かります！\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003cp\u003eDesign System について話す前に、一つの概念に触れておきたいと思います。「事前計画 \u0026gt; 実装」。\u003c\/p\u003e\n\u003cp\u003eソフトウェアエンジニアの本質は実は建築家に非常に近く、彼らが家を建てるのに対し、私たちはシステムを構築します。\u003c\/p\u003e\n\u003cp\u003e良い家には優れた建築設計が必要であり、設計図の計画、建物全体の構造の理解、事前の計画設計に多くの時間を費やします。\u003c\/p\u003e\n\u003cp\u003eこの概念はウェブページにおける \u003cstrong\u003eDesign System\u003c\/strong\u003e に相当します！\u003c\/p\u003e\n\u003ch2 id=\u0022design-system-の前身--atomic-design\u0022 class=\u0022relative group\u0022\u003eDesign System の前身 — Atomic Design \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#design-system-%e3%81%ae%e5%89%8d%e8%ba%ab--atomic-design\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003eDesign System について話す前に、\u003cstrong\u003eAtomic Design\u003c\/strong\u003e という概念について話す必要があります。\u003c\/p\u003e\n\u003cp\u003e結局のところ、ウェブページアーキテクチャ設計全体の先駆者は、2013 年に Atomic Design を提唱し、最初の口火を切った Brad Frost だと言えるでしょう。\u003c\/p\u003e\n\u003cp\u003eその後、Google が 2014 年に Material Design を作成し、2016 年に Airbnb がより完全な Design System を提唱しました。詳細は \u003ca href=\u0022https:\/\/www.youtube.com\/watch?v=TuLY1cYM57g\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eKarri Saarinen, Principle Designer at Airbnb\u003c\/a\u003e の講演を参照してください。\u003c\/p\u003e\n\u003ch3 id=\u0022ではatomic-design-とは何でしょうか\u0022 class=\u0022relative group\u0022\u003eでは、Atomic Design とは何でしょうか？ \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#%e3%81%a7%e3%81%afatomic-design-%e3%81%a8%e3%81%af%e4%bd%95%e3%81%a7%e3%81%97%e3%82%87%e3%81%86%e3%81%8b\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h3\u003e\u003cp\u003eまずこの画像を見てみましょう：\u003c\/p\u003e",
     "inLanguage": "ja",
-    "url" : "http:\/\/localhost:1313\/ja\/software\/design-system\/",
+    "url" : "\/\/localhost:1313\/ja\/software\/design-system\/",
     "author" : {
       "@type": "Person",
       "name": "Parker"
@@ -137,13 +137,13 @@
    "itemListElement": [
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/ja/",
+       "item": "//localhost:1313/ja/",
        "name": "ホーム",
        "position": 1
      },
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/ja/software/",
+       "item": "//localhost:1313/ja/software/",
        "name": "ソフトウェア",
        "position": 2
      },
@@ -654,13 +654,13 @@
       
         <source
           
-            srcset="http://localhost:1313/ja/software/design-system/cover-ja_hu_ed083ee4fee91d0.webp 330w,http://localhost:1313/ja/software/design-system/cover-ja_hu_54adca31d17dea31.webp 660w
+            srcset="//localhost:1313/ja/software/design-system/cover-ja_hu_ed083ee4fee91d0.webp 330w,//localhost:1313/ja/software/design-system/cover-ja_hu_54adca31d17dea31.webp 660w
             
-              ,http://localhost:1313/ja/software/design-system/cover-ja_hu_bad7e9e44199423b.webp 1024w
+              ,//localhost:1313/ja/software/design-system/cover-ja_hu_bad7e9e44199423b.webp 1024w
             
             
               
-                ,http://localhost:1313/ja/software/design-system/cover-ja_hu_40a3652f481d062b.webp 1200w
+                ,//localhost:1313/ja/software/design-system/cover-ja_hu_40a3652f481d062b.webp 1200w
               
             "
           
@@ -675,12 +675,12 @@
         
         
         
-          src="http://localhost:1313/ja/software/design-system/cover-ja_hu_a5e087c0ae458f58.png" srcset="http://localhost:1313/ja/software/design-system/cover-ja_hu_eca640fa82cb58f5.png 330w,http://localhost:1313/ja/software/design-system/cover-ja_hu_a5e087c0ae458f58.png 660w
+          src="//localhost:1313/ja/software/design-system/cover-ja_hu_a5e087c0ae458f58.png" srcset="//localhost:1313/ja/software/design-system/cover-ja_hu_eca640fa82cb58f5.png 330w,//localhost:1313/ja/software/design-system/cover-ja_hu_a5e087c0ae458f58.png 660w
           
-            ,http://localhost:1313/ja/software/design-system/cover-ja_hu_b8741571e05c027a.png 1024w
+            ,//localhost:1313/ja/software/design-system/cover-ja_hu_b8741571e05c027a.png 1024w
           
           
-            ,http://localhost:1313/ja/software/design-system/cover-ja.png 1200w
+            ,//localhost:1313/ja/software/design-system/cover-ja.png 1200w
           "
           sizes="100vw"
         
@@ -1165,7 +1165,7 @@
       <div class="flex justify-between pt-3">
         <span>
           
-            <a class="group flex" href="http://localhost:1313/ja/software/frontend-framework-101/">
+            <a class="group flex" href="//localhost:1313/ja/software/frontend-framework-101/">
               <span
                 class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
                 ><span class="ltr:inline rtl:hidden">&larr;</span
@@ -1187,7 +1187,7 @@
         </span>
         <span>
           
-            <a class="group flex text-right" href="http://localhost:1313/ja/software/talk-about-web-font/">
+            <a class="group flex text-right" href="//localhost:1313/ja/software/talk-about-web-font/">
               <span class="flex flex-col">
                 <span
                   class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
@@ -1221,7 +1221,7 @@
   data-host="https://cusdis.com"
   data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
   data-page-id="24ecd0939c04005b9016a1a415d1f4f3"
-  data-page-url="http://localhost:1313/ja/software/design-system/"
+  data-page-url="//localhost:1313/ja/software/design-system/"
   data-page-title="Design System — フロントエンドエンジニアも知っておくべきこと"
 ></div>
 <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>

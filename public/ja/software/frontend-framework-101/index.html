@@ -61,7 +61,7 @@
   
   
   
-    <link rel="canonical" href="http://localhost:1313/ja/software/frontend-framework-101/" />
+    <link rel="canonical" href="//localhost:1313/ja/software/frontend-framework-101/" />
   
   
   
@@ -79,7 +79,7 @@
   
   
   
-  <meta property="og:url" content="http://localhost:1313/ja/software/frontend-framework-101/">
+  <meta property="og:url" content="//localhost:1313/ja/software/frontend-framework-101/">
   <meta property="og:site_name" content="Parker Chang&#39;s Web">
   <meta property="og:title" content="フロントエンドフレームワーク第0課：フレームワークを学ぶ前に知っておくべきこと">
   <meta property="og:description" content="フロントエンドフレームワークの選択は、多くの初心者（私を含む）にとって常に大きな疑問でした。私は当初、会社がReactを使用していたため、Reactを書くしかありませんでした。最近、縁あってAngularに触れる機会があり、それがきっかけで「フロントエンドフレームワーク」について、「フレームワーク」とは一体何を指すのか？何が「フレームワーク」と呼ばれるのか？なぜフロントエンドでそれを使用する必要があるのか？使用しないとどうなるのか？Vue3がすごいと聞いたが、学ぶべきか？などの問題について、より深く考えるようになりました。">
@@ -93,11 +93,11 @@
     <meta property="article:tag" content="Frontend">
     <meta property="article:tag" content="Framework">
     <meta property="article:tag" content="JavaScript">
-    <meta property="og:image" content="http://localhost:1313/ja/software/frontend-framework-101/cover-en.png">
+    <meta property="og:image" content="//localhost:1313/ja/software/frontend-framework-101/cover-en.png">
 
   
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://localhost:1313/ja/software/frontend-framework-101/cover-en.png">
+  <meta name="twitter:image" content="//localhost:1313/ja/software/frontend-framework-101/cover-en.png">
   <meta name="twitter:title" content="フロントエンドフレームワーク第0課：フレームワークを学ぶ前に知っておくべきこと">
   <meta name="twitter:description" content="フロントエンドフレームワークの選択は、多くの初心者（私を含む）にとって常に大きな疑問でした。私は当初、会社がReactを使用していたため、Reactを書くしかありませんでした。最近、縁あってAngularに触れる機会があり、それがきっかけで「フロントエンドフレームワーク」について、「フレームワーク」とは一体何を指すのか？何が「フレームワーク」と呼ばれるのか？なぜフロントエンドでそれを使用する必要があるのか？使用しないとどうなるのか？Vue3がすごいと聞いたが、学ぶべきか？などの問題について、より深く考えるようになりました。">
 
@@ -112,7 +112,7 @@
     "description": "フロントエンドフレームワークの選択は、多くの初心者（私を含む）にとって常に大きな疑問でした。私は当初、会社がReactを使用していたため、Reactを書くしかありませんでした。最近、縁あってAngularに触れる機会があり、それがきっかけで「フロントエンドフレームワーク」について、「フレームワーク」とは一体何を指すのか？何が「フレームワーク」と呼ばれるのか？なぜフロントエンドでそれを使用する必要があるのか？使用しないとどうなるのか？Vue3がすごいと聞いたが、学ぶべきか？などの問題について、より深く考えるようになりました。",
     "abstract": "\u003cblockquote\u003e\n\u003cp\u003e\u003cstrong\u003e注:\u003c\/strong\u003e この記事は AI によって翻訳されています。もし不自然な表現や誤りがありましたら、メールやその他の手段でお知らせいただけると幸いです。フィードバックをいただけると助かります！\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003cp\u003eフロントエンドフレームワークの選択は、多くの初心者（私を含む）にとって常に大きな疑問でした。私は当初、会社が React を使用していたため、React を書くしかありませんでした。最近、縁あって Angular に触れる機会があり、それがきっかけで「フロントエンドフレームワーク」について、「フレームワーク」とは一体何を指すのか？何が「フレームワーク」と呼ばれるのか？なぜフロントエンドでそれを使用する必要があるのか？使用しないとどうなるのか？Vue3 がすごいと聞いたが、学ぶべきか？などの問題について、より深く考えるようになりました。\u003c\/p\u003e\n\u003cp\u003eそしてこの記事は、上記の問題のいくつかを解決するための私の思考であり、フレームワークを学び始める前に知っておくべき基本的な概念だとも考えています。\u003c\/p\u003e\n\u003ch2 id=\u0022web-の歴史について簡単に\u0022 class=\u0022relative group\u0022\u003eWeb の歴史について簡単に \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#web-%e3%81%ae%e6%ad%b4%e5%8f%b2%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%e7%b0%a1%e5%8d%98%e3%81%ab\u0022 aria-label=\u0022アンカー\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e技術の発展は日進月歩ですが、技術の本質は「問題解決」にあります。\u003c\/p\u003e\n\u003cblockquote\u003e\n\u003cp\u003e技術の文脈を理解することで、目の前の技術を理解し、将来の発展を想像するのに大いに役立つと信じています。\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003chr\u003e\n\u003cp\u003e\u003cstrong\u003e1990 年代：Web の誕生\u003c\/strong\u003e\u003c\/p\u003e\n\u003cul\u003e\n\u003cli\u003e1990 年 12 月 20 日、ティム・バーナーズ＝リーは\u003ca href=\u0022http:\/\/info.cern.ch\/hypertext\/WWW\/TheProject.html\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003e最初のウェブサイト\u003c\/a\u003eを書き、World Wide Web を設計しました。\u003c\/li\u003e\n\u003cli\u003eこの時期は静的なウェブページが主で、せいぜい動的なメニューや画像効果がある程度でした。\u003c\/li\u003e\n\u003c\/ul\u003e\n\u003cp\u003e\u003cstrong\u003e2000 年代：Web 2.0 ＋ Ajax\u003c\/strong\u003e\u003c\/p\u003e\n\u003cul\u003e\n\u003cli\u003e2004 年の Web 2.0 の誕生により、ウェブページの対話性が向上し始めました。Facebook (2004) や Youtube (2005) はこの時期に登場しました。\u003c\/li\u003e\n\u003cli\u003eAjax の非同期リクエストの応用により、ウェブページはブラウザではなく JS を介してリクエストを送信できるようになったため、データを更新するためにリロードする必要がなくなりました。\u003c\/li\u003e\n\u003c\/ul\u003e\n\u003cp\u003e\u003cstrong\u003e2010 年代：Web アプリケーション（Web Application）概念の出現\u003c\/strong\u003e\u003c\/p\u003e\n\u003cul\u003e\n\u003cli\u003eこの時期から、Web の複雑さと対話性は大幅に向上し、当初はデスクトップアプリケーション（Desktop Application）でしかできなかったことができるようになってきました。\u003c\/li\u003e\n\u003c\/ul\u003e\n\u003cblockquote\u003e\n\u003cp\u003eこのような高い対話性を持つウェブサイトが必要とする基本的な処理に対応するために、フロントエンドフレームワークが誕生しました。\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003col\u003e\n\u003cli\u003eAngular 1.0 (2010)\u003c\/li\u003e\n\u003cli\u003eReact (2013)\u003c\/li\u003e\n\u003cli\u003eVue (2014)\u003c\/li\u003e\n\u003c\/ol\u003e\n\u003cp\u003e（より詳細な進化の歴史に興味がある場合は、下部に参考リンクを添付します）\u003c\/p\u003e",
     "inLanguage": "ja",
-    "url" : "http:\/\/localhost:1313\/ja\/software\/frontend-framework-101\/",
+    "url" : "\/\/localhost:1313\/ja\/software\/frontend-framework-101\/",
     "author" : {
       "@type": "Person",
       "name": "Parker"
@@ -137,13 +137,13 @@
    "itemListElement": [
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/ja/",
+       "item": "//localhost:1313/ja/",
        "name": "ホーム",
        "position": 1
      },
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/ja/software/",
+       "item": "//localhost:1313/ja/software/",
        "name": "ソフトウェア",
        "position": 2
      },
@@ -654,13 +654,13 @@
       
         <source
           
-            srcset="http://localhost:1313/ja/software/frontend-framework-101/cover-ja_hu_888c9d5231adc7f4.webp 330w,http://localhost:1313/ja/software/frontend-framework-101/cover-ja_hu_b53372e2e4c35a6f.webp 660w
+            srcset="//localhost:1313/ja/software/frontend-framework-101/cover-ja_hu_888c9d5231adc7f4.webp 330w,//localhost:1313/ja/software/frontend-framework-101/cover-ja_hu_b53372e2e4c35a6f.webp 660w
             
-              ,http://localhost:1313/ja/software/frontend-framework-101/cover-ja_hu_dc8648c4560cc398.webp 1024w
+              ,//localhost:1313/ja/software/frontend-framework-101/cover-ja_hu_dc8648c4560cc398.webp 1024w
             
             
               
-                ,http://localhost:1313/ja/software/frontend-framework-101/cover-ja_hu_10a52dd1eebde4b0.webp 1200w
+                ,//localhost:1313/ja/software/frontend-framework-101/cover-ja_hu_10a52dd1eebde4b0.webp 1200w
               
             "
           
@@ -675,12 +675,12 @@
         
         
         
-          src="http://localhost:1313/ja/software/frontend-framework-101/cover-ja_hu_671429a77af1232a.png" srcset="http://localhost:1313/ja/software/frontend-framework-101/cover-ja_hu_2cfff9c04a7f37ab.png 330w,http://localhost:1313/ja/software/frontend-framework-101/cover-ja_hu_671429a77af1232a.png 660w
+          src="//localhost:1313/ja/software/frontend-framework-101/cover-ja_hu_671429a77af1232a.png" srcset="//localhost:1313/ja/software/frontend-framework-101/cover-ja_hu_2cfff9c04a7f37ab.png 330w,//localhost:1313/ja/software/frontend-framework-101/cover-ja_hu_671429a77af1232a.png 660w
           
-            ,http://localhost:1313/ja/software/frontend-framework-101/cover-ja_hu_b12db84f1ee22121.png 1024w
+            ,//localhost:1313/ja/software/frontend-framework-101/cover-ja_hu_b12db84f1ee22121.png 1024w
           
           
-            ,http://localhost:1313/ja/software/frontend-framework-101/cover-ja.png 1200w
+            ,//localhost:1313/ja/software/frontend-framework-101/cover-ja.png 1200w
           "
           sizes="100vw"
         
@@ -895,7 +895,7 @@
         </span>
         <span>
           
-            <a class="group flex text-right" href="http://localhost:1313/ja/software/design-system/">
+            <a class="group flex text-right" href="//localhost:1313/ja/software/design-system/">
               <span class="flex flex-col">
                 <span
                   class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
@@ -929,7 +929,7 @@
   data-host="https://cusdis.com"
   data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
   data-page-id="703b0aff9d871695809bb61cdf41379a"
-  data-page-url="http://localhost:1313/ja/software/frontend-framework-101/"
+  data-page-url="//localhost:1313/ja/software/frontend-framework-101/"
   data-page-title="フロントエンドフレームワーク第0課：フレームワークを学ぶ前に知っておくべきこと"
 ></div>
 <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>

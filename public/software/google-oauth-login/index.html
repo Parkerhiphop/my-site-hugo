@@ -61,7 +61,7 @@
   
   
   
-    <link rel="canonical" href="http://localhost:1313/software/google-oauth-login/" />
+    <link rel="canonical" href="//localhost:1313/software/google-oauth-login/" />
   
   
   
@@ -79,7 +79,7 @@
   
   
   
-  <meta property="og:url" content="http://localhost:1313/software/google-oauth-login/">
+  <meta property="og:url" content="//localhost:1313/software/google-oauth-login/">
   <meta property="og:site_name" content="Parker Chang&#39;s Web">
   <meta property="og:title" content="實作 Google 第三方登入（Vue / Express）">
   <meta property="og:description" content="使用 Vue 和 Express 做 Google 登入串接的小範例">
@@ -88,11 +88,11 @@
     <meta property="article:section" content="software">
     <meta property="article:published_time" content="2022-10-23T00:00:00+00:00">
     <meta property="article:modified_time" content="2022-10-23T00:00:00+00:00">
-    <meta property="og:image" content="http://localhost:1313/software/google-oauth-login/cover-en.png">
+    <meta property="og:image" content="//localhost:1313/software/google-oauth-login/cover-en.png">
 
   
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://localhost:1313/software/google-oauth-login/cover-en.png">
+  <meta name="twitter:image" content="//localhost:1313/software/google-oauth-login/cover-en.png">
   <meta name="twitter:title" content="實作 Google 第三方登入（Vue / Express）">
   <meta name="twitter:description" content="使用 Vue 和 Express 做 Google 登入串接的小範例">
 
@@ -107,7 +107,7 @@
     "description": "使用 Vue 和 Express 做 Google 登入串接的小範例",
     "abstract": "\u003cp\u003e\n\n\n\n\n\n\n  \n  \n\u003cfigure\u003e\u003cimg src=\u0022https:\/\/cdn-images-1.medium.com\/max\/800\/0*Ewxcp0OIGr31jGoo.png\u0022 alt=\u0022\u0022 class=\u0022mx-auto my-0 rounded-md\u0022 \/\u003e\n\u003c\/figure\u003e\n\u003c\/p\u003e\n\u003ch2 id=\u0022前言\u0022 class=\u0022relative group\u0022\u003e前言 \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#%e5%89%8d%e8%a8%80\u0022 aria-label=\u0022定位點\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e最近公司需要串接第三方登入，因為第一次做，踩了不少坑，也發現 Google 又改版了，爬到的許多文都已經不堪用的，於是來分享紀錄一下串接的流程。\u003c\/p\u003e\n\u003cp\u003e基本上，如果你是用 \u003ca href=\u0022https:\/\/github.com\/google\/google-api-javascript-client\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eGoogle Sign-in JavaScript library\u003c\/a\u003e 串接的話，Google 已經棄用（\u003ca href=\u0022https:\/\/developers.google.com\/identity\/sign-in\/web\/reference\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003edeprecated\u003c\/a\u003e）了，並且將在 2023\/03\/31 完全捨棄，也就是不讓人下載跟使用，所以之前按照 \u003ca href=\u0022https:\/\/developers.google.com\/identity\/sign-in\/web\/reference\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003e這個流程\u003c\/a\u003e 實作的要趕快重構啦！\u003c\/p\u003e\n\u003cblockquote\u003e\n\u003cp\u003e這篇文章會用 Vue3 和 Express 來帶大家來手把手實作簡易的 Google  第三方登入！\u003c\/p\u003e\n\u003c\/blockquote\u003e\n\u003cp\u003e（除了使用新版的 Sign In With Google button ，也會有新的 Google One Tap 功能）\u003c\/p\u003e\n\u003cp\u003e因為我只有使用 Google 原生的 Library，而沒有使用別人包過的，所以如果是 React 的話語法稍微改一下就也可以用囉！\u003c\/p\u003e\n\u003cp\u003e現在 Google 登入越來越好串，建議不要用別人包裝過的 library 來減少耦合度，因為敝司最近就是因為之前用的 library 沒在維護了才重新串了一遍。\u003c\/p\u003e\n\u003ch2 id=\u0022overview\u0022 class=\u0022relative group\u0022\u003eOverview \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#overview\u0022 aria-label=\u0022定位點\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e串接的流程會分成四個步驟：\u003c\/p\u003e",
     "inLanguage": "zh-TW",
-    "url" : "http:\/\/localhost:1313\/software\/google-oauth-login\/",
+    "url" : "\/\/localhost:1313\/software\/google-oauth-login\/",
     "author" : {
       "@type": "Person",
       "name": "Parker"
@@ -132,13 +132,13 @@
    "itemListElement": [
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/",
+       "item": "//localhost:1313/",
        "name": "首頁",
        "position": 1
      },
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/software/",
+       "item": "//localhost:1313/software/",
        "name": "軟體",
        "position": 2
      },
@@ -649,13 +649,13 @@
       
         <source
           
-            srcset="http://localhost:1313/software/google-oauth-login/cover-zh-TW_hu_9ee0bf9886557d.webp 330w,http://localhost:1313/software/google-oauth-login/cover-zh-TW_hu_c7a4b645e37023a.webp 660w
+            srcset="//localhost:1313/software/google-oauth-login/cover-zh-TW_hu_9ee0bf9886557d.webp 330w,//localhost:1313/software/google-oauth-login/cover-zh-TW_hu_c7a4b645e37023a.webp 660w
             
-              ,http://localhost:1313/software/google-oauth-login/cover-zh-TW_hu_ccef856fc5c16337.webp 1024w
+              ,//localhost:1313/software/google-oauth-login/cover-zh-TW_hu_ccef856fc5c16337.webp 1024w
             
             
               
-                ,http://localhost:1313/software/google-oauth-login/cover-zh-TW_hu_d1c2390a4daa5dd5.webp 1200w
+                ,//localhost:1313/software/google-oauth-login/cover-zh-TW_hu_d1c2390a4daa5dd5.webp 1200w
               
             "
           
@@ -670,12 +670,12 @@
         
         
         
-          src="http://localhost:1313/software/google-oauth-login/cover-zh-TW_hu_34a68f020efed5c9.png" srcset="http://localhost:1313/software/google-oauth-login/cover-zh-TW_hu_bfeb592a20048fb1.png 330w,http://localhost:1313/software/google-oauth-login/cover-zh-TW_hu_34a68f020efed5c9.png 660w
+          src="//localhost:1313/software/google-oauth-login/cover-zh-TW_hu_34a68f020efed5c9.png" srcset="//localhost:1313/software/google-oauth-login/cover-zh-TW_hu_bfeb592a20048fb1.png 330w,//localhost:1313/software/google-oauth-login/cover-zh-TW_hu_34a68f020efed5c9.png 660w
           
-            ,http://localhost:1313/software/google-oauth-login/cover-zh-TW_hu_57961e1806163b0e.png 1024w
+            ,//localhost:1313/software/google-oauth-login/cover-zh-TW_hu_57961e1806163b0e.png 1024w
           
           
-            ,http://localhost:1313/software/google-oauth-login/cover-zh-TW.png 1200w
+            ,//localhost:1313/software/google-oauth-login/cover-zh-TW.png 1200w
           "
           sizes="100vw"
         
@@ -1077,7 +1077,7 @@
       <div class="flex justify-between pt-3">
         <span>
           
-            <a class="group flex" href="http://localhost:1313/software/talk-about-web-font/">
+            <a class="group flex" href="//localhost:1313/software/talk-about-web-font/">
               <span
                 class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
                 ><span class="ltr:inline rtl:hidden">&larr;</span
@@ -1099,7 +1099,7 @@
         </span>
         <span>
           
-            <a class="group flex text-right" href="http://localhost:1313/software/from-callback-to-async/">
+            <a class="group flex text-right" href="//localhost:1313/software/from-callback-to-async/">
               <span class="flex flex-col">
                 <span
                   class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
@@ -1133,7 +1133,7 @@
   data-host="https://cusdis.com"
   data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
   data-page-id="b2d80a80c35b97c58e6648f571034365"
-  data-page-url="http://localhost:1313/software/google-oauth-login/"
+  data-page-url="//localhost:1313/software/google-oauth-login/"
   data-page-title="實作 Google 第三方登入（Vue / Express）"
 ></div>
 <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>

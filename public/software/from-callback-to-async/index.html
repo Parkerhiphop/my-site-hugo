@@ -61,7 +61,7 @@
   
   
   
-    <link rel="canonical" href="http://localhost:1313/software/from-callback-to-async/" />
+    <link rel="canonical" href="//localhost:1313/software/from-callback-to-async/" />
   
   
   
@@ -79,7 +79,7 @@
   
   
   
-  <meta property="og:url" content="http://localhost:1313/software/from-callback-to-async/">
+  <meta property="og:url" content="//localhost:1313/software/from-callback-to-async/">
   <meta property="og:site_name" content="Parker Chang&#39;s Web">
   <meta property="og:title" content="從 Callback 到 Async/Await：以次序淡入動畫為例">
   <meta property="og:description" content="透過一個次序淡入動畫的需求來看 JS 中非同步操作的處理，如何從 Callback 結構轉換到 Promise ，再用 Async/Await 重構成更簡潔、好讀的程式碼。">
@@ -88,11 +88,11 @@
     <meta property="article:section" content="software">
     <meta property="article:published_time" content="2023-08-21T00:00:00+00:00">
     <meta property="article:modified_time" content="2023-08-21T00:00:00+00:00">
-    <meta property="og:image" content="http://localhost:1313/software/from-callback-to-async/cover-en.png">
+    <meta property="og:image" content="//localhost:1313/software/from-callback-to-async/cover-en.png">
 
   
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://localhost:1313/software/from-callback-to-async/cover-en.png">
+  <meta name="twitter:image" content="//localhost:1313/software/from-callback-to-async/cover-en.png">
   <meta name="twitter:title" content="從 Callback 到 Async/Await：以次序淡入動畫為例">
   <meta name="twitter:description" content="透過一個次序淡入動畫的需求來看 JS 中非同步操作的處理，如何從 Callback 結構轉換到 Promise ，再用 Async/Await 重構成更簡潔、好讀的程式碼。">
 
@@ -107,7 +107,7 @@
     "description": "透過一個次序淡入動畫的需求來看 JS 中非同步操作的處理，如何從 Callback 結構轉換到 Promise ，再用 Async\/Await 重構成更簡潔、好讀的程式碼。",
     "abstract": "\u003ch2 id=\u0022foreword\u0022 class=\u0022relative group\u0022\u003eForeword \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#foreword\u0022 aria-label=\u0022定位點\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e這篇文章寫給聽過 Callback Hell, Promise 和 Async\/Await 但實務上沒碰過，或是仍不清楚演進的人，我會透過「點擊之後元素要一個個漸入」的功能一步步帶大家看怎麼這三種方式會怎麼實作這功能。\u003c\/p\u003e\n\u003cp\u003e功能 MVP 會是這樣：\u003c\/p\u003e\n\u003cp\u003e\n\n\n\n\n\n\n  \n  \n\u003cfigure\u003e\u003cimg src=\u0022\/software-development\/from-callback-to-async\/fading-example.gif\u0022 alt=\u0022Fading Example\u0022 class=\u0022mx-auto my-0 rounded-md\u0022 \/\u003e\n\u003c\/figure\u003e\n\u003c\/p\u003e\n\u003cp\u003e直覺想法：\u003c\/p\u003e\n\u003col\u003e\n\u003cli\u003e漸入在元素上放個 transition 然後點擊時改變 opacity 就好\u003c\/li\u003e\n\u003cli\u003e一個個漸入？代表後面的元素漸入需要「等」前面的元素先漸入完畢？\u003c\/li\u003e\n\u003cli\u003e在 JS 中要「等」首選就是 setTimeout，一個個等的話，就是一個 setTimeout 結束，再去呼叫另一個 setTimeout 就好。\u003c\/li\u003e\n\u003c\/ol\u003e\n\u003cp\u003e於是就寫出了類似這樣的程式碼：\u003c\/p\u003e\n\u003cdiv class=\u0022highlight\u0022\u003e\u003cpre tabindex=\u00220\u0022 style=\u0022color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;\u0022\u003e\u003ccode class=\u0022language-javascript\u0022 data-lang=\u0022javascript\u0022\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003estartBtn\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;startBtn\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003econtainer\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;container\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003efirst\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;first\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003esecond\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;second\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003ethird\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;third\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003eforth\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;forth\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003efifth\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;fifth\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#66d9ef\u0022\u003econst\u003c\/span\u003e \u003cspan style=\u0022color:#a6e22e\u0022\u003eresetBtn\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e document.\u003cspan style=\u0022color:#a6e22e\u0022\u003egetElementById\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;reset\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e\u003cspan style=\u0022color:#a6e22e\u0022\u003estartBtn\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eaddEventListener\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;click\u0026#39;\u003c\/span\u003e, \u003cspan style=\u0022color:#66d9ef\u0022\u003efunction\u003c\/span\u003e () {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e  \u003cspan style=\u0022color:#66d9ef\u0022\u003ethis\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003estyle\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003edisplay\u003c\/span\u003e \u003cspan style=\u0022color:#f92672\u0022\u003e=\u003c\/span\u003e \u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;none\u0026#39;\u003c\/span\u003e;\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e  \u003cspan style=\u0022color:#a6e22e\u0022\u003econtainer\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e  \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    \u003cspan style=\u0022color:#a6e22e\u0022\u003efirst\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e      \u003cspan style=\u0022color:#a6e22e\u0022\u003esecond\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e      \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e        \u003cspan style=\u0022color:#a6e22e\u0022\u003ethird\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e        \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e          \u003cspan style=\u0022color:#a6e22e\u0022\u003eforth\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e          \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e            \u003cspan style=\u0022color:#a6e22e\u0022\u003efifth\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e            \u003cspan style=\u0022color:#a6e22e\u0022\u003esetTimeout\u003c\/span\u003e(() =\u0026gt; {\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e              \u003cspan style=\u0022color:#a6e22e\u0022\u003eresetBtn\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eclassList\u003c\/span\u003e.\u003cspan style=\u0022color:#a6e22e\u0022\u003eremove\u003c\/span\u003e(\u003cspan style=\u0022color:#e6db74\u0022\u003e\u0026#39;hidden\u0026#39;\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e            }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e          }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e        }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e      }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e    }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e  }, \u003cspan style=\u0022color:#ae81ff\u0022\u003e500\u003c\/span\u003e);\n\u003c\/span\u003e\u003c\/span\u003e\u003cspan style=\u0022display:flex;\u0022\u003e\u003cspan\u003e});\n\u003c\/span\u003e\u003c\/span\u003e\u003c\/code\u003e\u003c\/pre\u003e\u003c\/div\u003e\u003cp\u003e寫完了，各個元素可以每 0.5 秒依序漸入了，可以收工了…嗎？\u003c\/p\u003e",
     "inLanguage": "zh-TW",
-    "url" : "http:\/\/localhost:1313\/software\/from-callback-to-async\/",
+    "url" : "\/\/localhost:1313\/software\/from-callback-to-async\/",
     "author" : {
       "@type": "Person",
       "name": "Parker"
@@ -132,13 +132,13 @@
    "itemListElement": [
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/",
+       "item": "//localhost:1313/",
        "name": "首頁",
        "position": 1
      },
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/software/",
+       "item": "//localhost:1313/software/",
        "name": "軟體",
        "position": 2
      },
@@ -649,13 +649,13 @@
       
         <source
           
-            srcset="http://localhost:1313/software/from-callback-to-async/cover-zh-TW_hu_5da78a77416bcf7e.webp 330w,http://localhost:1313/software/from-callback-to-async/cover-zh-TW_hu_cfdfa8bff1d430cd.webp 660w
+            srcset="//localhost:1313/software/from-callback-to-async/cover-zh-TW_hu_5da78a77416bcf7e.webp 330w,//localhost:1313/software/from-callback-to-async/cover-zh-TW_hu_cfdfa8bff1d430cd.webp 660w
             
-              ,http://localhost:1313/software/from-callback-to-async/cover-zh-TW_hu_c8c5ba60d42cf3fd.webp 1024w
+              ,//localhost:1313/software/from-callback-to-async/cover-zh-TW_hu_c8c5ba60d42cf3fd.webp 1024w
             
             
               
-                ,http://localhost:1313/software/from-callback-to-async/cover-zh-TW_hu_5508aa99a5a2dacc.webp 1200w
+                ,//localhost:1313/software/from-callback-to-async/cover-zh-TW_hu_5508aa99a5a2dacc.webp 1200w
               
             "
           
@@ -670,12 +670,12 @@
         
         
         
-          src="http://localhost:1313/software/from-callback-to-async/cover-zh-TW_hu_9d7721e97e1feac5.png" srcset="http://localhost:1313/software/from-callback-to-async/cover-zh-TW_hu_cbb9bfdc17bdb876.png 330w,http://localhost:1313/software/from-callback-to-async/cover-zh-TW_hu_9d7721e97e1feac5.png 660w
+          src="//localhost:1313/software/from-callback-to-async/cover-zh-TW_hu_9d7721e97e1feac5.png" srcset="//localhost:1313/software/from-callback-to-async/cover-zh-TW_hu_cbb9bfdc17bdb876.png 330w,//localhost:1313/software/from-callback-to-async/cover-zh-TW_hu_9d7721e97e1feac5.png 660w
           
-            ,http://localhost:1313/software/from-callback-to-async/cover-zh-TW_hu_c2f74de2a4a9680a.png 1024w
+            ,//localhost:1313/software/from-callback-to-async/cover-zh-TW_hu_c2f74de2a4a9680a.png 1024w
           
           
-            ,http://localhost:1313/software/from-callback-to-async/cover-zh-TW.png 1200w
+            ,//localhost:1313/software/from-callback-to-async/cover-zh-TW.png 1200w
           "
           sizes="100vw"
         
@@ -1192,7 +1192,7 @@
       <div class="flex justify-between pt-3">
         <span>
           
-            <a class="group flex" href="http://localhost:1313/software/google-oauth-login/">
+            <a class="group flex" href="//localhost:1313/software/google-oauth-login/">
               <span
                 class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
                 ><span class="ltr:inline rtl:hidden">&larr;</span
@@ -1214,7 +1214,7 @@
         </span>
         <span>
           
-            <a class="group flex text-right" href="http://localhost:1313/software/talk-about-js-eval/">
+            <a class="group flex text-right" href="//localhost:1313/software/talk-about-js-eval/">
               <span class="flex flex-col">
                 <span
                   class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
@@ -1248,7 +1248,7 @@
   data-host="https://cusdis.com"
   data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
   data-page-id="b3a35c5778e26bf3e8df834f6650c380"
-  data-page-url="http://localhost:1313/software/from-callback-to-async/"
+  data-page-url="//localhost:1313/software/from-callback-to-async/"
   data-page-title="從 Callback 到 Async/Await：以次序淡入動畫為例"
 ></div>
 <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>

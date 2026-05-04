@@ -61,7 +61,7 @@
   
   
   
-    <link rel="canonical" href="http://localhost:1313/software/talk-about-web-font/" />
+    <link rel="canonical" href="//localhost:1313/software/talk-about-web-font/" />
   
   
   
@@ -79,7 +79,7 @@
   
   
   
-  <meta property="og:url" content="http://localhost:1313/software/talk-about-web-font/">
+  <meta property="og:url" content="//localhost:1313/software/talk-about-web-font/">
   <meta property="og:site_name" content="Parker Chang&#39;s Web">
   <meta property="og:title" content="談談網頁中的字體 — 設計、檔案格式與前端載入">
   <meta property="og:description" content="介紹字體設計流程（不專業版）、字體的檔案有哪些、網頁如何使用字體。">
@@ -88,11 +88,11 @@
     <meta property="article:section" content="software">
     <meta property="article:published_time" content="2021-10-28T00:00:00+00:00">
     <meta property="article:modified_time" content="2021-10-28T00:00:00+00:00">
-    <meta property="og:image" content="http://localhost:1313/software/talk-about-web-font/cover-en.png">
+    <meta property="og:image" content="//localhost:1313/software/talk-about-web-font/cover-en.png">
 
   
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://localhost:1313/software/talk-about-web-font/cover-en.png">
+  <meta name="twitter:image" content="//localhost:1313/software/talk-about-web-font/cover-en.png">
   <meta name="twitter:title" content="談談網頁中的字體 — 設計、檔案格式與前端載入">
   <meta name="twitter:description" content="介紹字體設計流程（不專業版）、字體的檔案有哪些、網頁如何使用字體。">
 
@@ -107,7 +107,7 @@
     "description": "介紹字體設計流程（不專業版）、字體的檔案有哪些、網頁如何使用字體。",
     "abstract": "\u003cp\u003e前陣子 設事未深 的字型大補帖引起了一波領取字體的熱潮，除了在簡報、海報、社群貼文之外，你有想過在網頁上是如何使用字體的嗎？\u003c\/p\u003e\n\u003cp\u003e\n\n\n\n\n\n\n  \n  \n\u003cfigure\u003e\u003cimg src=\u0022https:\/\/cdn-images-1.medium.com\/max\/800\/0*OEf5PYLRWXCaS_Op\u0022 alt=\u0022typewritter\u0022 class=\u0022mx-auto my-0 rounded-md\u0022 \/\u003e\n\u003c\/figure\u003e\n\u003c\/p\u003e\n\u003cp\u003ephoto by \u003ca href=\u0022https:\/\/unsplash.com\/@diklein\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eDavid Klein\u003c\/a\u003e on \u003ca href=\u0022https:\/\/unsplash.com\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003eUnsplash\u003c\/a\u003e\u003c\/p\u003e\n\u003cp\u003e之前 \u003ca href=\u0022https:\/\/www.instagram.com\/designnotdeep\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003e設事未深\u003c\/a\u003e 的字型大補帖引起了一波字體的熱潮，那除了在簡報、海報、社群貼文之外，你有想過在網頁上是如何使用字體的嗎？\u003c\/p\u003e\n\u003cp\u003e於是今天就來先分享一些關於在網頁上使用字體的知識和技術細節，前半算是科普，後半關於網頁如何使用字體的部分談比較多技術，不是前端工程師的就斟酌觀看囉！\u003c\/p\u003e\n\u003cp\u003e\u003cstrong\u003e藉由這篇文章，我將會告訴你 👇\u003c\/strong\u003e\u003c\/p\u003e\n\u003col\u003e\n\u003cli\u003e一個字體的誕生（不專業版）\u003c\/li\u003e\n\u003cli\u003e字體的檔案有哪些\u003c\/li\u003e\n\u003cli\u003e網頁如何使用字體\u003c\/li\u003e\n\u003c\/ol\u003e\n\u003ch2 id=\u0022字體設計流程\u0022 class=\u0022relative group\u0022\u003e字體設計流程 \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#%e5%ad%97%e9%ab%94%e8%a8%ad%e8%a8%88%e6%b5%81%e7%a8%8b\u0022 aria-label=\u0022定位點\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e在開始介紹之前，因為實在太好奇字體如何被設計出來的，於是就問了一下身為設計師的朋友一些關於字體設計的問題，在這邊簡短介紹一下流程開個頭。\u003c\/p\u003e\n\u003cp\u003e以繁體中文來說，會先做幾個固定的字 ，這些字做完就能大概涵蓋到中文字的筆畫規律，像是「永」就包括了所有不同筆劃，「鷹」則是可以測試有很多橫筆的情況等等。\u003c\/p\u003e\n\u003cp\u003e\n\n\n\n\n\n\n  \n  \n\u003cfigure\u003e\u003cimg src=\u0022https:\/\/cdn-images-1.medium.com\/max\/800\/0*Yn16A9M8O252zZw9.jpg\u0022 alt=\u0022\u0022 class=\u0022mx-auto my-0 rounded-md\u0022 \/\u003e\n\u003c\/figure\u003e\n\u003c\/p\u003e\n\u003cp\u003e\u003ca href=\u0022https:\/\/www.easyatm.com.tw\/wiki\/%E6%B0%B8%E5%AD%97%E5%85%AB%E6%B3%95\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003ehttps:\/\/www.easyatm.com.tw\/wiki\/%E6%B0%B8%E5%AD%97%E5%85%AB%E6%B3%95\u003c\/a\u003e\u003c\/p\u003e\n\u003cp\u003e接著可能會使用 \u003ca href=\u0022https:\/\/glyphsapp.com\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003e\u003cstrong\u003eGlyphs\u003c\/strong\u003e\u003c\/a\u003e 或 \u003ca href=\u0022https:\/\/fontforge.org\/en-US\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003e\u003cstrong\u003eFontForge\u003c\/strong\u003e\u003c\/a\u003e 等軟體來調整各項細節，把大部分中文字做出來後，擺在一起確認一致性，最後就是一股作把剩下的中文字都做完。\u003c\/p\u003e\n\u003ch3 id=\u0022網頁中的繁體中文有多少字要設計\u0022 class=\u0022relative group\u0022\u003e網頁中的繁體中文有多少字要設計？ \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#%e7%b6%b2%e9%a0%81%e4%b8%ad%e7%9a%84%e7%b9%81%e9%ab%94%e4%b8%ad%e6%96%87%e6%9c%89%e5%a4%9a%e5%b0%91%e5%ad%97%e8%a6%81%e8%a8%ad%e8%a8%88\u0022 aria-label=\u0022定位點\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h3\u003e\u003cp\u003e關於中文字的總量，在教育部的\u003ca href=\u0022https:\/\/dict.variants.moe.edu.tw\/variants\/rbt\/home.do\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003e異體字字典\u003c\/a\u003e收錄了十萬多字，而根據 Google Font 有提供的\u003ca href=\u0022https:\/\/richer.tw\/google_font_info\/noto-serif-tc-cut\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003e思源黑體\u003c\/a\u003e檔案來看，網頁上會需要載入的字數大概是一萬五千字左右。\u003c\/p\u003e\n\u003cp\u003e不專業地介紹完大致上的流程後，設計的細節就不再這邊誤人子弟了，有興趣的可以去看 \u003ca href=\u0022https:\/\/blog.justfont.com\/\u0022 target=\u0022_blank\u0022 rel=\u0022noreferrer\u0022\u003ejustfont blog\u003c\/a\u003e 會有更多關於字體的好文可以看。\u003c\/p\u003e\n\u003ch2 id=\u0022字體一般來說都以怎樣的檔案格式儲存呢\u0022 class=\u0022relative group\u0022\u003e字體一般來說都以怎樣的檔案格式儲存呢？ \u003cspan class=\u0022absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100\u0022\u003e\u003ca class=\u0022group-hover:text-primary-300 dark:group-hover:text-neutral-700\u0022 style=\u0022text-decoration-line: none !important;\u0022 href=\u0022#%e5%ad%97%e9%ab%94%e4%b8%80%e8%88%ac%e4%be%86%e8%aa%aa%e9%83%bd%e4%bb%a5%e6%80%8e%e6%a8%a3%e7%9a%84%e6%aa%94%e6%a1%88%e6%a0%bc%e5%bc%8f%e5%84%b2%e5%ad%98%e5%91%a2\u0022 aria-label=\u0022定位點\u0022\u003e#\u003c\/a\u003e\u003c\/span\u003e\u003c\/h2\u003e\u003cp\u003e起初電腦的文字都是以點陣圖的方式呈現，這階段與印刷文字還是有很大的落差，因而字體就算設計出來了，也很難在電腦上完整呈現其美感。\u003c\/p\u003e",
     "inLanguage": "zh-TW",
-    "url" : "http:\/\/localhost:1313\/software\/talk-about-web-font\/",
+    "url" : "\/\/localhost:1313\/software\/talk-about-web-font\/",
     "author" : {
       "@type": "Person",
       "name": "Parker"
@@ -132,13 +132,13 @@
    "itemListElement": [
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/",
+       "item": "//localhost:1313/",
        "name": "首頁",
        "position": 1
      },
      {
        "@type": "ListItem",
-       "item": "http://localhost:1313/software/",
+       "item": "//localhost:1313/software/",
        "name": "軟體",
        "position": 2
      },
@@ -649,13 +649,13 @@
       
         <source
           
-            srcset="http://localhost:1313/software/talk-about-web-font/cover-zh-TW_hu_a4c51322e8e204e4.webp 330w,http://localhost:1313/software/talk-about-web-font/cover-zh-TW_hu_a4411feebbef319.webp 660w
+            srcset="//localhost:1313/software/talk-about-web-font/cover-zh-TW_hu_a4c51322e8e204e4.webp 330w,//localhost:1313/software/talk-about-web-font/cover-zh-TW_hu_a4411feebbef319.webp 660w
             
-              ,http://localhost:1313/software/talk-about-web-font/cover-zh-TW_hu_f79524195bea5b64.webp 1024w
+              ,//localhost:1313/software/talk-about-web-font/cover-zh-TW_hu_f79524195bea5b64.webp 1024w
             
             
               
-                ,http://localhost:1313/software/talk-about-web-font/cover-zh-TW_hu_cb31082a3a7dbd1c.webp 1200w
+                ,//localhost:1313/software/talk-about-web-font/cover-zh-TW_hu_cb31082a3a7dbd1c.webp 1200w
               
             "
           
@@ -670,12 +670,12 @@
         
         
         
-          src="http://localhost:1313/software/talk-about-web-font/cover-zh-TW_hu_f4d5675b80a28c8f.png" srcset="http://localhost:1313/software/talk-about-web-font/cover-zh-TW_hu_3c7112923b744097.png 330w,http://localhost:1313/software/talk-about-web-font/cover-zh-TW_hu_f4d5675b80a28c8f.png 660w
+          src="//localhost:1313/software/talk-about-web-font/cover-zh-TW_hu_f4d5675b80a28c8f.png" srcset="//localhost:1313/software/talk-about-web-font/cover-zh-TW_hu_3c7112923b744097.png 330w,//localhost:1313/software/talk-about-web-font/cover-zh-TW_hu_f4d5675b80a28c8f.png 660w
           
-            ,http://localhost:1313/software/talk-about-web-font/cover-zh-TW_hu_4dbd8368269d511b.png 1024w
+            ,//localhost:1313/software/talk-about-web-font/cover-zh-TW_hu_4dbd8368269d511b.png 1024w
           
           
-            ,http://localhost:1313/software/talk-about-web-font/cover-zh-TW.png 1200w
+            ,//localhost:1313/software/talk-about-web-font/cover-zh-TW.png 1200w
           "
           sizes="100vw"
         
@@ -970,7 +970,7 @@
       <div class="flex justify-between pt-3">
         <span>
           
-            <a class="group flex" href="http://localhost:1313/software/design-system/">
+            <a class="group flex" href="//localhost:1313/software/design-system/">
               <span
                 class="me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
                 ><span class="ltr:inline rtl:hidden">&larr;</span
@@ -992,7 +992,7 @@
         </span>
         <span>
           
-            <a class="group flex text-right" href="http://localhost:1313/software/google-oauth-login/">
+            <a class="group flex text-right" href="//localhost:1313/software/google-oauth-login/">
               <span class="flex flex-col">
                 <span
                   class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
@@ -1026,7 +1026,7 @@
   data-host="https://cusdis.com"
   data-app-id="CUSDIS_APP_ID_PLACEHOLDER"
   data-page-id="267aad96ce1044bf59e4d506c39bed1a"
-  data-page-url="http://localhost:1313/software/talk-about-web-font/"
+  data-page-url="//localhost:1313/software/talk-about-web-font/"
   data-page-title="談談網頁中的字體 — 設計、檔案格式與前端載入"
 ></div>
 <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
